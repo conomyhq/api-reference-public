@@ -1,0 +1,581 @@
+swagger: '2.0'
+info:
+  title: conomy-api-config
+  description: Conomy api documentation
+  version: 1.0.0
+host: conomy-services.apigateway.conomy-6cc91.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  firebase:
+    authorizationUrl: ''
+    flow: implicit
+    type: oauth2
+    x-google-issuer: 'https://securetoken.google.com/conomy-6cc91'
+    x-google-jwks_uri: 'https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com'
+    x-google-audiences: conomy-6cc91
+paths:
+  /v1/addresses:
+    get:
+      tags:
+        - address
+      summary: get an address
+      operationId: getAddress
+      description: Search an Address from a user
+      x-google-backend:
+        address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      parameters:
+        - name: user_id
+          in: query
+          description: User ID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Address'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '500':
+          description: internal error
+  /v1/cards:
+    get:
+      tags:
+        - card
+      summary: get cards by user id
+      operationId: getCardByUserId
+      description: Get a list of cards by user ID
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: user_id
+          in: query
+          description: User ID
+          type: string
+          required: true
+        - name: active
+          in: query
+          description: User ID
+          type: boolean
+          required: false
+      responses:
+        '200':
+          description: Cards filtered by user ID
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Card'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '500':
+          description: internal error
+  /v1/transactions:
+    get:
+      tags:
+        - transaction
+      summary: Retrive a list of transactions
+      description: List of transaction filtered by card number and userid
+      operationId: GetTransactionsSearch
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: query
+          name: card_id
+          type: string
+          required: true
+          description: Card id
+      responses:
+        '200':
+          description: Transactions filtered
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '500':
+          description: internal error
+  /v1/transactions/categories:
+    get:
+      tags:
+        - categories
+      summary: Retrive a list of transactions categories
+      description: List of transaction categoried agreggation sum filtered by date and user_id
+      operationId: GetTransactionsCategories
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: query
+          name: user_id
+          type: string
+          required: true
+          description: User uid
+        - in: query
+          name: start_date
+          type: string
+          format: date-time
+          required: true
+          description: star Date
+        - in: query
+          name: end_date
+          type: string
+          format: date-time
+          required: true
+          description: end Date
+      responses:
+        '200':
+          description: Transactions categories filtered
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CategoryItem'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '404':
+          description: not found
+        '500':
+          description: internal error
+  /v1/users:
+    get:
+      tags:
+        - user
+      summary: get a list of all users
+      operationId: getUsers
+      description: Retrive a list of users int DB
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: list of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '500':
+          description: internal error
+  '/v1/users/{user_id}':
+    get:
+      tags:
+        - user
+      summary: get an user
+      operationId: getUser
+      description: Search an User specific data
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          type: string
+          format: uuid
+          required: true
+      responses:
+        '200':
+          description: search results matching criteria
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: bad input parameter
+        '401':
+          description: invalid token
+        '500':
+          description: internal error
+definitions:
+  Address:
+    type: object
+    required:
+      - id
+      - user_id
+      - region
+      - commune
+      - first_address
+      - optional_address
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+      user_id:
+        type: string
+        format: uuid
+        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+      region:
+        type: string
+        example: Valparaiso
+      commune:
+        type: string
+        example: ConCon
+      first_address:
+        type: string
+        example: Los Pillines
+      optional_address:
+        type: string
+        example: '340'
+    description: This is a model to represent user address
+  AddressModify:
+    type: object
+    properties:
+      region:
+        type: string
+        example: Valparaiso
+      commune:
+        type: string
+        example: ConCon
+      first_address:
+        type: string
+        example: Los Pillines
+      optional_address:
+        type: string
+        example: '340'
+  AddressCreate:
+    type: object
+    required:
+      - user_id
+      - region
+      - commune
+      - first_address
+      - optional_address
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+      region:
+        type: string
+        example: Valparaiso
+      commune:
+        type: string
+        example: ConCon
+      first_address:
+        type: string
+        example: Los Pillines
+      optional_address:
+        type: string
+        example: '340'
+  Card:
+    type: object
+    properties:
+      _id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      user_id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      card_issuer:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      holder_card_name:
+        type: string
+        example: Pablo insulza
+      card_number:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      description:
+        type: object
+    required:
+      - _id
+      - card_issuer
+      - card_brand
+      - holder_card_name
+      - card_number
+      - currency
+      - is_active
+      - created_at
+      - updated_at
+      - description
+  Cardmodify:
+    type: object
+    properties:
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+  CardCreate:
+    type: object
+    required:
+      - user_id
+      - card_name
+      - card_issuer
+      - card_brand
+      - holder_card_name
+      - owner_card_name
+      - card_number
+      - spent
+      - currency
+      - is_conomy
+      - created_at
+    properties:
+      _id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      card_issuer:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      holder_card_name:
+        type: string
+        example: Pablo insulza
+      card_number:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      description:
+        type: object
+  Transaction:
+    type: object
+    properties:
+      _id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      card_id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      title:
+        type: string
+        example: clothes
+      type:
+        type: string
+        example: bars&restaurants
+      amount:
+        type: number
+        format: float
+        example: -196690
+      currency:
+        type: string
+        example: CLP
+      transaction_date:
+        type: integer
+        example: 1616021369
+      expanded:
+        $ref: '#/definitions/ExpandedInfo'
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+    required:
+      - _id
+      - title
+      - type
+      - amount
+      - currency
+      - transaction_date
+      - expanded
+      - created_at
+      - updated_at
+  TransactionModify:
+    type: object
+    properties:
+      title:
+        type: string
+        example: clothes
+      type:
+        type: string
+        example: bars&restaurants
+      amount:
+        type: number
+        format: float
+        example: -196690
+      currency:
+        type: string
+        example: CLP
+  ExpandedInfo:
+    type: object
+    properties:
+      location:
+        type: string
+        example: 'Santiago, Chile'
+      recipit:
+        type: string
+        example: url
+      score:
+        type: number
+        format: float
+        example: 3.5
+      analytics:
+        type: array
+        items:
+          type: string
+          example: analytic Text
+  CategoryItem:
+    type: object
+    properties:
+      type:
+        type: string
+        description: type descriptor
+        example: pharmacy
+      total:
+        type: number
+        description: total sum of category transactions
+        example: -30000
+  User:
+    type: object
+    required:
+      - user_id
+      - name
+      - last_name
+      - rut
+      - account
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+      name:
+        type: string
+        example: Mauricio
+      nick_name:
+        type: string
+        example: JFT
+      last_name:
+        type: string
+        example: Gatica
+      rut:
+        type: string
+        example: 12.612.412-2
+      phone:
+        type: string
+        example: '+5691238159123'
+      account:
+        type: string
+        example: user
+      password_pin:
+        type: string
+        example: '2424'
+  UserModify:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Mauricio
+      nick_name:
+        type: string
+        example: JFT
+      last_name:
+        type: string
+        example: Gatica
+      rut:
+        type: string
+        example: 12.612.412-2
+      phone:
+        type: string
+        example: '+5691238159123'
+      password_pin:
+        type: string
+        example: '2424'
+  PasswordPin:
+    required:
+      - password_pin
+    type: object
+    properties:
+      password_pin:
+        type: string
+        example: '2424'
+  UserCreate:
+    type: object
+    required:
+      - user_id
+      - name
+      - last_name
+      - rut
+      - account
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+      name:
+        type: string
+        example: Mauricio
+      last_name:
+        type: string
+        example: Gatica
+      rut:
+        type: string
+        example: 12.612.412-2
+      account:
+        type: string
+        example: user
