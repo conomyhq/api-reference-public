@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
-  title: conomy-api-config
-  description: Conomy api documentation
+  title: Conomy Api Reference
+  description: This is the Conomy Api Reference with publics services and endpoints descriptions.
   version: 1.0.0
-host: conomy-services.apigateway.conomy-6cc91.cloud.goog
+host: www.conomy.app
 schemes:
   - https
 produces:
@@ -20,7 +20,7 @@ paths:
   /v1/addresses:
     get:
       tags:
-        - address
+        - Address
       summary: get an address
       operationId: getAddress
       description: Search an Address from a user
@@ -51,7 +51,7 @@ paths:
   /v1/cards:
     get:
       tags:
-        - card
+        - Card
       summary: get cards by user id
       operationId: getCardByUserId
       description: Get a list of cards by user ID
@@ -87,8 +87,8 @@ paths:
   /v1/transactions:
     get:
       tags:
-        - transaction
-      summary: Retrive a list of transactions
+        - Transaction
+      summary: get a list of transactions
       description: List of transaction filtered by card number and userid
       operationId: GetTransactionsSearch
       security:
@@ -118,8 +118,8 @@ paths:
   /v1/transactions/categories:
     get:
       tags:
-        - categories
-      summary: Retrive a list of transactions categories
+        - Transaction Categories
+      summary: get a list of transactions categories
       description: List of transaction categoried agreggation sum filtered by date and user_id
       operationId: GetTransactionsCategories
       security:
@@ -163,10 +163,10 @@ paths:
   /v1/users:
     get:
       tags:
-        - user
+        - User
       summary: get a list of all users
       operationId: getUsers
-      description: Retrive a list of users int DB
+      description: retrive a list of users int DB
       security:
         - api_key: []
       x-google-backend:
@@ -188,7 +188,7 @@ paths:
   '/v1/users/{user_id}':
     get:
       tags:
-        - user
+        - User
       summary: get an user
       operationId: getUser
       description: Search an User specific data
