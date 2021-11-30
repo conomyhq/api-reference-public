@@ -459,8 +459,8 @@ paths:
     get:
       tags:
         - Transaction Categories
-      summary: get a list of transactions categories
-      description: List of transaction categoried agreggation sum filtered by date and user_id
+      summary: "Get a list of transactions categories \U0001F3F7️"
+      description: List of transaction categories with its agreggation sum filtered by date and user id.
       operationId: GetTransactionsCategories
       security:
         - api_key: []
@@ -504,7 +504,7 @@ paths:
     get:
       tags:
         - User
-      summary: get a list of all users
+      summary: "Get a list of all users \U0001F603"
       operationId: getUsers
       description: retrive a list of users int DB
       security:
@@ -529,7 +529,7 @@ paths:
     get:
       tags:
         - User
-      summary: get an user
+      summary: "Get a specific user \U0001F60A"
       operationId: getUser
       description: Search an User specific data
       security:
