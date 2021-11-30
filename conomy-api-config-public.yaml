@@ -47,7 +47,41 @@ paths:
             items:
               $ref: '#/definitions/Address'
         '400':
-          description: Bad input parameter.
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
         '401':
           description: Invalid authentication or missing token.
           examples:
@@ -73,11 +107,32 @@ paths:
                 code: 401
         '500':
           description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   /v1/cards:
     get:
       tags:
         - Card
-      summary: "Get cards by user id \U0001F4B3"
+      summary: "Get cards by user id  \U0001F4B3"
       operationId: getCardByUserId
       description: Get a list of cards filtered by owner's user id.
       security:
@@ -104,7 +159,41 @@ paths:
             items:
               $ref: '#/definitions/Card'
         '400':
-          description: bad input parameter
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
         '401':
           description: Invalid or missing authentication token.
           examples:
@@ -128,8 +217,65 @@ paths:
               example-1:
                 message: Jwt is missing
                 code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
         '500':
           description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   /v1/transactions:
     get:
       tags:
