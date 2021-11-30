@@ -492,21 +492,131 @@ paths:
             type: array
             items:
               $ref: '#/definitions/CategoryItem'
-        '400':
-          description: bad input parameter
         '401':
-          description: invalid token
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
         '404':
-          description: not found
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
         '500':
-          description: internal error
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+        400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
   /v1/users:
     get:
       tags:
         - User
       summary: "Get a list of all users \U0001F603"
       operationId: getUsers
-      description: retrive a list of users int DB
+      description: Get a list of users registered in the db.
       security:
         - api_key: []
       x-google-backend:
@@ -514,24 +624,136 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
-          description: list of users
+          description: List users from the db.
           schema:
             type: array
             items:
               $ref: '#/definitions/User'
         '400':
-          description: bad input parameter
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
         '401':
-          description: invalid token
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
         '500':
-          description: internal error
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   '/v1/users/{user_id}':
     get:
       tags:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: Search an User specific data
+      description: Get a specific user data searching by its unique user id.
       security:
         - api_key: []
       x-google-backend:
@@ -550,11 +772,123 @@ paths:
           schema:
             $ref: '#/definitions/User'
         '400':
-          description: bad input parameter
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
         '401':
-          description: invalid token
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
         '500':
-          description: internal error
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
 definitions:
   Address:
     type: object
