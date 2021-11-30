@@ -1087,3 +1087,28 @@ definitions:
         example: '2424'
 consumes:
   - application/json
+responses:
+  HTTP-State-codes:
+    description: All our http state codes and its meanings.
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    headers:
+      '200 - Ok ':
+        type: string
+        description: "Succeed \U0001F44C."
+      400 - Bad Request:
+        type: string
+        description: Required parameter for this API operation is invalid or has not been provided.
+      401 - Unauthorized:
+        type: string
+        description: "Invalid or missing authentication token \U0001F46E."
+      404 - Not found:
+        type: string
+        description: Data not found in the DB.
+      500 - Internal error:
+        type: string
+        description: Internal Server Error
