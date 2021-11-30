@@ -1,9 +1,12 @@
 swagger: '2.0'
 info:
-  title: Conomy Api Reference
-  description: This is the Conomy Api Reference with publics services and endpoints descriptions.
+  title: "Conomy Developers \U0001F7E0 API Reference"
+  description: "This is Conomy Developers, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation.\nIf you have any doubt please don't hesitate to reach us at hola@conomyhq.com. We hope you enjoy this site \U0001F44B."
   version: 1.0.0
-host: www.conomy.app
+  contact:
+    email: hola@conomyhq.com
+    name: Conomy app
+host: api.conomy.app
 schemes:
   - https
 produces:
@@ -16,14 +19,15 @@ securityDefinitions:
     x-google-issuer: 'https://securetoken.google.com/conomy-6cc91'
     x-google-jwks_uri: 'https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com'
     x-google-audiences: conomy-6cc91
+    description: 'We have a firebase authentication, to have access to an API Key available for QA environment please just contact us at hola@conomyhq.com.'
 paths:
   /v1/addresses:
     get:
       tags:
         - Address
-      summary: get an address
+      summary: "Get an address from a user \U0001F50E"
       operationId: getAddress
-      description: Search an Address from a user
+      description: Search an address by it's user id.
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -37,24 +41,45 @@ paths:
           required: true
       responses:
         '200':
-          description: search results matching criteria
+          description: Search results matching criteria sent in the request body.
           schema:
             type: array
             items:
               $ref: '#/definitions/Address'
         '400':
-          description: bad input parameter
+          description: Bad input parameter.
         '401':
-          description: invalid token
+          description: Invalid authentication or missing token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
         '500':
-          description: internal error
+          description: Internal server error.
   /v1/cards:
     get:
       tags:
         - Card
-      summary: get cards by user id
+      summary: "Get cards by user id \U0001F4B3"
       operationId: getCardByUserId
-      description: Get a list of cards by user ID
+      description: Get a list of cards filtered by owner's user id.
       security:
         - api_key: []
       x-google-backend:
@@ -63,17 +88,17 @@ paths:
       parameters:
         - name: user_id
           in: query
-          description: User ID
+          description: User id
           type: string
           required: true
         - name: active
           in: query
-          description: User ID
+          description: User id
           type: boolean
           required: false
       responses:
         '200':
-          description: Cards filtered by user ID
+          description: Fetch cards filtered by owner's user ID.
           schema:
             type: array
             items:
@@ -81,9 +106,30 @@ paths:
         '400':
           description: bad input parameter
         '401':
-          description: invalid token
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
         '500':
-          description: internal error
+          description: Internal server error.
   /v1/transactions:
     get:
       tags:
@@ -411,3 +457,5 @@ definitions:
       password_pin:
         type: string
         example: '2424'
+consumes:
+  - application/json
