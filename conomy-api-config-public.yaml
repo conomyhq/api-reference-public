@@ -1476,7 +1476,7 @@ paths:
     post:
       tags:
         - User
-      summary: Add an user
+      summary: "Create a new user in the db \U0001F929"
       operationId: addUser
       description: 'The Users services provides user information. The /users endpoint with a POST method register a new user in the db with its personal information such as name, last name, national id, phone among other data.'
       consumes:
