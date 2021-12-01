@@ -43,7 +43,7 @@ paths:
             $ref: '#/definitions/AddressCreate'
       responses:
         '201':
-          description: item created
+          description: Item created
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
