@@ -24,7 +24,7 @@ paths:
   /v1/addresses:
     post:
       tags:
-        - address
+        - Address
       summary: "Add an address to a specific user in the system \U0001F3E1"
       operationId: addAddress
       description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.'
@@ -306,7 +306,7 @@ paths:
                 code: 500
     put:
       tags:
-        - address
+        - Address
       summary: "Modify an address from a specific user \U0001F3D8️."
       operationId: modifyAddress
       description: 'The Address service delivers users address. The /addresses endpoint with PUT method modify the address of specific user id, being able to modify attributes like region, commune, first address and an optional address.'
@@ -452,7 +452,7 @@ paths:
   /v1/cards:
     post:
       tags:
-        - card
+        - Card
       summary: "Create a card and add to a specific user \U0001F45B"
       operationId: createCard
       description: 'The Cards service delivers cards data. The /cards endpoint with POST method adds a card owned by a specific user id and save it on an array of card objects, which includes all its cards attributes.'
@@ -743,7 +743,7 @@ paths:
   '/v1/cards/{card_id}':
     put:
       tags:
-        - card
+        - Card
       summary: "Set to active a specific card of a user \U0001F4CC"
       operationId: UpdateActiveCard
       description: The Cards service delivers cards data. The /cards endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.
@@ -890,7 +890,7 @@ paths:
   /v1/transactions:
     post:
       tags:
-        - transaction
+        - Transaction
       summary: "Create a transaction for a specific card \U0001F4DD"
       description: The Transactions service provides transactions information. The /transactions endpoint with a POST method creates a transaction in the db for a specific card and user id.
       operationId: CreateTransactions
@@ -1173,7 +1173,7 @@ paths:
   '/v1/transactions/{transaction_id}':
     put:
       tags:
-        - transaction
+        - Transaction
       summary: "Modify a transaction for specifics card and user id \U0001F4CB"
       operationId: ModifyTransaction
       description: The Transactions service provides transactions information. The /transactions endpoint with a PUT method allows to modify customizable fields for a specific transaction.
@@ -1475,7 +1475,7 @@ paths:
   /v1/users:
     post:
       tags:
-        - user
+        - User
       summary: Add an user
       operationId: addUser
       description: 'The Users services provides user information. The /users endpoint with a POST method register a new user in the db with its personal information such as name, last name, national id, phone among other data.'
@@ -1895,7 +1895,7 @@ paths:
                 code: 500
     put:
       tags:
-        - user
+        - User
       summary: "Update an user in the db by its user id \U0001F62C"
       operationId: updateUser
       description: 'The Users service provides user information. The /users/{user_id} endpoint with a PUT method modify a specific user by its user id in the db.'
@@ -2042,7 +2042,7 @@ paths:
   /v1/pin/authorization:
     post:
       tags:
-        - auth
+        - Auth
       summary: "Validate pin authentication for a specific user id \U0001F510"
       operationId: ValidatePin
       description: The Pin service provides user password information. The /pin/authorization endpoint with a POST validates user's pin against the value saved in the db. This gives the user the permission to gain access for different information inside the app and the permission to realize more personal actions.
@@ -2193,8 +2193,8 @@ paths:
           schema:
             $ref: '#/definitions/UserPin'
       tags:
-        - auth
-        - pin
+        - Auth
+        - Pin
       responses:
         '201':
           description: 'Ok, pin created'
