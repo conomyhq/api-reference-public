@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: "Conomy Developers \U0001F4D9 API Reference"
-  description: "This is Conomy Developers, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation.\nIf you have any doubt please don't hesitate to reach us at hola@conomyhq.com. We hope you enjoy this site \U0001F44B."
+  description: "This is **Conomy Developers**, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation, if you have any doubt please don't hesitate to reach us out at hola@conomyhq.com. We hope you enjoy this site \U0001F44B.\n\nCurrently we have a pack of 4 backend microservices serving for different purposes. You can find their description in the left menu with the detail of each of their specific endpoints.\n\n**Addresses Service**: Users addresses information, you can fetch address data with its specific user id, bringing parameters like region, commune, first_address and an optional description address.\n\n**Cards Service**: Cards information, search and match any card that is owned by specific user id and respond an array of card objects. \n\n**Transactions Service**: This service provides transactions information, you can fetch transaction data with its specific card id, bringing parameters like title, amount, currency among others.\n\n**Users Service**: This service provides users information, with its user id you can get all the user data and also make some changes to its personal information."
   version: 1.0.0
   contact:
     email: hola@conomyhq.com
@@ -22,12 +22,152 @@ securityDefinitions:
     description: 'We have a firebase authentication, to have access to an API Key available for QA environment please just contact us at hola@conomyhq.com.'
 paths:
   /v1/addresses:
+    post:
+      tags:
+        - address
+      summary: Add an address to a specific user in the system 🏡
+      operationId: addAddress
+      description: The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
+      parameters:
+        - in: body
+          name: Address
+          description: Address to add
+          schema:
+            $ref: '#/definitions/AddressCreate'
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
     get:
       tags:
         - Address
       summary: "Get an address from specific user \U0001F50E"
       operationId: getAddress
-      description: Search an address by it's user id.
+      description: 'The Address service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including region, commune, first_address and an optional description address.'
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -164,13 +304,159 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+    put:
+      tags:
+        - address
+      summary: Modify an address from a specific user 🏘️.
+      operationId: modifyAddress
+      description: The Address service delivers users address. The /addresses endpoint with PUT method modify the address of specific user id, being able to modify attributes like region, commune, first address and an optional address.
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
+      parameters:
+        - name: user_id
+          in: query
+          description: User ID
+          type: string
+          required: true
+        - in: body
+          name: Address
+          description: Address to add
+          schema:
+            $ref: '#/definitions/AddressModify'
+      responses:
+        '201':
+          description: address created
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   /v1/cards:
     get:
       tags:
         - Card
       summary: "Get cards by user id  \U0001F4B3"
       operationId: getCardByUserId
-      description: Get a list of cards filtered by owner's user id.
+      description: |
+        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, the card issuer which is the issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.
       security:
         - api_key: []
       x-google-backend:
