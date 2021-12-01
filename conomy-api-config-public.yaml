@@ -25,9 +25,9 @@ paths:
     post:
       tags:
         - address
-      summary: Add an address to a specific user in the system 🏡
+      summary: "Add an address to a specific user in the system \U0001F3E1"
       operationId: addAddress
-      description: The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.
+      description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.'
       consumes:
         - application/json
       x-google-backend:
@@ -307,9 +307,9 @@ paths:
     put:
       tags:
         - address
-      summary: Modify an address from a specific user 🏘️.
+      summary: "Modify an address from a specific user \U0001F3D8️."
       operationId: modifyAddress
-      description: The Address service delivers users address. The /addresses endpoint with PUT method modify the address of specific user id, being able to modify attributes like region, commune, first address and an optional address.
+      description: 'The Address service delivers users address. The /addresses endpoint with PUT method modify the address of specific user id, being able to modify attributes like region, commune, first address and an optional address.'
       consumes:
         - application/json
       x-google-backend:
@@ -450,6 +450,148 @@ paths:
                 message: Internal Server Error
                 code: 500
   /v1/cards:
+    post:
+      tags:
+        - card
+      summary: "Create a card and add to a specific user \U0001F45B"
+      operationId: createCard
+      description: 'The Cards service delivers cards data. The /cards endpoint with POST method adds a card owned by a specific user id and save it on an array of card objects, which includes all its cards attributes.'
+      consumes:
+        - application/json
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: Card
+          description: Card schema
+          schema:
+            $ref: '#/definitions/CardCreate'
+      responses:
+        '201':
+          description: Card information
+          schema:
+            $ref: '#/definitions/Card'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
     get:
       tags:
         - Card
@@ -598,12 +740,299 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+  '/v1/cards/{card_id}':
+    put:
+      tags:
+        - card
+      summary: "Set to active a specific card of a user \U0001F4CC"
+      operationId: UpdateActiveCard
+      description: The Cards service delivers cards data. The /cards endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.
+      consumes:
+        - application/json
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: card_id
+          in: path
+          description: Card ID from db
+          type: string
+          format: uuid
+          required: true
+        - name: active
+          in: query
+          description: property if search active cards or not
+          type: boolean
+          required: true
+      responses:
+        '204':
+          description: 'No Content, just a 204 status'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   /v1/transactions:
+    post:
+      tags:
+        - transaction
+      summary: "Create a transaction for a specific card \U0001F4DD"
+      description: The Transactions service provides transactions information. The /transactions endpoint with a POST method creates a transaction in the db for a specific card and user id.
+      operationId: CreateTransactions
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: Transaction
+          description: Transaction schema
+          schema:
+            $ref: '#/definitions/Transaction'
+      responses:
+        '201':
+          description: Transaction created
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
     get:
       tags:
         - Transaction
-      summary: "Get a list of card's transactions \U0001F4D6"
-      description: List of transaction filtered by card number and user id.
+      summary: "Get a list of a card's transactions \U0001F4D6"
+      description: 'The Transactions service provides transactions information. The /transactions endpoint with a GET method list transactions filtered by a card number and its user id, sending an array of transactions with its amount, currency and other data.'
       operationId: GetTransactionsSearch
       security:
         - api_key: []
@@ -741,43 +1170,71 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-  /v1/transactions/categories:
-    get:
+  '/v1/transactions/{transaction_id}':
+    put:
       tags:
-        - Transaction Categories
-      summary: "Get a list of transactions categories \U0001F3F7️"
-      description: List of transaction categories with its agreggation sum filtered by date and user id.
-      operationId: GetTransactionsCategories
+        - transaction
+      summary: "Modify a transaction for specifics card and user id \U0001F4CB"
+      operationId: ModifyTransaction
+      description: The Transactions service provides transactions information. The /transactions endpoint with a PUT method allows to modify customizable fields for a specific transaction.
+      consumes:
+        - application/json
       security:
-        - api_key: []
+        - firebase: []
       x-google-backend:
         address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
-        - in: query
-          name: user_id
+        - name: transaction_id
+          in: path
+          description: transaction ID
           type: string
+          format: uuid
           required: true
-          description: User uid
-        - in: query
-          name: start_date
-          type: string
-          format: date-time
-          required: true
-          description: star Date
-        - in: query
-          name: end_date
-          type: string
-          format: date-time
-          required: true
-          description: end Date
+        - in: body
+          name: Transaction
+          description: Transaction schema
+          schema:
+            $ref: '#/definitions/TransactionModify'
       responses:
         '200':
-          description: Transactions categories filtered
+          description: Succes modified
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/CategoryItem'
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
         '401':
           description: Invalid or missing authentication token.
           examples:
@@ -860,7 +1317,44 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-        400':
+  /v1/transactions/categories:
+    get:
+      tags:
+        - Transaction Categories
+      summary: "Get a list of transactions categories \U0001F3F7️"
+      description: The Transactions service provides transactions information. The /transactions/categories endpoint with a GET method list transaction categories with its agreggation sum filtered by date and user id.
+      operationId: GetTransactionsCategories
+      security:
+        - api_key: []
+      x-google-backend:
+        address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: query
+          name: user_id
+          type: string
+          required: true
+          description: User uid
+        - in: query
+          name: start_date
+          type: string
+          format: date-time
+          required: true
+          description: star Date
+        - in: query
+          name: end_date
+          type: string
+          format: date-time
+          required: true
+          description: end Date
+      responses:
+        '200':
+          description: Transactions categories filtered
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CategoryItem'
+        '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
             description: ''
@@ -896,13 +1390,237 @@ paths:
                   detail: A required parameter for this API operation is invalid or has not been provided
                   type: GenericError
                   code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
   /v1/users:
+    post:
+      tags:
+        - user
+      summary: Add an user
+      operationId: addUser
+      description: 'The Users services provides user information. The /users endpoint with a POST method register a new user in the db with its personal information such as name, last name, national id, phone among other data.'
+      consumes:
+        - application/json
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: User
+          description: User schema
+          schema:
+            $ref: '#/definitions/UserCreate'
+      responses:
+        '201':
+          description: matching user
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
     get:
       tags:
         - User
       summary: "Get a list of all users \U0001F603"
       operationId: getUsers
-      description: Get a list of users registered in the db.
+      description: 'The Users service provides user information. The /users endpoint with a GET method list all users registered in the db with its personal information such as name, last name, national id, phone among other data.'
       security:
         - api_key: []
       x-google-backend:
@@ -1039,7 +1757,7 @@ paths:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: Get a specific user data searching by its unique user id.
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
       security:
         - api_key: []
       x-google-backend:
@@ -1175,6 +1893,431 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+    put:
+      tags:
+        - user
+      summary: "Update an user in the db by its user id \U0001F62C"
+      operationId: updateUser
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a PUT method modify a specific user by its user id in the db.'
+      consumes:
+        - application/json
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          type: string
+          format: uuid
+          required: true
+        - in: body
+          name: User
+          description: User to be updated
+          schema:
+            $ref: '#/definitions/UserModify'
+      responses:
+        '201':
+          description: user created
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+  /v1/pin/authorization:
+    post:
+      tags:
+        - auth
+      summary: "Validate pin authentication for a specific user id \U0001F510"
+      operationId: ValidatePin
+      description: The Pin service provides user password information. The /pin/authorization endpoint with a POST validates user's pin against the value saved in the db. This gives the user the permission to gain access for different information inside the app and the permission to realize more personal actions.
+      security:
+        - firebase: []
+      x-google-backend:
+        address: 'https://auth-service-conomy-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: Token
+          description: Token to be matched
+          schema:
+            $ref: '#/definitions/UserPin'
+      responses:
+        '200':
+          description: search results matching criteria
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+  /v1/pin:
+    post:
+      summary: "Create a new pin linked to a specific user id \U0001F511"
+      x-google-backend:
+        address: 'https://auth-service-conomy-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
+      parameters:
+        - in: body
+          name: Token
+          description: Token to be matched
+          schema:
+            $ref: '#/definitions/UserPin'
+      tags:
+        - auth
+        - pin
+      responses:
+        '201':
+          description: 'Ok, pin created'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      operationId: CreatePin
+      description: The Pin service provides user password information. The /pin endpoint with a POST creates a user's pin and save it in the db. This gives the user the permission to gain access for different information and have more control over his personal data.
 definitions:
   Address:
     type: object
@@ -1207,6 +2350,46 @@ definitions:
         type: string
         example: '340'
     description: This is a model to represent user address
+  AddressModify:
+    type: object
+    properties:
+      region:
+        type: string
+        example: Valparaiso
+      commune:
+        type: string
+        example: ConCon
+      first_address:
+        type: string
+        example: Los Pillines
+      optional_address:
+        type: string
+        example: '340'
+  AddressCreate:
+    type: object
+    required:
+      - user_id
+      - region
+      - commune
+      - first_address
+      - optional_address
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+      region:
+        type: string
+        example: Valparaiso
+      commune:
+        type: string
+        example: ConCon
+      first_address:
+        type: string
+        example: Los Pillines
+      optional_address:
+        type: string
+        example: '340'
   Card:
     type: object
     properties:
@@ -1261,6 +2444,57 @@ definitions:
       - created_at
       - updated_at
       - description
+  CardCreate:
+    type: object
+    required:
+      - user_id
+      - card_name
+      - card_issuer
+      - card_brand
+      - holder_card_name
+      - owner_card_name
+      - card_number
+      - spent
+      - currency
+      - is_conomy
+      - created_at
+    properties:
+      _id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      card_issuer:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      holder_card_name:
+        type: string
+        example: Pablo insulza
+      card_number:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      description:
+        type: object
   Transaction:
     type: object
     properties:
@@ -1308,6 +2542,22 @@ definitions:
       - expanded
       - created_at
       - updated_at
+  TransactionModify:
+    type: object
+    properties:
+      title:
+        type: string
+        example: clothes
+      type:
+        type: string
+        example: bars&restaurants
+      amount:
+        type: number
+        format: float
+        example: -196690
+      currency:
+        type: string
+        example: CLP
   ExpandedInfo:
     type: object
     properties:
@@ -1371,30 +2621,67 @@ definitions:
       password_pin:
         type: string
         example: '2424'
+  UserModify:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Mauricio
+      nick_name:
+        type: string
+        example: JFT
+      last_name:
+        type: string
+        example: Gatica
+      rut:
+        type: string
+        example: 12.612.412-2
+      phone:
+        type: string
+        example: '+5691238159123'
+  UserCreate:
+    type: object
+    required:
+      - user_id
+      - name
+      - last_name
+      - rut
+      - account
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+      name:
+        type: string
+        example: Mauricio
+      last_name:
+        type: string
+        example: Gatica
+      rut:
+        type: string
+        example: 12.612.412-2
+      account:
+        type: string
+        example: user
+  UserPin:
+    type: object
+    title: UserPin
+    properties:
+      user_id:
+        type: string
+        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+        description: Firebase ID
+      password_pin:
+        type: string
+        example: vK6q83OnsWqRCN3C37Ikl/T4DwWpnumo1CR305oEkkhRdp4ua6TJeif309Es0x9t7snE04hu48eLw5zSVg/+y5rWNPBFg4rnka6j0btuD3htbdkm8emx+d6JcOk8/xlIWr4ifZvF5t5fuj2fqWZzgDxnF5TJxWWLETHGCl1FduK3rZj4Yh6MtoYjhqqVVuFaXwoZEka77K5HO2sQ11l03qnbAk+cV+ZjNyAD24Qgi+wrRG0pGJ3BHUy7K0jF1umKCJDd8ILfM7GD1/+fuTU4RMMJ0PFpbKnMp3kTSwwTpSJ0j3tgchXvfTc4sAx/aQgdVerdHnhFSMnoVbsV/TiBRg==
+      created_at:
+        type: string
+      updated_at:
+        type: string
+    required:
+      - user_id
+      - password_pin
 consumes:
   - application/json
-responses:
-  HTTP-State-codes:
-    description: All our http state codes and its meanings.
-    content:
-      application/json:
-        schema:
-          properties:
-            id:
-              type: string
-    headers:
-      '200 - Ok ':
-        type: string
-        description: "Succeed \U0001F44C."
-      400 - Bad Request:
-        type: string
-        description: Required parameter for this API operation is invalid or has not been provided.
-      401 - Unauthorized:
-        type: string
-        description: "Invalid or missing authentication token \U0001F46E."
-      404 - Not found:
-        type: string
-        description: Data not found in the DB.
-      500 - Internal error:
-        type: string
-        description: Internal Server Error
