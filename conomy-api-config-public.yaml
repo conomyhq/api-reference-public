@@ -2321,8 +2321,6 @@ paths:
   '/v1/termsconditions/{user_id}':
     get:
       summary: "Get user's terms & conditions \U0001F4C3"
-      tags:
-        - Terms&Conditions
       responses:
         '200':
           description: OK
@@ -2448,6 +2446,8 @@ paths:
                 message: Internal Server Error
                 code: 500
       operationId: getTermsConditions
+      tags:
+        - Terms & Conditions
     post:
       summary: "Store user's terms & conditions \U0001F4C4"
       operationId: postTermsConditions
@@ -2572,6 +2572,8 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+      tags:
+        - Terms & Conditions
     parameters:
       - type: string
         name: user_id
