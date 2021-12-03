@@ -2836,7 +2836,7 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-      operationId: getSmsNotification
+      operationId: getNotifications
       description: ''
       tags:
         - Notifications
