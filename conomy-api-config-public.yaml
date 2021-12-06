@@ -4690,6 +4690,7 @@ paths:
       description: ''
       tags:
         - Transaction Switch
+        - hola
     parameters: []
 definitions:
   Address:
