@@ -1893,12 +1893,12 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-    put:
+    patch:
       tags:
         - User
       summary: "Update an user in the db by its user id \U0001F62C"
       operationId: updateUser
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with a PUT method modify a specific user by its user id in the db.'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a PATCH method modify a specific user''s attribute by its user id in the db.'
       consumes:
         - application/json
       security:
@@ -1915,12 +1915,12 @@ paths:
           required: true
         - in: body
           name: User
-          description: User to be updated
+          description: User to update
           schema:
             $ref: '#/definitions/UserModify'
       responses:
         '201':
-          description: user created
+          description: User modified
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -2626,6 +2626,20 @@ paths:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+                user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+                card_issuer: BancoDeChile
+                card_brand: MasterCard
+                holder_card_name: Pablo insulza
+                card_number: '************1234'
+                currency: CLP
+                is_active: false
+                created_at: '2017-07-21T17:32:28Z'
+                updated_at: '2017-07-21T17:32:28Z'
+                active_card: {}
+                description: {}
             properties:
               _id:
                 type: string
@@ -2656,14 +2670,10 @@ paths:
               updated_at:
                 type: string
                 minLength: 1
-              active_card:
-                type: object
-                properties: {}
-                required: []
               description:
                 type: object
-                properties: {}
-                required: []
+              active_card:
+                type: object
             required:
               - _id
               - user_id
@@ -2675,22 +2685,8 @@ paths:
               - is_active
               - created_at
               - updated_at
-              - active_card
               - description
-            x-examples:
-              example-1:
-                _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-                user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-                card_issuer: BancoDeChile
-                card_brand: MasterCard
-                holder_card_name: Pablo insulza
-                card_number: '************1234'
-                currency: CLP
-                is_active: false
-                created_at: '2017-07-21T17:32:28Z'
-                updated_at: '2017-07-21T17:32:28Z'
-                active_card: {}
-                description: {}
+              - active_card
           description: Request are all the attributes but active default payment card and description
     put:
       summary: "Set to active a specific card for Conomy Card payment \U0001F4B3"
@@ -3000,7 +2996,7 @@ paths:
                 code: 500
       tags:
         - Conomy Card
-      description: Updates one Conomy Card's attribute (in this case is the attrb is_active)
+      description: Updates one Conomy Card's attribute (in this case the attrb is_active)
       parameters:
         - in: body
           name: body
@@ -3803,7 +3799,7 @@ paths:
       tags:
         - Card
     parameters: []
-  /v1/conomycards/budget:
+  /v1/budget:
     get:
       summary: "Get the budget of a specific Conomy Card \U0001F4CA"
       responses:
@@ -3935,7 +3931,7 @@ paths:
       tags:
         - Budget
     parameters: []
-  /v1/conomycards/rules:
+  /v1/rules:
     get:
       summary: "Get the rules of a specific Conomy Card \U0001F4B3"
       responses:
@@ -5425,6 +5421,8 @@ definitions:
         type: string
         format: date-time
         example: '2017-07-21T17:32:28Z'
+      description:
+        type: object
       active_card:
         type: object
         properties:
@@ -5440,8 +5438,6 @@ definitions:
             type: boolean
           currency:
             type: string
-      description:
-        type: object
     required:
       - _id
       - card_issuer
@@ -5598,12 +5594,7 @@ definitions:
         example: -30000
   User:
     type: object
-    required:
-      - user_id
-      - name
-      - last_name
-      - rut
-      - account
+    description: Conomy User Model
     properties:
       user_id:
         type: string
@@ -5627,27 +5618,63 @@ definitions:
       account:
         type: string
         example: user
-      password_pin:
+      profession:
         type: string
-        example: '2424'
+      gender:
+        type: string
+      civil_status:
+        type: string
+      email:
+        type: string
+    required:
+      - user_id
+      - name
+      - last_name
+      - rut
+      - account
   UserModify:
+    description: ''
     type: object
+    x-examples:
+      example-1:
+        user_id: b92e761a-279a-11ec-9621-0242ac130002
+        name: Mauricio
+        nick_name: JFT
+        last_name: Gatica
+        rut: 12.612.412-2
+        phone: '+5691238159123'
+        account: user
+        password_pin: '2424'
+        profession: string
+        gender: string
+        civil_status: string
+        email: string
     properties:
-      name:
-        type: string
-        example: Mauricio
       nick_name:
         type: string
-        example: JFT
-      last_name:
-        type: string
-        example: Gatica
-      rut:
-        type: string
-        example: 12.612.412-2
+        minLength: 1
       phone:
         type: string
-        example: '+5691238159123'
+        minLength: 1
+      profession:
+        type: string
+        minLength: 1
+      gender:
+        type: string
+        minLength: 1
+      civil_status:
+        type: string
+        minLength: 1
+      email:
+        type: string
+        minLength: 1
+    required:
+      - nick_name
+      - phone
+      - profession
+      - gender
+      - civil_status
+      - email
   UserCreate:
     type: object
     required:
