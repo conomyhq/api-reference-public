@@ -2318,6 +2318,834 @@ paths:
                 code: 500
       operationId: CreatePin
       description: The Pin service provides user's password information. The /pin endpoint with a POST creates a user's pin and save it in the db. This gives the user the permission to gain access for different information and have more control over his personal data.
+  '/v1/conomycards/{user_id}':
+    get:
+      summary: "Get all the information of a specific Conomy Card \U0001F4B3"
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ConomyCard'
+          examples:
+            example-1:
+              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              card_issuer: BancoDeChile
+              card_brand: MasterCard
+              holder_card_name: Pablo insulza
+              card_number: '************1234'
+              currency: CLP
+              is_active: false
+              created_at: '2017-07-21T17:32:28Z'
+              updated_at: '2017-07-21T17:32:28Z'
+              active_card:
+                card_id: string
+                card_issuer: string
+                card_brand: string
+                card_number: string
+                is_active: true
+                currency: string
+              description: {}
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      operationId: getConomyCard
+      description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch all the card data from a specific user id.
+      tags:
+        - Conomy Card
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        required: true
+    post:
+      summary: "Create a new Conomy Card \U0001F4B3"
+      operationId: postConomyCard
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ConomyCard'
+          examples:
+            example-1:
+              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              card_issuer: BancoDeChile
+              card_brand: MasterCard
+              holder_card_name: Pablo insulza
+              card_number: '************1234'
+              currency: CLP
+              is_active: false
+              created_at: '2017-07-21T17:32:28Z'
+              updated_at: '2017-07-21T17:32:28Z'
+              active_card: {}
+              description: {}
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      tags:
+        - Conomy Card
+      description: The Conomy Card service host all the data about Conomy Cards and the POST method creates a new Conomy Card based on the attributes provided.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            description: ''
+            type: object
+            properties:
+              _id:
+                type: string
+                minLength: 1
+              user_id:
+                type: string
+                minLength: 1
+              card_issuer:
+                type: string
+                minLength: 1
+              card_brand:
+                type: string
+                minLength: 1
+              holder_card_name:
+                type: string
+                minLength: 1
+              card_number:
+                type: string
+                minLength: 1
+              currency:
+                type: string
+                minLength: 1
+              is_active:
+                type: boolean
+              created_at:
+                type: string
+                minLength: 1
+              updated_at:
+                type: string
+                minLength: 1
+              active_card:
+                type: object
+                properties: {}
+                required: []
+              description:
+                type: object
+                properties: {}
+                required: []
+            required:
+              - _id
+              - user_id
+              - card_issuer
+              - card_brand
+              - holder_card_name
+              - card_number
+              - currency
+              - is_active
+              - created_at
+              - updated_at
+              - active_card
+              - description
+            x-examples:
+              example-1:
+                _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+                user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+                card_issuer: BancoDeChile
+                card_brand: MasterCard
+                holder_card_name: Pablo insulza
+                card_number: '************1234'
+                currency: CLP
+                is_active: false
+                created_at: '2017-07-21T17:32:28Z'
+                updated_at: '2017-07-21T17:32:28Z'
+                active_card: {}
+                description: {}
+          description: Request are all the attributes but active default payment card and description
+    put:
+      summary: "Set to active a specific card for Conomy Card payment \U0001F4B3"
+      operationId: putActiveCard
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ConomyCard'
+          examples:
+            example-1:
+              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              card_issuer: BancoDeChile
+              card_brand: MasterCard
+              holder_card_name: Pablo insulza
+              card_number: '************1234'
+              currency: CLP
+              is_active: false
+              created_at: '2017-07-21T17:32:28Z'
+              updated_at: '2017-07-21T17:32:28Z'
+              active_card:
+                card_id: string
+                card_issuer: string
+                card_brand: string
+                card_number: string
+                is_active: true
+                currency: string
+              description: {}
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      tags:
+        - Conomy Card
+      description: 'When the user selects a card to be the default payment from his wallet, the PUT method updates the card that is configured in the Conomy Card.'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Card'
+    patch:
+      summary: "Temporary Conomy Card lock \U0001F510"
+      operationId: patchToLockCard
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ConomyCard'
+          examples:
+            example-1:
+              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              card_issuer: BancoDeChile
+              card_brand: MasterCard
+              holder_card_name: Pablo insulza
+              card_number: '************1234'
+              currency: CLP
+              is_active: false
+              created_at: '2017-07-21T17:32:28Z'
+              updated_at: '2017-07-21T17:32:28Z'
+              active_card:
+                card_id: string
+                card_issuer: string
+                card_brand: string
+                card_number: string
+                is_active: true
+                currency: string
+              description: {}
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      tags:
+        - Conomy Card
+      description: Updates one Conomy Card's attribute (in this case is the attrb is_active)
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              is_active:
+                type: boolean
+          description: Only the attribute to change to that specific user_id's Conomy Card.
+    delete:
+      summary: "Delete all the information from a specific Conomy Card \U0001F6A8"
+      operationId: deleteAll
+      responses:
+        '200':
+          description: Response a message and a boolean
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              message: Account Deleted
+              deleted: true
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+      tags:
+        - Conomy Card
+      description: It applies when the user wants to delete his entire Conomy account or needs another Conomy Card so the last one is going to be deleted.
   '/v1/termsconditions/{user_id}':
     get:
       summary: "Get user's terms & conditions \U0001F4C3"
@@ -2975,138 +3803,6 @@ paths:
       tags:
         - Card
     parameters: []
-  /v1/conomycards/composite:
-    get:
-      summary: "Get all the information of a specific Conomy Card \U0001F4B3"
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties: {}
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-        '401':
-          description: Invalid or missing authentication token.
-          examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
-        '404':
-          description: Data not found in the DB.
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-          schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-        '500':
-          description: Internal server error.
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
-          examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-      operationId: getConomyCard
-      description: ''
-      tags:
-        - Conomy Card
-    parameters: []
   /v1/conomycards/budget:
     get:
       summary: "Get the budget of a specific Conomy Card \U0001F4CA"
@@ -3237,7 +3933,7 @@ paths:
       operationId: getBudget
       description: ''
       tags:
-        - Conomy Card
+        - Budget
     parameters: []
   /v1/conomycards/rules:
     get:
@@ -3369,7 +4065,7 @@ paths:
       operationId: getRules
       description: ''
       tags:
-        - Conomy Card
+        - Rules
     parameters: []
   /v1/transactions/composite:
     get:
@@ -4559,138 +5255,6 @@ paths:
       tags:
         - Transaction Switch
     parameters: []
-  /v1/TESTING:
-    get:
-      summary: TESTING
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties: {}
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-        '401':
-          description: Invalid or missing authentication token.
-          examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
-        '404':
-          description: Data not found in the DB.
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-          schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-        '500':
-          description: Internal server error.
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
-          examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-      operationId: transactionSwitch
-      description: ''
-      tags:
-        - Transaction Switch
-    parameters: []
 definitions:
   Address:
     type: object
@@ -4804,6 +5368,77 @@ definitions:
         type: string
         format: date-time
         example: '2017-07-21T17:32:28Z'
+      description:
+        type: object
+    required:
+      - _id
+      - card_issuer
+      - card_brand
+      - holder_card_name
+      - card_number
+      - currency
+      - is_active
+      - created_at
+      - updated_at
+      - description
+  ConomyCard:
+    type: object
+    title: Conomy Card
+    description: ''
+    properties:
+      _id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      user_id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      card_issuer:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      holder_card_name:
+        type: string
+        example: Pablo insulza
+      card_number:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      active_card:
+        type: object
+        properties:
+          card_id:
+            type: string
+          card_issuer:
+            type: string
+          card_brand:
+            type: string
+          card_number:
+            type: string
+          is_active:
+            type: boolean
+          currency:
+            type: string
       description:
         type: object
     required:
