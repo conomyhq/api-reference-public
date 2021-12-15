@@ -3275,7 +3275,7 @@ paths:
         - Transaction
       summary: "Delete a specific card's transaction \U0001F6A8"
       description: 'The Transactions service provides transactions information. The /transactions/{transaction_id} endpoint with a DELETE method deletes a specific transaction forever and ever.'
-      operationId: GetTransactionsSearch
+      operationId: DeleteTransactionsSearch
       security:
         - api_key: []
       x-google-backend:
