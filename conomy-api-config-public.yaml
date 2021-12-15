@@ -2990,7 +2990,7 @@ paths:
     get:
       tags:
         - Transaction
-      summary: "Get a list of a card's transactions \U0001F4D6"
+      summary: "Get a specific transaction by its transaction id\U0001F4D6"
       description: The Transactions service provides transactions information. The /transactions endpoint with a GET method fetch a specific transaction by its transaction_id.
       operationId: GetTransactionsSearch
       security:
