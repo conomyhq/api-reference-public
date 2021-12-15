@@ -2693,8 +2693,6 @@ paths:
       description: 'The Users service provides user information. The /users/{user_id} endpoint with DELETE method deletes a user from the db forever and ever.'
   /v1/transactions:
     get:
-      tags:
-        - Transaction Categories
       summary: "Get a list of transactions \U0001F3F7️"
       description: The Transactions service provides transactions information. The /transactions endpoint with a GET method list transactionby its category with its agreggation sum filtered by date and user id.
       operationId: GetTransactionsCategories
@@ -2846,6 +2844,8 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+      tags:
+        - Transaction
     post:
       tags:
         - Transaction
