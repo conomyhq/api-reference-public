@@ -27,7 +27,7 @@ paths:
         - Address
       summary: "Add an address to a specific user in the system \U0001F3E1"
       operationId: addAddress
-      description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.'
+      description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like  administrative_area_level_1, optional_address, locality and others.'
       consumes:
         - application/json
       x-google-backend:
@@ -43,7 +43,9 @@ paths:
             $ref: '#/definitions/AddressCreate'
       responses:
         '201':
-          description: Item created
+          description: Address created
+          schema:
+            $ref: '#/definitions/AddressCreate'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -167,7 +169,7 @@ paths:
         - Address
       summary: "Get an address from specific user \U0001F50E"
       operationId: getAddress
-      description: 'The Address service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including region, commune, first_address and an optional description address.'
+      description: 'The Address service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including administrative_area_level_1, optional_address and others.'
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -183,9 +185,18 @@ paths:
         '200':
           description: Search results matching criteria sent in the request parapameters.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Address'
+            type: object
+            properties:
+              page:
+                type: string
+              next_page:
+                type: string
+              total_addresses:
+                type: string
+              addresses:
+                type: array
+                items:
+                  $ref: '#/definitions/Address'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -309,7 +320,7 @@ paths:
         - Address
       summary: "Modify an address from a specific user \U0001F3D8️."
       operationId: modifyAddress
-      description: 'The Address service delivers users address. The /addresses endpoint with PATCH method modify the address of specific user id, being able to modify attributes like region, commune, first address and an optional address.'
+      description: 'The Address service delivers users address. The /addresses endpoint with PATCH method modify the address of specific user id, being able to modify attributes like administrative_area_level_1, optional_address, route, locality.'
       consumes:
         - application/json
       x-google-backend:
@@ -326,6 +337,284 @@ paths:
         - in: body
           name: Address
           description: Address to add
+          schema:
+            $ref: '#/definitions/AddressModify'
+      responses:
+        '201':
+          description: Address modified
+          schema:
+            $ref: '#/definitions/AddressModify'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+  '/v1/addresses/{id}':
+    get:
+      tags:
+        - Address
+      summary: "Get an address from specific user \U0001F50E"
+      operationId: getAddressId
+      description: 'The Address service delivers users address. The /addresses/{id} endpoint search a specific address by its id and respond an address object. Its properties are an unique id, the user id and the description of the address, including first_address, an optional description address among others.'
+      x-google-backend:
+        address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: Search an address by specific id
+          schema:
+            $ref: '#/definitions/Address'
+        '400':
+          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+            properties:
+              error:
+                type: object
+                required:
+                  - detail
+                  - type
+                  - code
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+            required:
+              - error
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: A required parameter for this API operation is invalid or has not been provided
+                  type: GenericError
+                  code: 3
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            example-1:
+              value:
+                message: Jwt is missing
+                code: 401
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Jwt is missing
+                code: 401
+        '404':
+          description: Data not found in the DB.
+          examples:
+            example-1:
+              value:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    minLength: 1
+                  type:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                required:
+                  - detail
+                  - type
+                  - code
+            required:
+              - error
+            x-examples:
+              example-1:
+                error:
+                  detail: The user could not be found in the DB
+                  type: AddressesError
+                  code: 34
+        '500':
+          description: Internal server error.
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+              code:
+                type: number
+            required:
+              - message
+              - code
+            x-examples:
+              example-1:
+                message: Internal Server Error
+                code: 500
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
+                code: 500
+    patch:
+      tags:
+        - Address
+      summary: "Modify an address from a specific user \U0001F3D8️."
+      operationId: modifyAddressId
+      description: 'The Address service delivers users address. The /addresses/{id} endpoint with PATCH method modify the address by its id, being able to modify attributes like first address, optional address and others.'
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
+      parameters:
+        - in: body
+          name: Address
+          description: Address to modify
           schema:
             $ref: '#/definitions/AddressModify'
       responses:
@@ -453,8 +742,8 @@ paths:
       tags:
         - Address
       summary: "Delete an address from a specific user \U0001F6A8"
-      operationId: deleteAddress
-      description: The Address service delivers users address. The /addresses endpoint with Delete method deletes the address of specific user id.
+      operationId: deleteAddressId
+      description: 'The Address service delivers users address. The /addresses/{id} endpoint with DELETE method deletes the address by its id.'
       consumes:
         - application/json
       x-google-backend:
@@ -462,20 +751,10 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       security:
         - firebase: []
-      parameters:
-        - name: user_id
-          in: query
-          description: User ID
-          type: string
-          required: true
-        - in: body
-          name: Address
-          description: Address to delete
-          schema:
-            $ref: '#/definitions/Address'
+      parameters: []
       responses:
-        '201':
-          description: "Address {id}\_deleted"
+        '200':
+          description: '{id}    '
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -594,6 +873,11 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
   /v1/cards:
     post:
       tags:
@@ -743,7 +1027,7 @@ paths:
       summary: "Get cards by user id  \U0001F4B3"
       operationId: getCardByUserId
       description: |
-        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, the card issuer which is the issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.
+        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.
       security:
         - api_key: []
       x-google-backend:
@@ -762,11 +1046,20 @@ paths:
           required: false
       responses:
         '200':
-          description: Fetch cards filtered by owner's user id.
+          description: ''
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Card'
+            type: object
+            properties:
+              page:
+                type: string
+              next_page:
+                type: string
+              total_addresses:
+                type: string
+              cards:
+                type: array
+                items:
+                  $ref: '#/definitions/Card'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -885,7 +1178,7 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-  '/v1/cards/{card_id}':
+  '/v1/cards/{id}':
     put:
       tags:
         - Card
@@ -900,7 +1193,7 @@ paths:
         address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
-        - name: card_id
+        - name: id
           in: path
           description: Card ID from db
           type: string
@@ -912,8 +1205,10 @@ paths:
           type: boolean
           required: true
       responses:
-        '204':
-          description: 'No Content, just a 204 status'
+        '205':
+          description: Card modified
+          schema:
+            $ref: '#/definitions/Card'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -1054,7 +1349,7 @@ paths:
           required: true
       responses:
         '200':
-          description: 'Card {card id} deleted.'
+          description: '{id}'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -1173,6 +1468,12 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: card id
   '/v1/conomycards/{user_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
@@ -5809,16 +6110,18 @@ definitions:
         type: string
         format: uuid
         example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
-      region:
+      administrative_area_level_1:
         type: string
         example: Valparaiso
-      commune:
+      administrative_area_level_2:
         type: string
         example: ConCon
-      first_address:
+      locality:
+        type: string
+      route:
         type: string
         example: Los Pillines
-      address_number:
+      street_number:
         type: string
       optional_address:
         type: string
@@ -5827,108 +6130,52 @@ definitions:
     required:
       - id
       - user_id
-      - region
-      - commune
-      - first_address
+      - administrative_area_level_1
+      - administrative_area_level_2
+      - route
       - optional_address
   AddressModify:
     type: object
     properties:
-      region:
+      administrative_area_level_1:
         type: string
         example: Valparaiso
-      commune:
+      administrative_area_level_2:
         type: string
         example: ConCon
-      first_address:
+      locality:
         type: string
         example: Los Pillines
       optional_address:
         type: string
         example: '340'
+      route:
+        type: string
+      street_number:
+        type: string
   AddressCreate:
     type: object
-    required:
-      - user_id
-      - region
-      - commune
-      - first_address
-      - optional_address
     properties:
       user_id:
         type: string
-        format: uuid
-        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
-      region:
+      administrative_area_level_1:
         type: string
         example: Valparaiso
-      commune:
+      administrative_area_level_2:
         type: string
         example: ConCon
-      first_address:
+      locality:
         type: string
         example: Los Pillines
       optional_address:
         type: string
         example: '340'
+      route:
+        type: string
+      street_number:
+        type: string
   Card:
     type: object
-    properties:
-      _id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      user_id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      card_issuer:
-        type: string
-        example: BancoDeChile
-        description: Issuing Bank
-      card_brand:
-        type: string
-        example: MasterCard
-      holder_card_name:
-        type: string
-        example: Pablo insulza
-      card_number:
-        type: string
-        example: '************1234'
-        description: Obfuscated card number
-      currency:
-        type: string
-        example: CLP
-        description: Card Currency
-      is_active:
-        type: boolean
-        example: false
-        description: Card state
-      created_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      updated_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      color:
-        type: string
-      card_account_type:
-        type: string
-      description:
-        type: object
-    required:
-      - _id
-      - card_issuer
-      - card_brand
-      - holder_card_name
-      - card_number
-      - currency
-      - is_active
-      - created_at
-      - updated_at
-      - description
     x-examples:
       example-1:
         _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
@@ -5944,6 +6191,63 @@ definitions:
         color: red
         card_account_type: cuenta vista
         description: {}
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      user_id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      issuing_bank:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      cardholder_name:
+        type: string
+        example: Pablo insulza
+      pan:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      card_type:
+        type: string
+        description: e.g. tarjeta de credito y debito
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      color:
+        type: string
+      description:
+        type: string
+    required:
+      - id
+      - issuing_bank
+      - card_brand
+      - cardholder_name
+      - pan
+      - currency
+      - is_active
+      - created_at
+      - updated_at
+      - description
   ConomyCard:
     type: object
     title: Conomy Card
@@ -6032,21 +6336,21 @@ definitions:
         card_account_type: cuenta vista
         description: {}
     properties:
-      _id:
+      id:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      card_issuer:
+      issuing_bank:
         type: string
         example: BancoDeChile
         description: Issuing Bank
       card_brand:
         type: string
         example: MasterCard
-      holder_card_name:
+      cardholder_name:
         type: string
         example: Pablo insulza
-      card_number:
+      pan:
         type: string
         example: '************1234'
         description: Obfuscated card number
@@ -6068,15 +6372,15 @@ definitions:
         example: '2017-07-21T17:32:28Z'
       color:
         type: string
-      card_account_type:
+      card_type:
         type: string
       description:
-        type: object
+        type: string
     required:
-      - card_issuer
+      - issuing_bank
       - card_brand
-      - holder_card_name
-      - card_number
+      - cardholder_name
+      - pan
       - currency
       - created_at
   Transaction:
