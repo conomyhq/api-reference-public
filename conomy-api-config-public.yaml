@@ -1174,6 +1174,17 @@ paths:
         in: path
         required: true
         description: card id
+    get:
+      summary: "Get a specific card by its id \U0001F4B3"
+      operationId: getCardId
+      responses:
+        '200':
+          description: Card information
+          schema:
+            $ref: '#/definitions/Card'
+      tags:
+        - Card
+      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{id} with the method GET fetch the information about a specific id.'
   /v1/cards:
     post:
       tags:
@@ -1322,8 +1333,7 @@ paths:
         - Card
       summary: "Get cards by user id  \U0001F4B3"
       operationId: getCardByUserId
-      description: |
-        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.
+      description: 'The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.'
       security:
         - api_key: []
       x-google-backend:
@@ -1481,18 +1491,7 @@ paths:
         '200':
           description: Response a Conomy Card Object
           schema:
-            type: object
-            properties:
-              page:
-                type: string
-              next_page:
-                type: string
-              total_conomy_cards:
-                type: string
-              addresses:
-                type: array
-                items:
-                  $ref: '#/definitions/ConomyCard'
+            $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
               _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
@@ -2083,9 +2082,18 @@ paths:
         '200':
           description: Response a Conomy Card Object
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/ConomyCard'
+            type: object
+            properties:
+              page:
+                type: string
+              next_page:
+                type: string
+              total_conomy_cards:
+                type: string
+              conomyCards:
+                type: array
+                items:
+                  $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
               _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
