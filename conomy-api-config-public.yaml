@@ -27,6 +27,7 @@ paths:
         - Address
       summary: "Add an address to a specific user in the system \U0001F3E1"
       operationId: addAddress
+      #hola
       description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like region, commune, first address and an optional address.'
       consumes:
         - application/json
