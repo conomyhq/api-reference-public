@@ -167,7 +167,7 @@ paths:
         - Address
       summary: "Get an address from specific user \U0001F50E"
       operationId: getAddress
-      description: 'The Address service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including region, commune, first_address and an optional description address.'
+      description: 'The Address service delivers users address. The /addresses endpoint looks up an address by user id and responds a body with an array of address objects. Their properties are an unique id, the user id and the address description, including region, commune, first address and an optional description address.'
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
