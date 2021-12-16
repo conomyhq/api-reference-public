@@ -1038,10 +1038,9 @@ paths:
           in: query
           description: User id
           type: string
-          required: true
         - name: active
           in: query
-          description: User id
+          description: active/inactive card
           type: boolean
           required: false
       responses:
@@ -1474,6 +1473,12 @@ paths:
         in: path
         required: true
         description: card id
+    get:
+      summary: ''
+      operationId: get-v1-cards-id
+      responses:
+        '200':
+          description: OK
   '/v1/conomycards/{user_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
