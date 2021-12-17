@@ -1279,6 +1279,9 @@ paths:
       description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch all the card data from a specific user id.
       tags:
         - Conomy Card
+      parameters:
+        - type: string
+          in: header
     parameters: []
     post:
       summary: "Create a new Conomy Card \U0001F4B3"
