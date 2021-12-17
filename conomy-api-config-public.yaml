@@ -39,15 +39,20 @@ paths:
           description: Search an address by specific id
           schema:
             $ref: '#/definitions/Address'
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/error'
           examples:
-            Bad Request Error:
-              detail: A required parameter for this API operation is invalid or has not been provided
-              type: GenericError
-              code: 3
+            example-1:
+              id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+              user_id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+              administrative_area_level_1: Valparaiso
+              administrative_area_level_2: ConCon
+              locality: string
+              route: Los Pillines
+              street_number: string
+              optional_address: '340'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
@@ -56,7 +61,7 @@ paths:
               type: AuthError
               code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
@@ -65,11 +70,11 @@ paths:
               type: NotFoundError
               code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
             Server Error:
               detail: Internal Server Error
@@ -98,45 +103,36 @@ paths:
         '201':
           description: address created
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     delete:
       tags:
         - Address
@@ -155,45 +151,36 @@ paths:
         '204':
           description: '{id}    '
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     parameters:
       - type: string
         name: id
@@ -225,45 +212,36 @@ paths:
           schema:
             $ref: '#/definitions/Address'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     get:
       tags:
         - Address
@@ -298,45 +276,36 @@ paths:
                 items:
                   $ref: '#/definitions/Address'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     patch:
       tags:
         - Address
@@ -367,123 +336,36 @@ paths:
           schema:
             $ref: '#/definitions/Address'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
   '/v1/cards/{id}':
     put:
       tags:
@@ -516,45 +398,36 @@ paths:
           schema:
             $ref: '#/definitions/Card'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     delete:
       tags:
         - Card
@@ -569,7 +442,7 @@ paths:
         address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
-        - name: card_id
+        - name: id
           in: path
           description: Card ID from db
           type: string
@@ -579,45 +452,36 @@ paths:
         '204':
           description: '{id}'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     parameters:
       - type: string
         name: id
@@ -632,6 +496,37 @@ paths:
           description: Card information
           schema:
             $ref: '#/definitions/Card'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Card
       description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{id} with the method GET fetch the information about a specific id.'
@@ -661,123 +556,36 @@ paths:
           schema:
             $ref: '#/definitions/Card'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     get:
       tags:
         - Card
@@ -820,45 +628,36 @@ paths:
             required:
               - cards
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
   '/v1/conomycards/{id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
@@ -869,64 +668,55 @@ paths:
             $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
-              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              card_issuer: BancoDeChile
+              issuing_bank: BancoDeChile
               card_brand: MasterCard
-              holder_card_name: Pablo insulza
-              card_number: '************1234'
+              cardholder_name: Pablo insulza
+              pan: '************1234'
               currency: CLP
               is_active: false
               created_at: '2017-07-21T17:32:28Z'
               updated_at: '2017-07-21T17:32:28Z'
               active_card:
-                card_id: string
-                card_issuer: string
+                id: string
+                issuing_bank: string
                 card_brand: string
-                card_number: string
+                pan: string
                 is_active: true
                 currency: string
-              description: {}
+              description: ''
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       operationId: getConomyCard
       description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch a specific card by its id.
       tags:
@@ -946,7 +736,7 @@ paths:
             $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
-              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               issuing_bank: BancoDeChile
               card_brand: MasterCard
@@ -959,123 +749,36 @@ paths:
               active_card: ''
               description: ''
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Conomy Card
       description: 'When the user selects a card to be the default payment from his wallet, the PUT method updates the card that is configured in the Conomy Card.'
@@ -1094,7 +797,7 @@ paths:
             $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
-              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               issuing_bank: BancoDeChile
               card_brand: MasterCard
@@ -1107,45 +810,36 @@ paths:
               active_card: ''
               description: ''
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Conomy Card
       description: Updates one Conomy Card's attribute (in this case the attrb is_active)
@@ -1157,7 +851,7 @@ paths:
             properties:
               is_active:
                 type: boolean
-          description: Only the attribute to change to that specific user_id's Conomy Card.
+          description: Only the attribute to change to that specific user id's Conomy Card.
     delete:
       summary: "Delete all the information from a specific Conomy Card \U0001F6A8"
       operationId: deleteAll
@@ -1170,45 +864,36 @@ paths:
               message: Account Deleted
               deleted: true
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Conomy Card
       description: It applies when the user wants to delete his entire Conomy account or needs another Conomy Card so the last one is going to be deleted.
@@ -1216,7 +901,7 @@ paths:
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
       responses:
-        '200':
+        '201':
           description: Response a Conomy Card Object
           schema:
             type: object
@@ -1233,64 +918,55 @@ paths:
                   $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
-              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              card_issuer: BancoDeChile
+              issuing_bank: BancoDeChile
               card_brand: MasterCard
-              holder_card_name: Pablo insulza
-              card_number: '************1234'
+              cardholder_name: Pablo insulza
+              pan: '************1234'
               currency: CLP
               is_active: false
               created_at: '2017-07-21T17:32:28Z'
               updated_at: '2017-07-21T17:32:28Z'
               active_card:
-                card_id: string
-                card_issuer: string
+                id: string
+                issuing_bank: string
                 card_brand: string
-                card_number: string
+                pan: string
                 is_active: true
                 currency: string
-              description: {}
+              description: ''
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            $ref: '#/definitions/error'
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            $ref: '#/definitions/error'
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       operationId: getConomyCard
       description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch all the card data from a specific user id.
       tags:
@@ -1309,136 +985,49 @@ paths:
             $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
-              _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              card_issuer: BancoDeChile
+              issuing_bank: BancoDeChile
               card_brand: MasterCard
-              holder_card_name: Pablo insulza
-              card_number: '************1234'
+              cardholder_name: Pablo insulza
+              pan: '************1234'
               currency: CLP
               is_active: false
               created_at: '2017-07-21T17:32:28Z'
               updated_at: '2017-07-21T17:32:28Z'
-              active_card: {}
-              description: {}
+              active_card: true
+              description: ''
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Conomy Card
       description: The Conomy Card service host all the data about Conomy Cards and the POST method creates a new Conomy Card based on the attributes provided.
@@ -1474,123 +1063,36 @@ paths:
           schema:
             $ref: '#/definitions/User'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     get:
       tags:
         - User
@@ -1606,275 +1108,103 @@ paths:
         '200':
           description: List users from the db.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            description: ''
             type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
             properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+              page:
+                type: string
+              next_page:
+                type: string
+              total_users:
+                type: string
+              users:
+                type: array
+                items:
+                  $ref: '#/definitions/User'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-  '/v1/users/{user_id}':
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+  '/v1/users/{id}':
     get:
       tags:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
+      description: 'The Users service provides user information. The /users/{id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
       security:
         - api_key: []
       x-google-backend:
         address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
-      parameters:
-        - name: user_id
-          in: path
-          description: User ID
-          type: string
-          format: uuid
-          required: true
       responses:
         '200':
           description: search results matching criteria
           schema:
             $ref: '#/definitions/User'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     patch:
       tags:
         - User
       summary: "Update an user in the db by its user id \U0001F62C"
       operationId: updateUser
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with a PATCH method modify a specific user''s attribute by its user id in the db.'
+      description: 'The Users service provides user information. The /users/{id} endpoint with a PATCH method modify a specific user''s attribute by its user id in the db.'
       consumes:
         - application/json
       security:
@@ -1883,12 +1213,6 @@ paths:
         address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
-        - name: user_id
-          in: path
-          description: User ID
-          type: string
-          format: uuid
-          required: true
         - in: body
           name: User
           description: User to update
@@ -1897,251 +1221,84 @@ paths:
       responses:
         '201':
           description: User modified
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/User'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     delete:
       summary: "Delete specific user by its user id \U0001F6A8"
       operationId: deleteUser
       responses:
-        '200':
-          description: OK
+        '204':
+          description: {id}
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - User
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with DELETE method deletes a user from the db forever and ever.'
+      description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
   /v1/transactions:
     get:
       summary: "Get a list of transactions \U0001F3F7️"
@@ -2174,127 +1331,49 @@ paths:
         '200':
           description: Transactions categories filtered
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/CategoryItem'
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            description: ''
             type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
             properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+              page:
+                type: string
+              next_page:
+                type: string
+              total_transactions:
+                type: string
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Transaction
     post:
@@ -2320,129 +1399,42 @@ paths:
           schema:
             $ref: '#/definitions/Transaction'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-  '/v1/transactions/{transaction_id}':
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+  '/v1/transactions/{id}':
     get:
       tags:
         - Transaction
       summary: "Get a specific transaction by its transaction id\U0001F4D6"
-      description: The Transactions service provides transactions information. The /transactions endpoint with a GET method fetch a specific transaction by its transaction_id.
+      description: The Transactions service provides transactions information. The /transactions endpoint with a GET method fetch a specific transaction by its transaction id.
       operationId: GetTransactionsSearch
       security:
         - api_key: []
@@ -2454,127 +1446,38 @@ paths:
         '200':
           description: Transactions filtered
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Transaction'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     patch:
       tags:
         - Transaction
@@ -2589,7 +1492,7 @@ paths:
         address: 'https://conomy-transaction-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
-        - name: transaction_id
+        - name: id
           in: path
           description: transaction ID
           type: string
@@ -2603,129 +1506,44 @@ paths:
       responses:
         '200':
           description: Succes modified
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     delete:
       tags:
         - Transaction
       summary: "Delete a specific card's transaction \U0001F6A8"
-      description: 'The Transactions service provides transactions information. The /transactions/{transaction_id} endpoint with a DELETE method deletes a specific transaction forever and ever.'
+      description: 'The Transactions service provides transactions information. The /transactions/{id} endpoint with a DELETE method deletes a specific transaction forever and ever.'
       operationId: DeleteTransactionsSearch
       security:
         - api_key: []
@@ -2734,130 +1552,44 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters: []
       responses:
-        '200':
-          description: 'Transaction {transaction id} deleted.'
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Transaction'
+        '204':
+          description: '{id}'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
   /v1/classifier:
     get:
       summary: "Classify transactions in specific categories \U0001F5E0"
@@ -2868,123 +1600,36 @@ paths:
             type: object
             properties: {}
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       operationId: getCategorizedTransactions
       description: ''
       tags:
@@ -3012,123 +1657,36 @@ paths:
         '200':
           description: search results matching criteria
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
   /v1/pin:
     post:
       summary: "Create a new pin linked to a specific user id \U0001F511"
@@ -3150,126 +1708,39 @@ paths:
         '201':
           description: 'Ok, pin created'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       operationId: CreatePin
       description: The Pin service provides user's password information. The /pin endpoint with a POST creates a user's pin and save it in the db. This gives the user the permission to gain access for different information and have more control over his personal data.
-  '/v1/termsconditions/{user_id}':
+  '/v1/termsconditions/{id}':
     get:
       summary: "Get user's terms & conditions \U0001F4C3"
       responses:
@@ -3525,11 +1996,6 @@ paths:
                 code: 500
       tags:
         - Terms & Conditions
-    parameters:
-      - type: string
-        name: user_id
-        in: path
-        required: true
   /v1/auth/sms:
     get:
       summary: "User's verification with sms\U0001F4F1"
@@ -5328,7 +3794,7 @@ definitions:
     type: object
     x-examples:
       example-1:
-        _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         card_issuer: BancoDeChile
         card_brand: MasterCard
@@ -5543,7 +4009,7 @@ definitions:
     type: object
     x-examples:
       example-1:
-        _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         card_issuer: BancoDeChile
         card_brand: MasterCard
         holder_card_name: Pablo insulza
@@ -5604,29 +4070,9 @@ definitions:
       - currency
   Transaction:
     type: object
-    x-examples:
-      example-1:
-        _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        card_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        title: clothes
-        category: bars&restaurants
-        amount: -196690
-        currency: CLP
-        transaction_date: 1616021369
-        expanded:
-          location: 'Santiago, Chile'
-          recipit: url
-          score: 3.5
-          analytics:
-            - analytic Text
-        created_at: '2017-07-21T17:32:28Z'
-        updated_at: '2017-07-21T17:32:28Z'
-        card_issuer: Banco Santander
-        card_account_type: Cuenta Vista
-        transaction_type: out
-        commerce: La tiendita
+    x-examples: {}
     properties:
-      _id:
+      id:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
@@ -5634,7 +4080,7 @@ definitions:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      title:
+      description:
         type: string
         example: clothes
       category:
@@ -5660,19 +4106,27 @@ definitions:
         type: string
         format: date-time
         example: '2017-07-21T17:32:28Z'
-      card_issuer:
+      issuing_bank:
         type: string
-      card_account_type:
-        type: string
+        example: Banco de Chile
       transaction_type:
         type: string
         description: if is in/out transaction
-      commerce:
+        example: out
+      merchant:
         type: string
+        example: Bar Alonso
+      brand_category:
+        type: string
+        description: e.g. Master Card merchant code
+        example: '303'
+      taxing_code:
+        type: string
+        description: e.g. SII code
+        example: '2'
     required:
-      - _id
-      - title
-      - category
+      - id
+      - description
       - amount
       - currency
       - transaction_date
@@ -5681,15 +4135,9 @@ definitions:
       - updated_at
   TransactionModify:
     type: object
-    x-examples:
-      example-1:
-        title: clothes
-        type: bars&restaurants
-        amount: -196690
-        currency: CLP
-        card_account_type: cuenta vista
+    x-examples: {}
     properties:
-      title:
+      description:
         type: string
         example: clothes
       category:
@@ -5702,20 +4150,26 @@ definitions:
       currency:
         type: string
         example: CLP
-      card_issuer:
+      issuing_bank:
         type: string
         example: Banco de Chile
-      card_account_type:
-        type: string
-        example: cuenta vista
       transaction_type:
         type: string
         example: out
-      commerce:
+      merchant:
         type: string
         example: la tiendita
+      brand_category:
+        type: string
+        example: '403'
+        description: category provided by MasterCard for example
+      taxing_code:
+        type: string
+        description: Code provided by tax service
+        example: '22'
   ExpandedInfo:
     type: object
+    x-examples: {}
     properties:
       location:
         type: string
@@ -5727,18 +4181,6 @@ definitions:
         type: number
         format: float
         example: 3.5
-      analytics:
-        type: array
-        items:
-          type: string
-          example: analytic Text
-    x-examples:
-      example-1:
-        location: 'Santiago, Chile'
-        receipt: url
-        score: 3.5
-        analytics:
-          - analytic Text
   CategoryItem:
     type: object
     properties:
@@ -5754,7 +4196,7 @@ definitions:
     type: object
     description: Conomy User Model
     properties:
-      user_id:
+      id:
         type: string
         format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
@@ -5767,7 +4209,7 @@ definitions:
       last_name:
         type: string
         example: Gatica
-      rut:
+      dni:
         type: string
         example: 12.612.412-2
       phone:
@@ -5776,19 +4218,19 @@ definitions:
       account:
         type: string
         example: user
-      profession:
+      occupation:
         type: string
       gender:
         type: string
-      civil_status:
+      marital_status:
         type: string
       email:
         type: string
     required:
-      - user_id
+      - id
       - name
       - last_name
-      - rut
+      - dni
       - account
   UserModify:
     description: ''
@@ -5814,13 +4256,13 @@ definitions:
       phone:
         type: string
         minLength: 1
-      profession:
+      occupation:
         type: string
         minLength: 1
       gender:
         type: string
         minLength: 1
-      civil_status:
+      marital_status:
         type: string
         minLength: 1
       email:
@@ -5829,20 +4271,14 @@ definitions:
     required:
       - nick_name
       - phone
-      - profession
+      - occupation
       - gender
-      - civil_status
+      - marital_status
       - email
   UserCreate:
     type: object
-    required:
-      - user_id
-      - name
-      - last_name
-      - rut
-      - account
     properties:
-      user_id:
+      id:
         type: string
         format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
@@ -5852,21 +4288,29 @@ definitions:
       last_name:
         type: string
         example: Gatica
-      rut:
+      dni:
         type: string
         example: 12.612.412-2
       account:
         type: string
         example: user
+    required:
+      - id
+      - name
+      - last_name
+      - dni
+      - account
   UserPin:
     type: object
     title: UserPin
     properties:
-      user_id:
+      id:
         type: string
         format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
         description: Firebase ID
+      user_id:
+        type: string
       password_pin:
         type: string
         example: vK6q83OnsWqRCN3C37Ikl/T4DwWpnumo1CR305oEkkhRdp4ua6TJeif309Es0x9t7snE04hu48eLw5zSVg/+y5rWNPBFg4rnka6j0btuD3htbdkm8emx+d6JcOk8/xlIWr4ifZvF5t5fuj2fqWZzgDxnF5TJxWWLETHGCl1FduK3rZj4Yh6MtoYjhqqVVuFaXwoZEka77K5HO2sQ11l03qnbAk+cV+ZjNyAD24Qgi+wrRG0pGJ3BHUy7K0jF1umKCJDd8ILfM7GD1/+fuTU4RMMJ0PFpbKnMp3kTSwwTpSJ0j3tgchXvfTc4sAx/aQgdVerdHnhFSMnoVbsV/TiBRg==
@@ -5875,18 +4319,107 @@ definitions:
       updated_at:
         type: string
     required:
-      - user_id
+      - id
       - password_pin
   error:
     title: error
     type: object
+    x-examples:
+      Unauthorized Error 401:
+        detail: Jwt is missing
+        type: AuthError
+        code: 401
     properties:
       code:
         type: number
+        example: 401
       type:
         type: string
+        example: AuthError
       detail:
         type: string
+        example: Jwt is missing
+    required:
+      - code
+      - type
+      - detail
+  Error400:
+    title: BadRequestError
+    type: object
+    x-examples: {}
+    properties:
+      code:
+        type: number
+        example: 2
+      type:
+        type: string
+        example: GenericError
+      detail:
+        type: string
+        example: A required parameter for this API operation is invalid or has not been provided
+    required:
+      - code
+      - type
+      - detail
+    description: ''
+  Error401:
+    title: UnauthorizedError
+    type: object
+    x-examples:
+      Unauthorized Error 401:
+        detail: Jwt is missing
+        type: AuthError
+        code: 401
+    properties:
+      code:
+        type: number
+        example: 401
+      type:
+        type: string
+        example: AuthError
+      detail:
+        type: string
+        example: Jwt is missing
+    required:
+      - code
+      - type
+      - detail
+  Error404:
+    title: NotFoundError
+    type: object
+    x-examples: {}
+    properties:
+      code:
+        type: number
+        example: 404
+      type:
+        type: string
+        example: NotFoundError
+      detail:
+        type: string
+        example: The user could not be found in the DB
+    required:
+      - code
+      - type
+      - detail
+  Error500:
+    title: InternalServerError
+    type: object
+    x-examples: {}
+    properties:
+      code:
+        type: number
+        example: 500
+      type:
+        type: string
+        example: ServerError
+      detail:
+        type: string
+        example: Internal Server Error
+    required:
+      - code
+      - type
+      - detail
 consumes:
   - application/json
 responses: {}
