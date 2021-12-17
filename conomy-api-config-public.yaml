@@ -44,30 +44,26 @@ paths:
           schema:
             $ref: '#/definitions/error'
           examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            Bad Request Error:
+              detail: A required parameter for this API operation is invalid or has not been provided
+              type: GenericError
+              code: 3
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
             $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
             $ref: '#/definitions/error'
         '500':
@@ -75,10 +71,10 @@ paths:
           schema:
             $ref: '#/definitions/error'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
     patch:
       tags:
         - Address
@@ -628,6 +624,17 @@ paths:
         in: path
         required: true
         description: card id
+    get:
+      summary: "Get a specific card by its id \U0001F4B3"
+      operationId: getCardId
+      responses:
+        '200':
+          description: Card information
+          schema:
+            $ref: '#/definitions/Card'
+      tags:
+        - Card
+      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{id} with the method GET fetch the information about a specific id.'
   /v1/cards:
     post:
       tags:
@@ -1212,9 +1219,18 @@ paths:
         '200':
           description: Response a Conomy Card Object
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/ConomyCard'
+            type: object
+            properties:
+              page:
+                type: string
+              next_page:
+                type: string
+              total_conomy_cards:
+                type: string
+              conomyCards:
+                type: array
+                items:
+                  $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
               _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
