@@ -82,7 +82,7 @@ paths:
     patch:
       tags:
         - Address
-      summary: "Modify an address from a specific address \U0001F3D8️."
+      summary: "Modify an address from a specific address ID \U0001F3D8️."
       operationId: modifyAddressId
       description: 'The Address service delivers users address. The /addresses/{id} endpoint with PATCH method modify the address by its id, being able to modify attributes like first address, optional address and others.'
       consumes:
@@ -282,7 +282,7 @@ paths:
       parameters:
         - name: user_id
           in: query
-          description: User id
+          description: User ID
           type: string
           required: true
       responses:
@@ -492,7 +492,7 @@ paths:
     put:
       tags:
         - Card
-      summary: "Set to active a specific card of a user \U0001F6A8"
+      summary: "Set to active a specific card \U0001F6A8"
       operationId: UpdateActiveCard
       description: The Cards service delivers cards data. The /cards endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.
       consumes:
@@ -522,32 +522,7 @@ paths:
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -563,21 +538,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -588,50 +549,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -640,7 +562,7 @@ paths:
     delete:
       tags:
         - Card
-      summary: "Delete specific card of a user \U0001F4CC"
+      summary: "Delete specific card \U0001F4CC"
       operationId: DeleteActiveCard
       description: The Cards service delivers cards data. The /cards endpoint with DELETE method deletes a specific card.
       consumes:
@@ -658,37 +580,12 @@ paths:
           format: uuid
           required: true
       responses:
-        '200':
+        '204':
           description: '{id}'
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -704,21 +601,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -729,50 +612,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -933,7 +777,7 @@ paths:
       summary: "Get cards by user id  \U0001F4B3"
       operationId: getCardByUserId
       description: |
-        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, issuing bank, card brand (e.g. VISA), holder card name which is the name written in the card, obfuscated card number, the card currency and if the card is active or not, also has a description and last updated date.
+        The Cards service delivers cards data. The /cards endpoint search and match any card that is owned by specific user id and respond an array of card objects. Its response properties are an unique card id, the card owner user id, issuing bank, card brand (e.g. VISA), cardholder name which is the name written in the card, obfuscated PAN, the card currency and if the card is active or not, also has a description and last updated date.
       security:
         - api_key: []
       x-google-backend:
@@ -947,7 +791,7 @@ paths:
           required: true
         - name: active
           in: query
-          description: User id
+          description: card_status
           type: boolean
           required: false
       responses:
@@ -960,41 +804,18 @@ paths:
                 type: string
               next_page:
                 type: string
-              total_addresses:
+              total_cards:
                 type: string
               cards:
                 type: array
                 items:
                   $ref: '#/definitions/Card'
+            required:
+              - cards
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1010,21 +831,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -1035,50 +842,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1091,18 +859,7 @@ paths:
         '200':
           description: Response a Conomy Card Object
           schema:
-            type: object
-            properties:
-              page:
-                type: string
-              next_page:
-                type: string
-              total_conomy_cards:
-                type: string
-              addresses:
-                type: array
-                items:
-                  $ref: '#/definitions/ConomyCard'
+            $ref: '#/definitions/ConomyCard'
           examples:
             example-1:
               _id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
@@ -1126,32 +883,7 @@ paths:
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1167,21 +899,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -1192,50 +910,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1251,7 +930,7 @@ paths:
         in: path
         required: true
     put:
-      summary: "Set to active a specific card for Conomy Card payment \U0001F4B3"
+      summary: "Set to active a specific card for Conomy Card payment \U0001F4B3 [Deprecated]"
       operationId: putActiveCard
       responses:
         '200':
@@ -1423,32 +1102,7 @@ paths:
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1464,21 +1118,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -1489,50 +1129,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1554,13 +1155,9 @@ paths:
       summary: "Delete all the information from a specific Conomy Card \U0001F6A8"
       operationId: deleteAll
       responses:
-        '200':
-          description: Response a message and a boolean
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
+        '204':
+          description: '{id}'
+          schema: {}
           examples:
             example-1:
               message: Account Deleted
@@ -1568,32 +1165,7 @@ paths:
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1609,21 +1181,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -1634,50 +1192,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1719,32 +1238,7 @@ paths:
         '400':
           description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
@@ -1760,21 +1254,7 @@ paths:
                 message: Jwt is missing
                 code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/error'
         '404':
           description: Data not found in the DB.
           examples:
@@ -1785,50 +1265,11 @@ paths:
                   type: AddressesError
                   code: 34
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/error'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/error'
           examples:
             example-1:
               value:
