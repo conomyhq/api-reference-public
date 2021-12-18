@@ -191,6 +191,7 @@ paths:
         name: address_id
         in: path
         required: true
+        description: Address ID
   /v1/addresses:
     post:
       tags:
@@ -399,13 +400,13 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/cards/{id}':
+  '/v1/cards/{card_id}':
     put:
       tags:
         - Card
       summary: "Set to active a specific card \U0001F6A8"
       operationId: UpdateActiveCard
-      description: The Cards service delivers cards data. The /cards endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.
+      description: 'The Cards service delivers cards data. The /cards/{card_id} endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.'
       consumes:
         - application/json
       security:
@@ -466,7 +467,7 @@ paths:
         - Card
       summary: "Delete specific card \U0001F4CC"
       operationId: DeleteActiveCard
-      description: The Cards service delivers cards data. The /cards endpoint with DELETE method deletes a specific card.
+      description: 'The Cards service delivers cards data. The /cards/{card_id} endpoint with DELETE method deletes a specific card.'
       consumes:
         - application/json
       security:
@@ -517,12 +518,12 @@ paths:
               code: 500
     parameters:
       - type: string
-        name: id
+        name: card_id
         in: path
         required: true
-        description: card id
+        description: card ID
     get:
-      summary: "Get a specific card by its id \U0001F4B3"
+      summary: "Get a specific card by card ID \U0001F4B3"
       operationId: getCardId
       responses:
         '200':
@@ -562,7 +563,13 @@ paths:
               code: 500
       tags:
         - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{id} with the method GET fetch the information about a specific id.'
+      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{card_id} with the method GET fetch the information about a specific id.'
+      parameters: []
+      x-google-backend:
+        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
   /v1/cards:
     post:
       tags:
@@ -691,7 +698,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/conomycards/{id}':
+  '/v1/conomycards/{conomycard_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
       responses:
@@ -756,9 +763,10 @@ paths:
         - Conomy Card
     parameters:
       - type: string
-        name: id
+        name: conomycard_id
         in: path
         required: true
+        description: Conomy card ID
     put:
       summary: "Set to active a specific card for Conomy Card payment \U0001F4B3 [Deprecated]"
       operationId: putActiveCard
@@ -1184,7 +1192,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/users/{id}':
+  '/v1/users/{user_id}':
     get:
       tags:
         - User
@@ -1330,9 +1338,10 @@ paths:
       description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
     parameters:
       - type: string
-        name: id
+        name: user_id
         in: path
         required: true
+        description: User ID
   /v1/transactions:
     get:
       summary: "Get a list of transactions \U0001F3F7️"
@@ -1463,7 +1472,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/transactions/{id}':
+  '/v1/transactions/{transaction_id}':
     get:
       tags:
         - Transaction
@@ -1621,9 +1630,10 @@ paths:
               code: 500
     parameters:
       - type: string
-        name: id
+        name: transaction_id
         in: path
         required: true
+        description: Transaction ID
   /v1/classifier:
     get:
       summary: "Classify transactions in specific categories \U0001F5E0"
