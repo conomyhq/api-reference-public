@@ -27,7 +27,10 @@ paths:
         - Address
       summary: "Get an address from specific address ID \U0001F50E"
       operationId: getAddressId
-      description: 'The Addresses service delivers users address. The /addresses/{address_id} endpoint search a specific address by its id and respond an address object. Its properties are an unique id, the user id and the description of the address, including first_address, an optional description address among others.'
+      description: |-
+        The Addresses service delivers users address. The /addresses/{address_id} endpoint search a specific address by its id and respond an address object. Its properties are an unique id, the user id and the description of the address, including first_address, an optional description address among others.
+
+        ![Dev portal settings](https://i.imgur.com/YCb6MWI.png)
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -36,7 +39,10 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Search an address by specific id
+          description: |-
+            Search an address by specific id
+
+            Error
           schema:
             $ref: '#/definitions/Address'
           examples:
