@@ -1201,7 +1201,7 @@ paths:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: 'The Users service provides user information. The /users/{id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
       security:
         - api_key: []
       x-google-backend:
@@ -1248,7 +1248,7 @@ paths:
         - User
       summary: "Update an user in the db by its user id \U0001F62C"
       operationId: updateUser
-      description: 'The Users service provides user information. The /users/{id} endpoint with a PATCH method modify a specific user''s attribute by its user id in the db.'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a PATCH method modify a specific user''s attribute by its user id in the db.'
       consumes:
         - application/json
       security:
@@ -1338,7 +1338,7 @@ paths:
               code: 500
       tags:
         - User
-      description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with DELETE method deletes a user from the db forever and ever.'
     parameters:
       - type: string
         name: user_id
@@ -1480,7 +1480,7 @@ paths:
       tags:
         - Transaction
       summary: "Get a specific transaction by its transaction id\U0001F4D6"
-      description: The Transactions service provides transactions information. The /transactions endpoint with a GET method fetch a specific transaction by its transaction id.
+      description: 'The Transactions service provides transactions information. The /transactions{transaction_id} endpoint with a GET method fetch a specific transaction by its transaction id.'
       operationId: GetTransactionsSearch
       security:
         - api_key: []
@@ -1529,7 +1529,7 @@ paths:
         - Transaction
       summary: "Modify a transaction for specifics card and user id \U0001F4CB"
       operationId: ModifyTransaction
-      description: The Transactions service provides transactions information. The /transactions endpoint with a PATCH method allows to modify customizable fields for a specific transaction.
+      description: 'The Transactions service provides transactions information. The /transactions/{transaction_id} endpoint with a PATCH method allows to modify customizable fields for a specific transaction.'
       consumes:
         - application/json
       security:
@@ -1589,7 +1589,7 @@ paths:
       tags:
         - Transaction
       summary: "Delete a specific card's transaction \U0001F6A8"
-      description: 'The Transactions service provides transactions information. The /transactions/{id} endpoint with a DELETE method deletes a specific transaction forever and ever.'
+      description: 'The Transactions service provides transactions information. The /transactions/{transaction_id} endpoint with a DELETE method deletes a specific transaction forever and ever.'
       operationId: DeleteTransactionsSearch
       security:
         - api_key: []
