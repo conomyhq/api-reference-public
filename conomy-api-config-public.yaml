@@ -3689,6 +3689,7 @@ definitions:
       - processes
   RuleProcess:
     type: object
+    description: 'Atomic process definition, it applies one simple operation of the rule. It follows a simple operation syntax, left variable + operation + right variable.'
     properties:
       id:
         type: string
@@ -3698,16 +3699,16 @@ definitions:
       description:
         type: string
         description: Rule description for human reading
-      process:
+      leftVariable:
         type: string
-        description: What is the function to apply in the transaction
-        example: Validation
+      rightVariable:
+        type: string
+      operation:
+        type: string
     required:
       - id
       - type
       - description
-      - process
-    description: 'Atomic process definition, it applies one simple operation of the rule'
   Card:
     type: object
     x-examples:
