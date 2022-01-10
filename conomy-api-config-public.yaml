@@ -1588,6 +1588,14 @@ paths:
         name: id
         in: path
         required: true
+  /v1/rules:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-v1-rules
+      responses:
+        '200':
+          description: OK
   /v1/classifier:
     get:
       summary: "Classify transactions in specific categories \U0001F5E0"
@@ -2258,138 +2266,6 @@ paths:
       tags:
         - Notifications
     parameters: []
-  /v1/cards/composite:
-    get:
-      summary: "Get all type of cards (bank cards, gift cards & benefit cards) \U0001F4B8"
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties: {}
-        '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-        '401':
-          description: Invalid or missing authentication token.
-          examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
-        '404':
-          description: Data not found in the DB.
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-          schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
-        '500':
-          description: Internal server error.
-          schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
-          examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-      operationId: getAllCards
-      description: ''
-      tags:
-        - Card
-    parameters: []
   /v1/budget:
     get:
       summary: "Get the budget of a specific Conomy Card \U0001F4CA"
@@ -2522,9 +2398,9 @@ paths:
       tags:
         - Budget
     parameters: []
-  /v1/rules:
+  /v1/cards/composite:
     get:
-      summary: "Get the rules of a specific Conomy Card \U0001F4B3"
+      summary: "Get all type of cards (bank cards, gift cards & benefit cards) \U0001F4B8"
       responses:
         '200':
           description: OK
@@ -2649,10 +2525,10 @@ paths:
               value:
                 message: Internal Server Error
                 code: 500
-      operationId: getRules
+      operationId: getAllCards
       description: ''
       tags:
-        - Rules
+        - Card
     parameters: []
   /v1/transactions/composite:
     get:
@@ -3788,6 +3664,50 @@ definitions:
         type: string
       street_number:
         type: string
+  Rule:
+    type: object
+    description: Rule that defines business rules and has its atomic processes to apply to the transaction
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        description: Rule's type
+        example: Profile rule
+      description:
+        type: string
+        description: Rule description for human reading
+      processes:
+        type: array
+        description: Processes are atomic operations that when accomplished in sequence define and apply the rule as a whole
+        items:
+          $ref: '#/definitions/RuleProcess'
+    required:
+      - id
+      - type
+      - description
+      - processes
+  RuleProcess:
+    type: object
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        description: Rule's type
+      description:
+        type: string
+        description: Rule description for human reading
+      process:
+        type: string
+        description: What is the function to apply in the transaction
+        example: Validation
+    required:
+      - id
+      - type
+      - description
+      - process
+    description: 'Atomic process definition, it applies one simple operation of the rule'
   Card:
     type: object
     x-examples:
