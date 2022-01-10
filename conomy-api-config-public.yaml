@@ -3699,9 +3699,9 @@ definitions:
       description:
         type: string
         description: Rule description for human reading
-      leftVariable:
+      variableA:
         type: string
-      rightVariable:
+      variableB:
         type: string
       operation:
         type: string
