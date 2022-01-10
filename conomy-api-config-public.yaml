@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: "Conomy Developers \U0001F4D9 API Reference"
-  description: "This is **Conomy Developers**, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation, if you have any doubt please don't hesitate to reach us out at hola@conomyhq.com. We hope you enjoy this site \U0001F44B.\n\nCurrently we have a microservices backend architecture serving for different purposes. You can find their description in the left menu with the detail of each of their specific endpoints.\n\n**Addresses Service**: Users addresses information, you can fetch address data with its specific user id, bringing parameters like region, commune, first_address and an optional description address.\n\n**Cards Service**: Cards information, search and match any card that is owned by specific user id and respond an array of card objects. \n\n**Transactions Service**: This service provides transactions information, you can fetch transaction data with its specific card id, bringing parameters like title, amount, currency among others.\n\n**Users Service**: This service provides users information, with its user id you can get all the user data and also make some changes to its personal information.\n\n**Authorization Service**: This service lets the user to have its private pin, letting him take control over his personal data with a configured pin pass. \n\n**Others...*"
+  description: "This is **Conomy Developers**, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation, if you have any doubt please don't hesitate to reach us out at hola@conomyhq.com. We hope you enjoy this site \U0001F44B.\n\nCurrently we have a microservices backend architecture serving for different purposes. You can find their description in the left menu with the detail of each of their specific endpoints.\n\n**Addresses Service**: Users addresses information, you can fetch address data with its specific user id, bringing parameters like region, commune, first_address and an optional description address.\n\n**Cards Service**: Cards information, search and match any card that is owned by specific user id and respond an array of card objects. \n\n**Transactions Service**: This service provides transactions information, you can fetch transaction data with its specific card id, bringing parameters like title, amount, currency among others.\n\n**Users Service**: This service provides users information, with its user id you can get all the user data and also make some changes to its personal information.\n\n**Authorization Service**: This service lets the user to have its private pin, letting him take control over his personal data with a configured pin pass. \n\n**Others...*\n\nhttps://giphy.com/gifs/barkpost-barkpost-happy-wednesday-working-like-a-dog-eYilisUwipOEM"
   version: 1.0.0
   contact:
     email: hola@conomyhq.com
@@ -21,13 +21,13 @@ securityDefinitions:
     x-google-audiences: conomy-6cc91
     description: 'We have a firebase authentication, to have access to an API Key available for QA environment please just contact us at hola@conomyhq.com.'
 paths:
-  '/v1/addresses/{id}':
+  '/v1/addresses/{address_id}':
     get:
       tags:
         - Address
       summary: "Get an address from specific address ID \U0001F50E"
       operationId: getAddressId
-      description: 'The Address service delivers users address. The /addresses/{id} endpoint search a specific address by its id and respond an address object. Its properties are an unique id, the user id and the description of the address, including first_address, an optional description address among others.'
+      description: 'The Addresses service delivers users address. The /addresses/{address_id} endpoint search a specific address by its id and respond an address object. Its properties are an unique id, the user id and the description of the address, including first_address, an optional description address among others.'
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -36,30 +36,38 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Search an address by specific id
+          description: |-
+            Search an address by specific id
+
+            Error
           schema:
             $ref: '#/definitions/Address'
           examples:
-            example-1:
+            Succeed:
               id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
               user_id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
               administrative_area_level_1: Valparaiso
               administrative_area_level_2: ConCon
               locality: string
-              route: Los Pillines
+              street: Los Pillines
               street_number: string
               optional_address: '340'
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
             $ref: '#/definitions/Error400'
+          examples:
+            Bad Request:
+              code: 2
+              type: GenericError
+              detail: A required parameter for this API operation is invalid or has not been provided
         '401':
           description: Invalid or missing authentication token.
           examples:
             Unauthorized Error:
               detail: Jwt is missing
               type: AuthError
-              code: 401
+              code: 3
           schema:
             $ref: '#/definitions/Error401'
         '404':
@@ -67,8 +75,8 @@ paths:
           examples:
             Not Found Error:
               detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
+              type: UserNotFoundError
+              code: 5
           schema:
             $ref: '#/definitions/Error404'
         '500':
@@ -79,13 +87,13 @@ paths:
             Server Error:
               detail: Internal Server Error
               type: ServerError
-              code: 500
+              code: 1
     patch:
       tags:
         - Address
       summary: "Modify an address from a specific address ID \U0001F3D8️."
       operationId: modifyAddressId
-      description: 'The Address service delivers users address. The /addresses/{id} endpoint with PATCH method modify the address by its id, being able to modify attributes like first address, optional address and others.'
+      description: 'The Addresses service delivers users address. The /addresses/{address_id} endpoint with PATCH method modify the address by its id, being able to modify attributes like administratives areas, locality and optional address and others.'
       consumes:
         - application/json
       x-google-backend:
@@ -138,7 +146,7 @@ paths:
         - Address
       summary: "Delete an address from a specific address ID \U0001F6A8"
       operationId: deleteAddressId
-      description: 'The Address service delivers users address. The /addresses/{id} endpoint with DELETE method deletes the address by its id.'
+      description: 'The Addresses service delivers users address. The /addresses/{address_id} endpoint with DELETE method deletes the address by its id.'
       consumes:
         - application/json
       x-google-backend:
@@ -183,16 +191,17 @@ paths:
               code: 500
     parameters:
       - type: string
-        name: id
+        name: address_id
         in: path
         required: true
+        description: Address ID
   /v1/addresses:
     post:
       tags:
         - Address
       summary: "Add an address to a specific user in the system \U0001F3E1"
       operationId: addAddress
-      description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like  administrative_area_level_1, optional_address, locality and others.'
+      description: 'The Address service delivers users address. The /addresses endpoint with POST method adds an address to a specific user id, setting its attributes like  administratives area, optional address, locality and others.'
       consumes:
         - application/json
       x-google-backend:
@@ -206,6 +215,15 @@ paths:
           description: Address to add
           schema:
             $ref: '#/definitions/AddressCreate'
+          x-examples:
+            example-1:
+              user_id: string
+              administrative_area_level_1: Valparaiso
+              administrative_area_level_2: ConCon
+              locality: Los Pillines
+              optional_address: '340'
+              street: string
+              street_number: string
       responses:
         '201':
           description: Address created
@@ -247,7 +265,7 @@ paths:
         - Address
       summary: "Get an address from specific user \U0001F50E"
       operationId: getAddress
-      description: 'The Address service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including administrative_area_level_1, optional_address and others.'
+      description: 'The Addresses service delivers users address. The /addresses endpoint search an address by it''s user id and respond a body with an array of address objects. Its properties are an unique id, the user id and the description of the address, including administratives area, locality, street, optional address and others.'
       x-google-backend:
         address: 'https://conomy-address-service-h4gib2s4ya-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -266,26 +284,45 @@ paths:
             type: object
             properties:
               page:
-                type: string
+                type: number
               next_page:
-                type: string
+                type: number
               total_addresses:
-                type: string
+                type: number
               addresses:
                 type: array
                 items:
                   $ref: '#/definitions/Address'
+          examples:
+            Succeed:
+              page: 1
+              next_page: 1
+              total_addresses: 1
+              addresses:
+                - id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+                  user_id: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
+                  administrative_area_level_1: Valparaiso
+                  administrative_area_level_2: ConCon
+                  locality: string
+                  street: Los Pillines
+                  street_number: string
+                  optional_address: '340'
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
             $ref: '#/definitions/Error400'
+          examples:
+            Bad Request:
+              code: 2
+              type: GenericError
+              detail: A required parameter for this API operation is invalid or has not been provided
         '401':
           description: Invalid or missing authentication token.
           examples:
             Unauthorized Error:
               detail: Jwt is missing
               type: AuthError
-              code: 401
+              code: 3
           schema:
             $ref: '#/definitions/Error401'
         '404':
@@ -293,8 +330,8 @@ paths:
           examples:
             Not Found Error:
               detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
+              type: UserNotFoundError
+              code: 4
           schema:
             $ref: '#/definitions/Error404'
         '500':
@@ -305,13 +342,13 @@ paths:
             Server Error:
               detail: Internal Server Error
               type: ServerError
-              code: 500
+              code: 5
     patch:
       tags:
         - Address
       summary: "Modify an address from a specific user \U0001F3D8️."
       operationId: modifyAddress
-      description: 'The Address service delivers users address. The /addresses endpoint with PATCH method modify the address of specific user id, being able to modify attributes like administrative_area_level_1, optional_address, route, locality.'
+      description: 'The Address service delivers users address. The /addresses endpoint with PATCH method modify the address of specific user id, being able to modify attributes like administratives area, optional address, street, locality.'
       consumes:
         - application/json
       x-google-backend:
@@ -366,13 +403,13 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/cards/{id}':
+  '/v1/cards/{card_id}':
     put:
       tags:
         - Card
       summary: "Set to active a specific card \U0001F6A8"
       operationId: UpdateActiveCard
-      description: The Cards service delivers cards data. The /cards endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.
+      description: 'The Cards service delivers cards data. The /cards/{card_id} endpoint with PUT method set one card to "active state" among all user id cards. This means that specific user is going to process all its payments with that active card and omit the others for any payment.'
       consumes:
         - application/json
       security:
@@ -433,7 +470,7 @@ paths:
         - Card
       summary: "Delete specific card \U0001F4CC"
       operationId: DeleteActiveCard
-      description: The Cards service delivers cards data. The /cards endpoint with DELETE method deletes a specific card.
+      description: 'The Cards service delivers cards data. The /cards/{card_id} endpoint with DELETE method deletes a specific card.'
       consumes:
         - application/json
       security:
@@ -484,12 +521,12 @@ paths:
               code: 500
     parameters:
       - type: string
-        name: id
+        name: card_id
         in: path
         required: true
-        description: card id
+        description: card ID
     get:
-      summary: "Get a specific card by its id \U0001F4B3"
+      summary: "Get a specific card by card ID \U0001F4B3"
       operationId: getCardId
       responses:
         '200':
@@ -529,7 +566,13 @@ paths:
               code: 500
       tags:
         - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{id} with the method GET fetch the information about a specific id.'
+      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{card_id} with the method GET fetch the information about a specific id.'
+      parameters: []
+      x-google-backend:
+        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - firebase: []
   /v1/cards:
     post:
       tags:
@@ -658,7 +701,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/conomycards/{id}':
+  '/v1/conomycards/{conomycard_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
       responses:
@@ -723,9 +766,10 @@ paths:
         - Conomy Card
     parameters:
       - type: string
-        name: id
+        name: conomycard_id
         in: path
         required: true
+        description: Conomy card ID
     put:
       summary: "Set to active a specific card for Conomy Card payment \U0001F4B3 [Deprecated]"
       operationId: putActiveCard
@@ -971,6 +1015,9 @@ paths:
       description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch all the card data from a specific user id.
       tags:
         - Conomy Card
+      parameters:
+        - type: string
+          in: header
     parameters: []
     post:
       summary: "Create a new Conomy Card \U0001F4B3"
@@ -1148,7 +1195,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/users/{id}':
+  '/v1/users/{user_id}':
     get:
       tags:
         - User
@@ -1294,9 +1341,10 @@ paths:
       description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
     parameters:
       - type: string
-        name: id
+        name: user_id
         in: path
         required: true
+        description: User ID
   /v1/transactions:
     get:
       summary: "Get a list of transactions \U0001F3F7️"
@@ -1427,7 +1475,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/transactions/{id}':
+  '/v1/transactions/{transaction_id}':
     get:
       tags:
         - Transaction
@@ -1585,7 +1633,7 @@ paths:
               code: 500
     parameters:
       - type: string
-        name: id
+        name: transaction_id
         in: path
         required: true
   /v1/rules:
@@ -3608,7 +3656,7 @@ definitions:
         example: ConCon
       locality:
         type: string
-      route:
+      street:
         type: string
         example: Los Pillines
       street_number:
@@ -3622,7 +3670,7 @@ definitions:
       - user_id
       - administrative_area_level_1
       - administrative_area_level_2
-      - route
+      - street
       - optional_address
   AddressModify:
     type: object
@@ -3639,7 +3687,7 @@ definitions:
       optional_address:
         type: string
         example: '340'
-      route:
+      street:
         type: string
       street_number:
         type: string
@@ -3660,7 +3708,7 @@ definitions:
       optional_address:
         type: string
         example: '340'
-      route:
+      street:
         type: string
       street_number:
         type: string
@@ -4240,28 +4288,6 @@ definitions:
     required:
       - id
       - password_pin
-  error:
-    title: error
-    type: object
-    x-examples:
-      Unauthorized Error 401:
-        detail: Jwt is missing
-        type: AuthError
-        code: 401
-    properties:
-      code:
-        type: number
-        example: 401
-      type:
-        type: string
-        example: AuthError
-      detail:
-        type: string
-        example: Jwt is missing
-    required:
-      - code
-      - type
-      - detail
   Error400:
     title: BadRequestError
     type: object
@@ -4288,7 +4314,7 @@ definitions:
       Unauthorized Error 401:
         detail: Jwt is missing
         type: AuthError
-        code: 401
+        code: 3
     properties:
       code:
         type: number
@@ -4306,7 +4332,11 @@ definitions:
   Error404:
     title: NotFoundError
     type: object
-    x-examples: {}
+    x-examples:
+      example-1:
+        code: 4
+        type: UserNotFound
+        detail: The user could not be found in the DB
     properties:
       code:
         type: number
@@ -4324,7 +4354,11 @@ definitions:
   Error500:
     title: InternalServerError
     type: object
-    x-examples: {}
+    x-examples:
+      example-1:
+        code: 5
+        type: ServerError
+        detail: Internal Server Error
     properties:
       code:
         type: number
