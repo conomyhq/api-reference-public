@@ -3635,6 +3635,342 @@ paths:
         - Transaction Switch
         - hola
     parameters: []
+  /v1/goals-challenges:
+    post:
+      summary: Create goal
+      tags: []
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/GoalandChallenge'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      operationId: post-v1-gch-composite-goals
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GoalandChallengeCreate'
+          description: Goal & challenge schema
+      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-v1-gch-composite-goals-challenges
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GoalandChallenge'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
+      parameters:
+        - type: string
+          in: query
+          name: user_upayments_uuid
+          description: upayments user identifier
+  '/v1/goals-challenges/{id}':
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GoalandChallenge'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      operationId: get-v1-gch-composite-goals-challenge
+      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
+      parameters: []
+    put:
+      summary: ''
+      operationId: put-v1-gch-composite-goals-challenge
+      responses:
+        '202':
+          description: Accepted
+          schema:
+            $ref: '#/definitions/GoalandChallenge'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method updates a goal or challenge values by id'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GoalandChallenge'
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: Goal or Challenge identifier
+    delete:
+      summary: ''
+      operationId: delete-v1-gch-composite-goals-challenges-id
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error404'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method deletes a goal or challenge values by id'
+  /v1/gch-composite/goals-challenges:
+    post:
+      summary: Create goal
+      tags: []
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/GoalandChallengeFiltered'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      operationId: post-v1-gch-composite-goals
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GoalandChallengeCreate'
+          description: Goal & challenge schema
+      description: The goals and challenges compound is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-v1-gch-composite-goals-challenges
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GoalandChallengeFiltered'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
+      parameters:
+        - type: string
+          in: query
+          name: user_upayments_uuid
+          description: upayments user identifier
+  '/v1/gch-composite/goals-challenges/{id}':
+    get:
+      summary: ''
+      tags: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GoalandChallengeFiltered'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      operationId: get-v1-gch-composite-goals-challenge
+      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
+      parameters: []
+    put:
+      summary: ''
+      operationId: put-v1-gch-composite-goals-challenge
+      responses:
+        '202':
+          description: Accepted
+          schema:
+            $ref: '#/definitions/GoalandChallengeFiltered'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method updates a goal or challenge values by id
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GoalandChallengeModify'
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: Goal or Challenge identifier
+    delete:
+      summary: ''
+      operationId: delete-v1-gch-composite-goals-challenges-id
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error404'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
+  /v1/gch-composite/goals-challenges/rules:
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-v1-gch-composite-goals-challenges
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RuleFiltered'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/rules endpoint with a GET method fetch all rules related to a goal
+      parameters: []
 definitions:
   Address:
     type: object
@@ -3735,6 +4071,24 @@ definitions:
       - type
       - description
       - processes
+  RuleFiltered:
+    type: object
+    description: Rule that defines business rules and has its atomic processes to apply to the transaction
+    title: ''
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        description: Rule's type
+        example: Profile rule
+      description:
+        type: string
+        description: Rule description for human reading
+    required:
+      - id
+      - type
+      - description
   RuleProcess:
     type: object
     description: 'Atomic process definition, it applies one simple operation of the rule. It follows a simple operation syntax, left variable + operation + right variable.'
@@ -4373,6 +4727,134 @@ definitions:
       - code
       - type
       - detail
+  GoalandChallenge:
+    title: Goal&Challenge
+    type: object
+    description: Goal and challenge model
+    properties:
+      id:
+        type: string
+      user_uuid:
+        type: string
+      user_upayments_uuid:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      rules:
+        type: array
+        items:
+          $ref: '#/definitions/RuleFiltered'
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      currentAmount:
+        type: number
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  GoalandChallengeFiltered:
+    title: Goal&ChallengeFiltered
+    type: object
+    description: Goal and challenge model
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      rules:
+        type: array
+        items:
+          $ref: '#/definitions/RuleFiltered'
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      currentAmount:
+        type: number
+  GoalandChallengeModify:
+    title: Goal&ChallengeModify
+    type: object
+    description: Goal and challenge model
+    properties:
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+  GoalandChallengeCreate:
+    title: Goal&ChallengeCreate
+    type: object
+    description: Goal and challenge model
+    properties:
+      user_uuid:
+        type: string
+      user_upayments_uuid:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
 consumes:
   - application/json
 responses: {}
