@@ -4277,7 +4277,7 @@ definitions:
       - description
   ConomyCardCreate:
     type: object
-    title: Conomy Card
+    title: Conomy Card Create
     description: ''
     properties:
       id:
