@@ -3637,7 +3637,7 @@ paths:
     parameters: []
   /v1/goals-challenges:
     post:
-      summary: Create goal
+      summary: Create goal or challenge
       tags:
         - Goals & Challenges
       responses:
@@ -3671,7 +3671,7 @@ paths:
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
     parameters: []
     get:
-      summary: ''
+      summary: Get goals and challenges by user_id
       operationId: get-v1-gch-composite-goals-challenges
       responses:
         '200':
@@ -3706,7 +3706,7 @@ paths:
         - Goals & Challenges
   '/v1/goals-challenges/{id}':
     get:
-      summary: ''
+      summary: Get goal or challenge by id
       responses:
         '200':
           description: OK
@@ -3734,7 +3734,7 @@ paths:
       tags:
         - Goals & Challenges
     put:
-      summary: ''
+      summary: Modify goal or challenge by id
       operationId: put-v1-gch-composite-goals-challenge
       responses:
         '202':
@@ -3772,7 +3772,7 @@ paths:
         required: true
         description: Goal or Challenge identifier
     delete:
-      summary: ''
+      summary: Delete goal or challenge by id
       operationId: delete-v1-gch-composite-goals-challenges-id
       responses:
         '204':
@@ -3832,7 +3832,7 @@ paths:
       description: The goals and challenges compound is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
     parameters: []
     get:
-      summary: ''
+      summary: Get goals and challenges by user_id
       operationId: get-v1-gch-composite-goals-challenges
       responses:
         '200':
@@ -3867,7 +3867,7 @@ paths:
         - Goals & Challenges composite
   '/v1/gch-composite/goals-challenges/{id}':
     get:
-      summary: ''
+      summary: Get goal or challenge by id
       responses:
         '200':
           description: OK
@@ -3895,7 +3895,7 @@ paths:
       tags:
         - Goals & Challenges composite
     put:
-      summary: ''
+      summary: Modify goal or challenge by id
       operationId: put-v1-gch-composite-goals-challenge
       responses:
         '202':
@@ -3933,7 +3933,7 @@ paths:
         required: true
         description: Goal or Challenge identifier
     delete:
-      summary: ''
+      summary: Delete goal or challenge by id
       operationId: delete-v1-gch-composite-goals-challenges-id
       responses:
         '204':
@@ -3960,7 +3960,7 @@ paths:
   /v1/gch-composite/goals-challenges/rules:
     parameters: []
     get:
-      summary: ''
+      summary: Get rules applicable to a goal
       operationId: get-v1-gch-composite-goals-challenges
       responses:
         '200':
