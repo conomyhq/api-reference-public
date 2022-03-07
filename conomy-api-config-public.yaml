@@ -3638,7 +3638,8 @@ paths:
   /v1/goals-challenges:
     post:
       summary: Create goal
-      tags: []
+      tags:
+        - Goals & Challenges
       responses:
         '201':
           description: Created
@@ -3762,6 +3763,8 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/GoalandChallenge'
+      tags:
+        - Goals & Challenges
     parameters:
       - type: string
         name: id
@@ -3791,10 +3794,13 @@ paths:
           schema:
             $ref: '#/definitions/Error500'
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method deletes a goal or challenge values by id'
+      tags:
+        - Goals & Challenges
   /v1/gch-composite/goals-challenges:
     post:
       summary: Create goal
-      tags: []
+      tags:
+        - Goals & Challenges composite
       responses:
         '201':
           description: Created
@@ -3918,6 +3924,8 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/GoalandChallengeModify'
+      tags:
+        - Goals & Challenges composite
     parameters:
       - type: string
         name: id
@@ -3947,6 +3955,8 @@ paths:
           schema:
             $ref: '#/definitions/Error500'
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
+      tags:
+        - Goals & Challenges composite
   /v1/gch-composite/goals-challenges/rules:
     parameters: []
     get:
