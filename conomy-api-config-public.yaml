@@ -3701,10 +3701,11 @@ paths:
           in: query
           name: user_upayments_uuid
           description: upayments user identifier
+      tags:
+        - Goals & Challenges
   '/v1/goals-challenges/{id}':
     get:
       summary: ''
-      tags: []
       responses:
         '200':
           description: OK
@@ -3729,6 +3730,8 @@ paths:
       operationId: get-v1-gch-composite-goals-challenge
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
+      tags:
+        - Goals & Challenges
     put:
       summary: ''
       operationId: put-v1-gch-composite-goals-challenge
@@ -3854,10 +3857,11 @@ paths:
           in: query
           name: user_upayments_uuid
           description: upayments user identifier
+      tags:
+        - Goals & Challenges composite
   '/v1/gch-composite/goals-challenges/{id}':
     get:
       summary: ''
-      tags: []
       responses:
         '200':
           description: OK
@@ -3882,6 +3886,8 @@ paths:
       operationId: get-v1-gch-composite-goals-challenge
       description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
+      tags:
+        - Goals & Challenges composite
     put:
       summary: ''
       operationId: put-v1-gch-composite-goals-challenge
@@ -3971,6 +3977,8 @@ paths:
             $ref: '#/definitions/Error500'
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/rules endpoint with a GET method fetch all rules related to a goal
       parameters: []
+      tags:
+        - Goals & Challenges composite
 definitions:
   Address:
     type: object
