@@ -3773,7 +3773,6 @@ paths:
         name: id
         in: path
         required: true
-        description: Goal or Challenge identifier
     delete:
       summary: Delete goal or challenge by id
       operationId: delete-v1-goals-challenges-id
@@ -3803,8 +3802,6 @@ paths:
   /v1/goals-challenges/composite/:
     post:
       summary: Create goal
-      tags:
-        - Goals & Challenges composite
       responses:
         '201':
           description: Created
@@ -3834,6 +3831,8 @@ paths:
             $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
       description: The goals and challenges compound is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
+      tags:
+        - Goals & Challenges
     parameters: []
     get:
       summary: Get goals and challenges by user_id
@@ -3929,7 +3928,7 @@ paths:
           schema:
             $ref: '#/definitions/GoalandChallengeModify'
       tags:
-        - Goals & Challenges composite
+        - Goals & Challenges
     parameters:
       - type: string
         name: id
@@ -3960,7 +3959,7 @@ paths:
             $ref: '#/definitions/Error500'
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
       tags:
-        - Goals & Challenges composite
+        - Goals & Challenges
   /v1/goals-challenges/composite/rules:
     parameters: []
     get:
