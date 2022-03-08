@@ -3661,7 +3661,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      operationId: post-v1-gch-composite-goals
+      operationId: post-v1-goals
       parameters:
         - in: body
           name: body
@@ -3673,7 +3673,7 @@ paths:
     parameters: []
     get:
       summary: Get goals and challenges by user_id
-      operationId: get-v1-gch-composite-goals-challenges
+      operationId: get-v1-goals-challenges
       responses:
         '200':
           description: OK
@@ -3730,7 +3730,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      operationId: get-v1-gch-composite-goals-challenge
+      operationId: get-v1-goals-challenge
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
       tags:
@@ -3738,7 +3738,7 @@ paths:
       x-internal: true
     put:
       summary: Modify goal or challenge by id
-      operationId: put-v1-gch-composite-goals-challenge
+      operationId: put-v1-goals-challenge
       responses:
         '202':
           description: Accepted
@@ -3777,7 +3777,7 @@ paths:
         description: Goal or Challenge identifier
     delete:
       summary: Delete goal or challenge by id
-      operationId: delete-v1-gch-composite-goals-challenges-id
+      operationId: delete-v1-goals-challenges-id
       responses:
         '204':
           description: No Content
