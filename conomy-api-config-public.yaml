@@ -1691,8 +1691,6 @@ paths:
     parameters: []
   /v1/pin/authorization:
     post:
-      tags:
-        - Auth
       summary: "Validate pin authentication for a specific user id \U0001F510"
       operationId: ValidatePin
       description: The Pin service provides user's password information. The /pin/authorization endpoint with a POST validates user's pin against the value saved in the db. This gives the user the permission to gain access for different information inside the app and the permission to realize more personal actions.
@@ -1741,6 +1739,8 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
+      tags:
+        - Pin
   /v1/pin:
     post:
       summary: "Create a new pin linked to a specific user id \U0001F511"
@@ -1755,9 +1755,6 @@ paths:
           description: Token to be matched
           schema:
             $ref: '#/definitions/UserPin'
-      tags:
-        - Auth
-        - Pin
       responses:
         '201':
           description: 'Ok, pin created'
@@ -1794,6 +1791,8 @@ paths:
               code: 500
       operationId: CreatePin
       description: The Pin service provides user's password information. The /pin endpoint with a POST creates a user's pin and save it in the db. This gives the user the permission to gain access for different information and have more control over his personal data.
+      tags:
+        - Pin
   '/v1/termsconditions/{id}':
     get:
       summary: "Get user's terms & conditions \U0001F4C3"
@@ -3801,7 +3800,7 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
-  /v1/gch-composite/goals-challenges:
+  /v1/goals-challenges/composite/:
     post:
       summary: Create goal
       tags:
@@ -3869,8 +3868,8 @@ paths:
           name: user_upayments_uuid
           description: upayments user identifier
       tags:
-        - Goals & Challenges composite
-  '/v1/gch-composite/goals-challenges/{id}':
+        - Goals & Challenges
+  '/v1/goals-challenges/composite/{id}':
     get:
       summary: Get goal or challenge by id
       responses:
@@ -3898,7 +3897,7 @@ paths:
       description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
       tags:
-        - Goals & Challenges composite
+        - Goals & Challenges
     put:
       summary: Modify goal or challenge by id
       operationId: put-v1-gch-composite-goals-challenge
@@ -3962,7 +3961,7 @@ paths:
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
       tags:
         - Goals & Challenges composite
-  /v1/gch-composite/goals-challenges/rules:
+  /v1/goals-challenges/composite/rules:
     parameters: []
     get:
       summary: Get rules applicable to a goal
@@ -3993,7 +3992,7 @@ paths:
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/rules endpoint with a GET method fetch all rules related to a goal
       parameters: []
       tags:
-        - Goals & Challenges composite
+        - Goals & Challenges
 definitions:
   Address:
     type: object
