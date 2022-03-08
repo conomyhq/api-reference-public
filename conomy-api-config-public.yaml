@@ -3669,6 +3669,7 @@ paths:
             $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
+      x-internal: true
     parameters: []
     get:
       summary: Get goals and challenges by user_id
@@ -3704,6 +3705,7 @@ paths:
           description: upayments user identifier
       tags:
         - Goals & Challenges
+      x-internal: true
   '/v1/goals-challenges/{id}':
     get:
       summary: Get goal or challenge by id
@@ -3733,6 +3735,7 @@ paths:
       parameters: []
       tags:
         - Goals & Challenges
+      x-internal: true
     put:
       summary: Modify goal or challenge by id
       operationId: put-v1-gch-composite-goals-challenge
@@ -3765,6 +3768,7 @@ paths:
             $ref: '#/definitions/GoalandChallenge'
       tags:
         - Goals & Challenges
+      x-internal: true
     parameters:
       - type: string
         name: id
@@ -3796,6 +3800,7 @@ paths:
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method deletes a goal or challenge values by id'
       tags:
         - Goals & Challenges
+      x-internal: true
   /v1/gch-composite/goals-challenges:
     post:
       summary: Create goal
