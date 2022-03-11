@@ -2493,21 +2493,23 @@ definitions:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      user_id:
+      userId:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         description: user conomy identifier
-      issuing_bank:
+      issuingBank:
         type: string
         example: BancoDeChile
         description: Issuing Bank
-      card_brand:
+      cardBrand:
         type: string
         example: MasterCard
-      cardholder_name:
+        description: 'MASTERCARD, VISA, AMEX, MAGNA'
+      cardholderName:
         type: string
         example: Pablo insulza
+        description: name shown on card
       pan:
         type: string
         example: '************1234'
@@ -2515,37 +2517,41 @@ definitions:
       currency:
         type: string
         example: CLP
-        description: Card Currency
-      is_active:
+        description: Card currency
+      isActive:
         type: boolean
         example: false
         description: Card state
-      card_type:
+      cardType:
         type: string
-        description: e.g. tarjeta de credito y debito
-      created_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      updated_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      color:
-        type: string
+        description: 'PREPAID, DEBIT, CREDIT'
       description:
         type: string
+        description: info shown on conomy app
+      priority:
+        type: string
+        description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
+      color:
+        type: string
+        description: 'User-defined card color. RED, BLUE, ORANGE, GREEN '
+      createdAt:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updatedAt:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
     required:
       - id
-      - issuing_bank
-      - card_brand
-      - cardholder_name
+      - issuingBank
+      - cardBrand
+      - cardholderName
       - pan
       - currency
-      - is_active
-      - created_at
-      - updated_at
-      - description
+      - isActive
+      - createdAt
+      - updatedAt
   CardCreate:
     type: object
     x-examples:
