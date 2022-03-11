@@ -2881,38 +2881,53 @@ definitions:
         type: string
         format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
+      userExternalUuid:
+        type: string
+        description: User u-payments uuid
       name:
         type: string
         example: Mauricio
-      nick_name:
-        type: string
-        example: JFT
-      last_name:
+        description: User name
+      lastName:
         type: string
         example: Gatica
+        description: user last name
+      nickName:
+        type: string
+        example: JFT
+        description: user nickname
       dni:
         type: string
         example: 12.612.412-2
+        description: Unique country identifier
       phone:
         type: string
         example: '+5691238159123'
-      account:
+        description: phone number
+      career:
         type: string
-        example: user
-      occupation:
-        type: string
+        description: User career/ocuppation
       gender:
         type: string
-      marital_status:
-        type: string
+        description: 'FEMALE, MALE, OTHER'
       email:
         type: string
+        description: user email
+      maritalStatus:
+        type: string
+        description: 'MARRIED, SINGLE, DIVORCED, WIDOW '
     required:
       - id
+      - userExternalUuid
       - name
-      - last_name
+      - lastName
+      - nickName
       - dni
-      - account
+      - phone
+      - career
+      - gender
+      - email
+      - maritalStatus
   UserModify:
     description: ''
     type: object
@@ -2931,56 +2946,74 @@ definitions:
         civil_status: string
         email: string
     properties:
-      nick_name:
+      name:
         type: string
-        minLength: 1
-      phone:
+        description: User name
+      lastName:
         type: string
-        minLength: 1
-      occupation:
-        type: string
-        minLength: 1
-      gender:
-        type: string
-        minLength: 1
-      marital_status:
-        type: string
-        minLength: 1
+        description: User last name
       email:
         type: string
         minLength: 1
-    required:
-      - nick_name
-      - phone
-      - occupation
-      - gender
-      - marital_status
-      - email
+        description: user email
+      nickName:
+        type: string
+        minLength: 1
+        description: user nick name
+      phone:
+        type: string
+        minLength: 1
+        description: phone number
+      career:
+        type: string
+        minLength: 1
+        description: user career/ocuppation
+      gender:
+        type: string
+        minLength: 1
+        description: 'FEMALE, MALE, OTHER'
+      maritalStatus:
+        type: string
+        minLength: 1
+        description: 'User civil status. MARRIED, SINGLE, DIVORCED, WIDOW'
   UserCreate:
     type: object
     properties:
-      id:
+      userExternalUuid:
         type: string
-        format: uuid
-        example: b92e761a-279a-11ec-9621-0242ac130002
+        description: user u-payments uuid
       name:
         type: string
         example: Mauricio
-      last_name:
+        description: user name
+      lastName:
         type: string
         example: Gatica
+        description: user last name
+      nickName:
+        type: string
+        description: User nickname
+      email:
+        type: string
+        description: user email
       dni:
         type: string
         example: 12.612.412-2
-      account:
+        description: Unique country identifier
+      phone:
         type: string
-        example: user
+        description: User phone number
+      career:
+        type: string
+        description: user career/ocuppation
+      gender:
+        type: string
+        description: 'FEMALE, MALE, OTHER'
+      maritalStatus:
+        type: string
+        description: 'MARRIED, SINGLE, DIVORCED, WIDOW'
     required:
-      - id
-      - name
-      - last_name
-      - dni
-      - account
+      - userExternalUuid
   UserPin:
     type: object
     title: UserPin
