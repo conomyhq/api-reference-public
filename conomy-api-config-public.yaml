@@ -3369,7 +3369,7 @@ paths:
       tags:
         - Customer Services
     parameters: []
-  /v1/auth:
+  '/v1/authorize ':
     get:
       summary: "Transaction auth \U0001F511"
       responses:
@@ -3992,6 +3992,98 @@ paths:
       parameters: []
       tags:
         - Goals & Challenges composite
+  /v1/authorize:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v1-auth
+    parameters: []
+  /v1/auth:
+    post:
+      summary: Auth
+      operationId: post-v1-auth
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/Session'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: |
+        The auth service is responsable for handling our conomy user session. The /auth endpoint with POST method fetch a user session
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/CreateSession'
+        - type: string
+          in: header
+          name: conomyToken
+          description: User conomy token
+      tags:
+        - Auth
+  /v1/auth/refresh:
+    post:
+      summary: Refresh Token
+      operationId: post-v1-auth-refresh
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Session'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: The auth service is responsable for handling our conomy user session. The /auth/refresh endpoint with POST method refreshes the user session
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/RefreshToken'
+      tags:
+        - Auth
+    parameters: []
+  /v1/auth/validate:
+    parameters: []
+    get:
+      summary: Validate session
+      operationId: get-v1-auth-validate
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Session'
+      description: The auth service is responsable for handling our conomy user session. The /auth/validate endpoint with GET method validates the conomy user token
+      tags:
+        - Auth
 definitions:
   Address:
     type: object
@@ -4876,6 +4968,83 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+  CreateSession:
+    title: CreateSession
+    type: object
+    properties:
+      userExternalUuid:
+        type: string
+        description: u-payments user id
+      ttl:
+        type: integer
+        description: Time to live. Value for the period of time that session should exist
+    required:
+      - userExternalUuid
+  Session:
+    title: Session
+    type: object
+    properties:
+      conomyToken:
+        type: string
+        description: User conomy token
+      _links:
+        type: array
+        description: A list of link types and descriptions for token validation. Conomy provides this paramenter
+        items:
+          $ref: '#/definitions/_links'
+  _links:
+    title: _links
+    type: object
+    description: A list of link types and descriptions.
+    properties:
+      rel:
+        type: string
+        description: This describes the type of links
+      route:
+        type: string
+        description: This property contais a full-qualified URL
+      method:
+        type: string
+        description: The HTTP method that should be used
+      targetSchema:
+        type: string
+        description: 'For requests, this is a URL representing the schema that the response should conform to.'
+      schema:
+        type: string
+        description: 'For HTTP methods that can receive bodies (POST and PUT), this is a URL representing the schema that the body should conform to.'
+    required:
+      - rel
+      - route
+      - method
+  RefreshToken:
+    title: RefreshToken
+    type: object
+    description: ''
+    properties:
+      userExternalUuid:
+        type: string
+        description: u-payments user id
+      conomyToken:
+        type: string
+        description: User conomy token
+      ttl:
+        type: string
+        description: Time to live. Value for the period of time that session should exist
+    required:
+      - userExternalUuid
+      - conomyToken
+      - ttl
+  ValidatedSession:
+    title: ValidatedSession
+    type: object
+    properties:
+      userExternalUuid:
+        type: string
+      message:
+        type: string
+    required:
+      - userExternalUuid
+      - message
 consumes:
   - application/json
 responses: {}
