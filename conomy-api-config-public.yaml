@@ -2491,8 +2491,6 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       userId:
         type: string
         format: uuid
@@ -2522,18 +2520,18 @@ definitions:
         type: boolean
         example: false
         description: Card state
+      color:
+        type: string
+        description: User-defined card color (HEX)
       cardType:
         type: string
         description: 'PREPAID, DEBIT, CREDIT'
       description:
         type: string
-        description: info shown on conomy app
+        description: Info shown on conomy app
       priority:
         type: string
         description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
-      color:
-        type: string
-        description: 'User-defined card color. RED, BLUE, ORANGE, GREEN '
       createdAt:
         type: string
         format: date-time
@@ -2543,7 +2541,6 @@ definitions:
         format: date-time
         example: '2017-07-21T17:32:28Z'
     required:
-      - id
       - issuingBank
       - cardBrand
       - cardholderName
@@ -2573,16 +2570,21 @@ definitions:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      issuing_bank:
+      userId:
+        type: string
+        description: User conomy id
+      issuingBank:
         type: string
         example: BancoDeChile
         description: Issuing Bank
-      card_brand:
+      cardBrand:
         type: string
         example: MasterCard
-      cardholder_name:
+        description: 'MASTERCARD, VISA, AMEX, MAGNA'
+      cardholderName:
         type: string
         example: Pablo insulza
+        description: name shown on card
       pan:
         type: string
         example: '************1234'
@@ -2591,28 +2593,34 @@ definitions:
         type: string
         example: CLP
         description: Card Currency
-      is_active:
+      isActive:
         type: boolean
         example: false
         description: Card state
-      created_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      updated_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
       color:
         type: string
-      card_type:
+        description: User-defined card color (HEX)
+      cardType:
         type: string
+        description: 'PREPAID, DEBIT, CREDIT'
       description:
         type: string
+        description: Info shown on conomy app
+      priority:
+        type: string
+        description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
+      updatedAt:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      createdAt:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
     required:
-      - issuing_bank
-      - card_brand
-      - cardholder_name
+      - issuingBank
+      - cardBrand
+      - cardholderName
       - pan
       - currency
   ConomyCard:
