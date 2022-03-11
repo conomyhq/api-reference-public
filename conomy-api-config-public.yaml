@@ -2497,6 +2497,7 @@ definitions:
         type: string
         format: uuid
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        description: user conomy identifier
       issuing_bank:
         type: string
         example: BancoDeChile
@@ -2545,6 +2546,69 @@ definitions:
       - created_at
       - updated_at
       - description
+  CardCreate:
+    type: object
+    x-examples:
+      example-1:
+        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        card_issuer: BancoDeChile
+        card_brand: MasterCard
+        holder_card_name: Pablo insulza
+        card_number: '************1234'
+        currency: CLP
+        is_active: false
+        created_at: '2017-07-21T17:32:28Z'
+        updated_at: '2017-07-21T17:32:28Z'
+        color: string
+        card_account_type: cuenta vista
+        description: {}
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+      issuing_bank:
+        type: string
+        example: BancoDeChile
+        description: Issuing Bank
+      card_brand:
+        type: string
+        example: MasterCard
+      cardholder_name:
+        type: string
+        example: Pablo insulza
+      pan:
+        type: string
+        example: '************1234'
+        description: Obfuscated card number
+      currency:
+        type: string
+        example: CLP
+        description: Card Currency
+      is_active:
+        type: boolean
+        example: false
+        description: Card state
+      created_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      updated_at:
+        type: string
+        format: date-time
+        example: '2017-07-21T17:32:28Z'
+      color:
+        type: string
+      card_type:
+        type: string
+      description:
+        type: string
+    required:
+      - issuing_bank
+      - card_brand
+      - cardholder_name
+      - pan
+      - currency
   ConomyCard:
     type: object
     title: Conomy Card
@@ -2686,69 +2750,6 @@ definitions:
       - pan
       - currency
       - is_active
-  CardCreate:
-    type: object
-    x-examples:
-      example-1:
-        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        card_issuer: BancoDeChile
-        card_brand: MasterCard
-        holder_card_name: Pablo insulza
-        card_number: '************1234'
-        currency: CLP
-        is_active: false
-        created_at: '2017-07-21T17:32:28Z'
-        updated_at: '2017-07-21T17:32:28Z'
-        color: string
-        card_account_type: cuenta vista
-        description: {}
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      issuing_bank:
-        type: string
-        example: BancoDeChile
-        description: Issuing Bank
-      card_brand:
-        type: string
-        example: MasterCard
-      cardholder_name:
-        type: string
-        example: Pablo insulza
-      pan:
-        type: string
-        example: '************1234'
-        description: Obfuscated card number
-      currency:
-        type: string
-        example: CLP
-        description: Card Currency
-      is_active:
-        type: boolean
-        example: false
-        description: Card state
-      created_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      updated_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      color:
-        type: string
-      card_type:
-        type: string
-      description:
-        type: string
-    required:
-      - issuing_bank
-      - card_brand
-      - cardholder_name
-      - pan
-      - currency
   Transaction:
     type: object
     x-examples: {}
@@ -2881,7 +2882,7 @@ definitions:
         type: string
         format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
-      userExternalUuid:
+      userExternalId:
         type: string
         description: User u-payments uuid
       name:
@@ -2918,7 +2919,7 @@ definitions:
         description: 'MARRIED, SINGLE, DIVORCED, WIDOW '
     required:
       - id
-      - userExternalUuid
+      - userExternalId
       - name
       - lastName
       - nickName
@@ -2979,7 +2980,7 @@ definitions:
   UserCreate:
     type: object
     properties:
-      userExternalUuid:
+      userExternald:
         type: string
         description: user u-payments uuid
       name:
@@ -3013,7 +3014,7 @@ definitions:
         type: string
         description: 'MARRIED, SINGLE, DIVORCED, WIDOW'
     required:
-      - userExternalUuid
+      - userExternald
   UserPin:
     type: object
     title: UserPin
@@ -3127,9 +3128,9 @@ definitions:
     properties:
       id:
         type: string
-      user_uuid:
+      userId:
         type: string
-      user_upayments_uuid:
+      userExternalId:
         type: string
       type:
         type: string
@@ -3224,9 +3225,9 @@ definitions:
     type: object
     description: Goal and challenge model
     properties:
-      user_uuid:
+      userId:
         type: string
-      user_upayments_uuid:
+      userExternalId:
         type: string
       type:
         type: string
@@ -3252,14 +3253,14 @@ definitions:
     title: CreateSession
     type: object
     properties:
-      userExternalUuid:
+      userExternalId:
         type: string
         description: u-payments user id
       ttl:
         type: integer
         description: Time to live. Value for the period of time that session should exist
     required:
-      - userExternalUuid
+      - userExternalId
   Session:
     title: Session
     type: object
