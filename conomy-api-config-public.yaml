@@ -2207,6 +2207,38 @@ paths:
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
       tags:
         - Goals & Challenges composite
+  '/v1/goals-challenges/composite/{id}/confirm':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: Goal or Challenge identifier
+    post:
+      summary: Complete the setup of an objective or challenge
+      operationId: post-v1-goals-challenges-composite-id-confirm
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/GoalandChallenge'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
   /v1/goals-challenges/composite/rules:
     parameters: []
     get:
