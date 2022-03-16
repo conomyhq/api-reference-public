@@ -13,13 +13,9 @@ produces:
   - application/json
 securityDefinitions:
   firebase:
-    authorizationUrl: ''
-    flow: implicit
-    type: oauth2
-    x-google-issuer: 'https://securetoken.google.com/conomy-6cc91'
-    x-google-jwks_uri: 'https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com'
-    x-google-audiences: conomy-6cc91
-    description: 'We have a firebase authentication, to have access to an API Key available for QA environment please just contact us at hola@conomyhq.com.'
+    name: API Key
+    type: apiKey
+    in: header
 paths:
   '/v1/addresses/{address_id}':
     get:
@@ -2306,7 +2302,7 @@ paths:
           schema:
             $ref: '#/definitions/Error500'
       description: |
-        The auth service is responsable for handling our conomy user session. The /auth endpoint with POST method fetch a user session
+        The auth service is responsable for handling our conomy user session. The /auth endpoint with POST method create a user session
       parameters:
         - in: body
           name: body
@@ -2314,10 +2310,12 @@ paths:
             $ref: '#/definitions/CreateSession'
         - type: string
           in: header
-          name: conomyToken
-          description: User conomy token
+          name: X-Application-id
+          description: IMEI or app identifier
       tags:
         - Auth
+      security:
+        - firebase: []
   /v1/auth/refresh:
     post:
       summary: Refresh Token
@@ -2348,9 +2346,20 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/RefreshToken'
+            $ref: '#/definitions/CreateSession'
+          description: ''
+        - type: string
+          in: header
+          name: X-Refresh-Token
+          description: Conomy refresh token
+        - type: string
+          in: header
+          name: X-Application-Id
+          description: IMEI or app identifier
       tags:
         - Auth
+      security:
+        - firebase: []
     parameters: []
   /v1/auth/validate:
     parameters: []
@@ -2361,10 +2370,35 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Session'
+            type: object
+            properties:
+              userId:
+                type: string
+                description: Conomy user identifier
+              message:
+                type: string
+                description: human readable message
+              expiration:
+                type: string
+                description: 'Expiration time [min]'
+              _links:
+                type: array
+                items:
+                  $ref: '#/definitions/_links'
       description: The auth service is responsable for handling our conomy user session. The /auth/validate endpoint with GET method validates the conomy user token
       tags:
         - Auth
+      security:
+        - firebase: []
+      parameters:
+        - type: string
+          in: header
+          name: Conomy-Token
+          description: User conomy token
+        - type: string
+          in: header
+          name: X-Application-id
+          description: IMEI or app identifier
 definitions:
   Address:
     type: object
@@ -3292,6 +3326,12 @@ definitions:
       conomyToken:
         type: string
         description: User conomy token
+      refreshToken:
+        type: string
+        description: Refresh Token
+      expiration:
+        type: string
+        description: 'Expiration time [min]'
       _links:
         type: array
         description: A list of link types and descriptions for token validation. Conomy provides this paramenter
