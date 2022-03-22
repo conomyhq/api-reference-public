@@ -1886,7 +1886,7 @@ paths:
         '201':
           description: Created
           schema:
-            $ref: '#/definitions/GoalandChallenge'
+            $ref: '#/definitions/GoalandChallengeCreateResponse'
         '400':
           description: Bad Request
           schema:
@@ -1908,7 +1908,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/GoalandChallengeCreateResponse'
+            $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
@@ -2054,7 +2054,7 @@ paths:
         '201':
           description: Created
           schema:
-            $ref: '#/definitions/GoalandChallengeFiltered'
+            $ref: '#/definitions/GoalandChallengeFilteredResponse'
         '400':
           description: Bad Request
           schema:
@@ -2113,9 +2113,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-        '':
-          schema:
-            $ref: '#/definitions/GoalandChallengeFiltered'
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
       parameters:
         - type: string
