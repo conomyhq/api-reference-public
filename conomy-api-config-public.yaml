@@ -1908,7 +1908,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/GoalandChallengeCreate'
+            $ref: '#/definitions/GoalandChallengeCreateResponse'
           description: Goal & challenge schema
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
@@ -1920,9 +1920,14 @@ paths:
         '200':
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/GoalandChallenge'
+            type: object
+            properties:
+              goalschallenges:
+                $ref: '#/definitions/GoalandChallenge'
+              _links:
+                type: array
+                items:
+                  $ref: '#/definitions/_links'
         '400':
           description: Bad Request
           schema:
@@ -1955,7 +1960,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GoalandChallenge'
+            $ref: '#/definitions/GoalandChallengeResponse'
         '400':
           description: Bad Request
           schema:
@@ -1985,7 +1990,7 @@ paths:
         '202':
           description: Accepted
           schema:
-            $ref: '#/definitions/GoalandChallenge'
+            $ref: '#/definitions/GoalandChallengeResponse'
         '400':
           description: Bad Request
           schema:
@@ -2042,7 +2047,7 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
-  /v1/goals-challenges/composite/:
+  /v1/rest/goals-challenges/:
     post:
       summary: Create goal
       responses:
@@ -2084,9 +2089,14 @@ paths:
         '200':
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/GoalandChallengeFiltered'
+            type: object
+            properties:
+              goalsChallenges:
+                $ref: '#/definitions/GoalandChallengeFiltered'
+              _links:
+                type: array
+                items:
+                  $ref: '#/definitions/_links'
         '400':
           description: Bad Request
           schema:
@@ -2103,7 +2113,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
+        '':
+          schema:
+            $ref: '#/definitions/GoalandChallengeFiltered'
+      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
       parameters:
         - type: string
           in: query
@@ -2111,14 +2124,14 @@ paths:
           description: upayments user identifier
       tags:
         - Goals & Challenges composite
-  '/v1/goals-challenges/composite/{id}':
+  '/v1/rest/goals-challenges/{id}':
     get:
       summary: Get goal or challenge by id
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GoalandChallengeFiltered'
+            $ref: '#/definitions/GoalandChallengeFilteredResponse'
         '400':
           description: Bad Request
           schema:
@@ -2136,7 +2149,7 @@ paths:
           schema:
             $ref: '#/definitions/Error500'
       operationId: get-v1-gch-composite-goals-challenge
-      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
+      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
       tags:
         - Goals & Challenges composite
@@ -2147,7 +2160,7 @@ paths:
         '202':
           description: Accepted
           schema:
-            $ref: '#/definitions/GoalandChallengeFiltered'
+            $ref: '#/definitions/GoalandChallengeFilteredResponse'
         '400':
           description: Bad Request
           schema:
@@ -2203,7 +2216,7 @@ paths:
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
       tags:
         - Goals & Challenges composite
-  '/v1/goals-challenges/composite/{id}/confirm':
+  '/v1/rest/goals-challenges/{id}/confirm':
     parameters:
       - type: string
         name: id
@@ -2217,7 +2230,7 @@ paths:
         '201':
           description: Created
           schema:
-            $ref: '#/definitions/GoalandChallenge'
+            $ref: '#/definitions/GoalandChallengeResponse'
         '400':
           description: Bad Request
           schema:
@@ -2234,10 +2247,44 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
+      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
       tags:
         - Goals & challenges composite
-  /v1/goals-challenges/composite/rules:
+  '/v1/goals-challenges/{id}/confirm':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: Goal or Challenge identifier
+    post:
+      summary: Complete the setup of an objective or challenge
+      operationId: post-v1-goals-challenges-id-confirm
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/GoalandChallengeResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
+      tags:
+        - Goals & challenges
+  /v1/rest/goals-challenges/rules:
     parameters: []
     get:
       summary: Get rules applicable to a goal
@@ -3180,6 +3227,47 @@ definitions:
       - type
       - detail
   GoalandChallenge:
+    title: Goal&Challenge Response
+    type: object
+    description: Goal and challenge response model
+    properties:
+      id:
+        type: string
+      userId:
+        type: string
+      userExternalId:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      rules:
+        type: array
+        items:
+          $ref: '#/definitions/RuleFiltered'
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      currentAmount:
+        type: number
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  GoalandChallengeResponse:
     title: Goal&Challenge
     type: object
     description: Goal and challenge model
@@ -3220,6 +3308,10 @@ definitions:
         type: string
       updated_at:
         type: string
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/_links'
   GoalandChallengeFiltered:
     title: Goal&ChallengeFiltered
     type: object
@@ -3253,6 +3345,43 @@ definitions:
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
       currentAmount:
         type: number
+  GoalandChallengeFilteredResponse:
+    title: Goal&ChallengeFilteredResponse
+    type: object
+    description: Goal and challenge filtered response model
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      rules:
+        type: array
+        items:
+          $ref: '#/definitions/RuleFiltered'
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      currentAmount:
+        type: number
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/_links'
   GoalandChallengeModify:
     title: Goal&ChallengeModify
     type: object
@@ -3278,6 +3407,11 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      rules:
+        type: array
+        description: rulesId
+        items:
+          type: string
   GoalandChallengeCreate:
     title: Goal&ChallengeCreate
     type: object
@@ -3307,6 +3441,39 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+  GoalandChallengeCreateResponse:
+    title: Goal&ChallengeCreate Response
+    type: object
+    description: Goal and challenge response model
+    properties:
+      userId:
+        type: string
+      userExternalId:
+        type: string
+      type:
+        type: string
+      description:
+        type: object
+        properties:
+          title:
+            type: string
+          image:
+            type: string
+          color:
+            type: string
+          detail:
+            type: string
+      endTime:
+        type: string
+      targetAmount:
+        type: number
+      status:
+        type: string
+        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/_links'
   CreateSession:
     title: CreateSession
     type: object
