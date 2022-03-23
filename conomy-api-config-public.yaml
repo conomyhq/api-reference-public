@@ -1987,8 +1987,8 @@ paths:
       summary: Modify goal or challenge by id
       operationId: put-v1-goals-challenge
       responses:
-        '202':
-          description: Accepted
+        '200':
+          description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeResponse'
         '400':
@@ -2121,6 +2121,40 @@ paths:
           description: upayments user identifier
       tags:
         - Goals & Challenges composite
+  '/v1/rest/goals-challenges/{id}/confirm':
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: Goal or Challenge identifier
+    post:
+      summary: Complete the setup of an objective or challenge
+      operationId: post-v1-goals-challenges-composite-id-confirm
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GoalandChallengeResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
+      tags:
+        - Goals & challenges composite
   '/v1/rest/goals-challenges/{id}':
     get:
       summary: Get goal or challenge by id
@@ -2154,8 +2188,8 @@ paths:
       summary: Modify goal or challenge by id
       operationId: put-v1-gch-composite-goals-challenge
       responses:
-        '202':
-          description: Accepted
+        '200':
+          description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeFilteredResponse'
         '400':
@@ -2213,40 +2247,6 @@ paths:
       description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
       tags:
         - Goals & Challenges composite
-  '/v1/rest/goals-challenges/{id}/confirm':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-        description: Goal or Challenge identifier
-    post:
-      summary: Complete the setup of an objective or challenge
-      operationId: post-v1-goals-challenges-composite-id-confirm
-      responses:
-        '201':
-          description: Created
-          schema:
-            $ref: '#/definitions/GoalandChallengeResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
-      tags:
-        - Goals & challenges composite
   '/v1/goals-challenges/{id}/confirm':
     parameters:
       - type: string
@@ -2258,8 +2258,8 @@ paths:
       summary: Complete the setup of an objective or challenge
       operationId: post-v1-goals-challenges-id-confirm
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeResponse'
         '400':
