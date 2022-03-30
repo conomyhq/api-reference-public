@@ -1632,14 +1632,6 @@ paths:
         name: transaction_id
         in: path
         required: true
-  /v1/rules:
-    parameters: []
-    get:
-      summary: ''
-      operationId: get-v1-rules
-      responses:
-        '200':
-          description: OK
   /v1/pin/authorization:
     post:
       summary: "Validate pin authentication for a specific user id \U0001F510"
@@ -2313,13 +2305,6 @@ paths:
       parameters: []
       tags:
         - Goals & Challenges composite
-  /v1/authorize:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-v1-auth
-    parameters: []
   /v1/auth:
     post:
       summary: Auth
