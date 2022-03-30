@@ -1195,7 +1195,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-  '/v1/users/{user_id}':
+  '/v1/users/{id}':
     get:
       tags:
         - User
@@ -1303,8 +1303,9 @@ paths:
       operationId: deleteUser
       responses:
         '204':
-          description:
-            id: null
+          description: Deleted
+          schema:
+            $ref: '#/definitions/User'
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -1341,10 +1342,9 @@ paths:
       description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
     parameters:
       - type: string
-        name: user_id
+        name: id
         in: path
         required: true
-        description: User ID
   /v1/transactions:
     get:
       summary: "Get a list of transactions \U0001F3F7️"
@@ -4165,89 +4165,63 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+      upay_id:
+        type: string
         example: b92e761a-279a-11ec-9621-0242ac130002
       name:
         type: string
         example: Mauricio
-      nick_name:
-        type: string
-        example: JFT
       last_name:
         type: string
         example: Gatica
-      dni:
+      email:
         type: string
-        example: 12.612.412-2
+        example: example@conomy.app
+      marital_status:
+        type: string
       phone:
         type: string
         example: '+5691238159123'
-      account:
-        type: string
-        example: user
       occupation:
         type: string
-      gender:
+        example: Engineer
+      dni:
         type: string
-      marital_status:
+        example: 12.612.412-2
+      address:
         type: string
-      email:
+        example: Bellas Artes
+      status:
         type: string
+        example: active
+      contract_id:
+        type: string
+        example: 1dhHkkf76
+      rules_id:
+        type: array
+        example: '[1, 2, 3]'
+        items:
+          type: string
     required:
-      - id
+      - upay_id
       - name
       - last_name
-      - dni
-      - account
-  UserModify:
-    description: ''
-    type: object
-    x-examples:
-      example-1:
-        user_id: b92e761a-279a-11ec-9621-0242ac130002
-        name: Mauricio
-        nick_name: JFT
-        last_name: Gatica
-        rut: 12.612.412-2
-        phone: '+5691238159123'
-        account: user
-        password_pin: '2424'
-        profession: string
-        gender: string
-        civil_status: string
-        email: string
-    properties:
-      nick_name:
-        type: string
-        minLength: 1
-      phone:
-        type: string
-        minLength: 1
-      occupation:
-        type: string
-        minLength: 1
-      gender:
-        type: string
-        minLength: 1
-      marital_status:
-        type: string
-        minLength: 1
-      email:
-        type: string
-        minLength: 1
-    required:
-      - nick_name
-      - phone
-      - occupation
-      - gender
-      - marital_status
       - email
+      - phone
+      - dni
+      - address
+      - status
+      - contract_id
   UserCreate:
     type: object
+    description: Conomy User Model
     properties:
       id:
         type: string
-        format: uuid
+        example: b92e761a-279a-11ec-9621-0242ac130002
+      upay_id:
+        type: string
         example: b92e761a-279a-11ec-9621-0242ac130002
       name:
         type: string
@@ -4255,18 +4229,72 @@ definitions:
       last_name:
         type: string
         example: Gatica
+      email:
+        type: string
+        example: example@conomy.app
+      marital_status:
+        type: string
+      phone:
+        type: string
+        example: '+5691238159123'
+      occupation:
+        type: string
+        example: Engineer
       dni:
         type: string
         example: 12.612.412-2
-      account:
+      address:
         type: string
-        example: user
+        example: Bellas Artes
+      status:
+        type: string
+        example: active
+      contract_id:
+        type: string
+        example: 1dhHkkf76
+      rules_id:
+        type: array
+        example: '[1, 2, 3]'
+        items:
+          type: string
     required:
-      - id
+      - upay_id
       - name
       - last_name
+      - email
+      - phone
       - dni
-      - account
+      - address
+      - status
+      - contract_id
+  UserModify:
+    type: object
+    description: Conomy User Model
+    additionalProperties: false
+    properties:
+      email:
+        type: string
+        example: example@conomy.app
+      marital_status:
+        type: string
+        example: married
+      phone:
+        type: string
+        example: '+5691238159123'
+      occupation:
+        type: string
+        example: Engineer
+      address:
+        type: string
+        example: Bellas Artes
+      status:
+        type: string
+        example: active
+      rules_id:
+        type: array
+        example: '[1, 2, 3]'
+        items:
+          type: string
   UserPin:
     type: object
     title: UserPin
