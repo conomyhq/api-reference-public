@@ -1191,6 +1191,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
+      x-internal: true
   '/v1/users/{user_id}':
     get:
       tags:
@@ -1294,6 +1295,7 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
+      x-internal: true
     delete:
       summary: "Delete specific user by its user id \U0001F6A8"
       operationId: deleteUser
@@ -1335,6 +1337,7 @@ paths:
       tags:
         - User
       description: 'The Users service provides user information. The /users/{id} endpoint with DELETE method deletes a user from the db forever and ever.'
+      x-internal: true
     parameters:
       - type: string
         name: user_id
@@ -2967,7 +2970,6 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
         example: b92e761a-279a-11ec-9621-0242ac130002
       userExternalId:
         type: string
@@ -2976,46 +2978,61 @@ definitions:
         type: string
         example: Mauricio
         description: User name
-      lastName:
-        type: string
-        example: Gatica
-        description: user last name
       nickName:
         type: string
         example: JFT
         description: user nickname
-      dni:
+      lastName:
         type: string
-        example: 12.612.412-2
-        description: Unique country identifier
-      phone:
-        type: string
-        example: '+5691238159123'
-        description: phone number
-      career:
-        type: string
-        description: User career/ocuppation
-      gender:
-        type: string
-        description: 'FEMALE, MALE, OTHER'
+        example: Gatica
+        description: user last name
       email:
         type: string
         description: user email
       maritalStatus:
         type: string
         description: 'MARRIED, SINGLE, DIVORCED, WIDOW '
+      phone:
+        type: string
+        example: '+5691238159123'
+        description: phone number
+      dni:
+        type: string
+        example: 12.612.412-2
+        description: Unique country identifier
+      career:
+        type: string
+        description: User career/ocuppation
+      address:
+        type: string
+        example: Bellas Artes
+      status:
+        type: string
+        example: active
+      contractId:
+        type: string
+        example: 1dhHkkf76
+      rulesId:
+        type: array
+        example:
+          - af1gs
+          - l2b3f
+          - hjg3k3
+        items:
+          type: string
     required:
       - id
       - userExternalId
       - name
       - lastName
-      - nickName
-      - dni
-      - phone
-      - career
-      - gender
       - email
       - maritalStatus
+      - phone
+      - dni
+      - career
+      - address
+      - status
+      - contractId
   UserModify:
     description: ''
     type: object
@@ -3064,6 +3081,23 @@ definitions:
         type: string
         minLength: 1
         description: 'User civil status. MARRIED, SINGLE, DIVORCED, WIDOW'
+      address:
+        type: string
+        example: Bellas Artes
+      status:
+        type: string
+        example: active
+      contractId:
+        type: string
+        example: 1dhHkkf76
+      rulesId:
+        type: array
+        example:
+          - af1gs
+          - l2b3f
+          - hjg3k3
+        items:
+          type: string
   UserCreate:
     type: object
     properties:
@@ -3100,6 +3134,23 @@ definitions:
       maritalStatus:
         type: string
         description: 'MARRIED, SINGLE, DIVORCED, WIDOW'
+      address:
+        type: string
+        example: Bellas Artes
+      status:
+        type: string
+        example: active
+      contractId:
+        type: string
+        example: 1dhHkkf76
+      rulesId:
+        type: array
+        example:
+          - af1gs
+          - l2b3f
+          - hjg3k3
+        items:
+          type: string
     required:
       - userExternald
   UserPin:
