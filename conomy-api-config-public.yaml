@@ -1287,10 +1287,6 @@ definitions:
         card_account_type: cuenta vista
         description: {}
     properties:
-      id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       externalId:
         type: string
         description: Card external identifier
@@ -1399,10 +1395,6 @@ definitions:
     title: Conomy Card Create
     description: ''
     properties:
-      id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       externalId:
         type: string
         format: uuid
@@ -1429,10 +1421,6 @@ definitions:
         type: string
         example: CLP
         description: Card Currency
-      isActive:
-        type: boolean
-        example: false
-        description: Card state
       description:
         type: string
     required:
@@ -1702,7 +1690,7 @@ definitions:
   UserCreate:
     type: object
     properties:
-      userExternald:
+      userExternalId:
         type: string
         description: user u-payments uuid
       name:
@@ -1745,7 +1733,7 @@ definitions:
         type: string
         example: 1dhHkkf76
     required:
-      - userExternald
+      - userExternalId
   UserPin:
     type: object
     title: UserPin
