@@ -6,7 +6,7 @@ info:
   contact:
     email: hola@conomyhq.com
     name: Conomy app
-host: api.conomy.app
+host: conomy-data-report-composite-ylggeyc7ba-uc.a.run.app
 schemes:
   - https
 produces:
@@ -1744,14 +1744,6 @@ definitions:
       contractId:
         type: string
         example: 1dhHkkf76
-      rulesId:
-        type: array
-        example:
-          - af1gs
-          - l2b3f
-          - hjg3k3
-        items:
-          type: string
     required:
       - userExternald
   UserPin:
