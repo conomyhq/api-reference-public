@@ -96,7 +96,7 @@ paths:
         '201':
           description: Card information
           schema:
-            $ref: '#/definitions/Card'
+            $ref: '#/definitions/CardCreate'
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -207,7 +207,7 @@ paths:
         '200':
           description: Response a Conomy Card Object
           schema:
-            $ref: '#/definitions/ConomyCard'
+            $ref: '#/definitions/ConomyCardCreate'
           examples:
             example-1:
               id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
@@ -286,7 +286,7 @@ paths:
         '201':
           description: matching user
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/UserCreate'
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -373,698 +373,62 @@ paths:
         in: path
         required: true
         description: User ID
-  /switch:
-    get:
+  /transaction:
+    post:
       summary: "Transaction switch \U0001F511"
+      operationId: transactionSwitch
+      description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: User
+          description: User schema
+          schema:
+            $ref: '#/definitions/SwitchTransaction'
+          x-examples: {}
       responses:
-        '200':
-          description: OK
+        '201':
+          description: matching user
           schema:
-            type: object
-            properties: {}
+            $ref: '#/definitions/SwitchTransactionResponse'
         '400':
-          description: Bad Request - A required parameter for this API operation is invalid or has not been provided.
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
-            properties:
-              error:
-                type: object
-                required:
-                  - detail
-                  - type
-                  - code
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-            required:
-              - error
-          examples:
-            example-1:
-              value:
-                error:
-                  detail: A required parameter for this API operation is invalid or has not been provided
-                  type: GenericError
-                  code: 3
+            $ref: '#/definitions/Error400'
         '401':
           description: Invalid or missing authentication token.
           examples:
-            example-1:
-              value:
-                message: Jwt is missing
-                code: 401
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Jwt is missing
-                code: 401
+            $ref: '#/definitions/Error401'
         '404':
           description: Data not found in the DB.
           examples:
-            example-1:
-              value:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
           schema:
-            description: ''
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  detail:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: string
-                    minLength: 1
-                  code:
-                    type: number
-                required:
-                  - detail
-                  - type
-                  - code
-            required:
-              - error
-            x-examples:
-              example-1:
-                error:
-                  detail: The user could not be found in the DB
-                  type: AddressesError
-                  code: 34
+            $ref: '#/definitions/Error404'
         '500':
           description: Internal server error.
           schema:
-            description: ''
-            type: object
-            properties:
-              message:
-                type: string
-                minLength: 1
-              code:
-                type: number
-            required:
-              - message
-              - code
-            x-examples:
-              example-1:
-                message: Internal Server Error
-                code: 500
+            $ref: '#/definitions/Error500'
           examples:
-            example-1:
-              value:
-                message: Internal Server Error
-                code: 500
-      operationId: transactionSwitch
-      description: ''
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
       tags:
         - Transaction Switch
-        - hola
     parameters: []
-  /v1/goals-challenges:
-    post:
-      summary: Create goal or challenge
-      tags:
-        - Goals & Challenges
-      responses:
-        '201':
-          description: Created
-          schema:
-            $ref: '#/definitions/GoalandChallengeCreateResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      operationId: post-v1-goals
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/GoalandChallengeCreate'
-          description: Goal & challenge schema
-      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
-      x-internal: true
-    parameters: []
-    get:
-      summary: Get goals and challenges by user_id
-      operationId: get-v1-goals-challenges
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties:
-              goalschallenges:
-                $ref: '#/definitions/GoalandChallenge'
-              _links:
-                type: array
-                items:
-                  $ref: '#/definitions/_links'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
-      parameters:
-        - type: string
-          in: query
-          name: user_upayments_uuid
-          description: upayments user identifier
-      tags:
-        - Goals & Challenges
-      x-internal: true
-  '/v1/goals-challenges/{id}':
-    get:
-      summary: Get goal or challenge by id
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      operationId: get-v1-goals-challenge
-      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
-      parameters: []
-      tags:
-        - Goals & Challenges
-      x-internal: true
-    put:
-      summary: Modify goal or challenge by id
-      operationId: put-v1-goals-challenge
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method updates a goal or challenge values by id'
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/GoalandChallenge'
-      tags:
-        - Goals & Challenges
-      x-internal: true
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-    delete:
-      summary: Delete goal or challenge by id
-      operationId: delete-v1-goals-challenges-id
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error404'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method deletes a goal or challenge values by id'
-      tags:
-        - Goals & Challenges
-      x-internal: true
-  /v1/rest/goals-challenges/:
-    post:
-      summary: Create goal
-      responses:
-        '201':
-          description: Created
-          schema:
-            $ref: '#/definitions/GoalandChallengeFilteredResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      operationId: post-v1-gch-composite-goals
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/GoalandChallengeCreate'
-          description: Goal & challenge schema
-      description: The goals and challenges compound is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
-      tags:
-        - Goals & Challenges composite
-    parameters: []
-    get:
-      summary: Get goals and challenges by user_id
-      operationId: get-v1-gch-composite-goals-challenges
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties:
-              goalsChallenges:
-                $ref: '#/definitions/GoalandChallengeFiltered'
-              _links:
-                type: array
-                items:
-                  $ref: '#/definitions/_links'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
-      parameters:
-        - type: string
-          in: query
-          name: user_upayments_uuid
-          description: upayments user identifier
-      tags:
-        - Goals & Challenges composite
-  '/v1/rest/goals-challenges/{id}/confirm':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-        description: Goal or Challenge identifier
-    post:
-      summary: Complete the setup of an objective or challenge
-      operationId: post-v1-goals-challenges-composite-id-confirm
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
-      tags:
-        - Goals & challenges composite
-  '/v1/rest/goals-challenges/{id}':
-    get:
-      summary: Get goal or challenge by id
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeFilteredResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      operationId: get-v1-gch-composite-goals-challenge
-      description: 'The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /rest/goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
-      parameters: []
-      tags:
-        - Goals & Challenges composite
-    put:
-      summary: Modify goal or challenge by id
-      operationId: put-v1-gch-composite-goals-challenge
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeFilteredResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method updates a goal or challenge values by id
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/GoalandChallengeModify'
-      tags:
-        - Goals & Challenges composite
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-        description: Goal or Challenge identifier
-    delete:
-      summary: Delete goal or challenge by id
-      operationId: delete-v1-gch-composite-goals-challenges-id
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error404'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges endpoint with a PUT method deletes a goal or challenge values by id
-      tags:
-        - Goals & Challenges composite
-  '/v1/goals-challenges/{id}/confirm':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-        description: Goal or Challenge identifier
-    post:
-      summary: Complete the setup of an objective or challenge
-      operationId: post-v1-goals-challenges-id-confirm
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/GoalandChallengeResponse'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
-      tags:
-        - Goals & challenges
-  /v1/rest/goals-challenges/rules:
-    parameters: []
-    get:
-      summary: Get rules applicable to a goal
-      operationId: get-v1-gch-composite-rules
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/RuleFiltered'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The goals and challenges composite is responsible for handling and fitting the requests of the goals and challenges module. The /gch-composite/goals-challenges/rules endpoint with a GET method fetch all rules related to a goal
-      parameters: []
-      tags:
-        - Goals & Challenges composite
-  /v1/auth:
-    post:
-      summary: Auth
-      operationId: post-v1-auth
-      responses:
-        '201':
-          description: Created
-          schema:
-            $ref: '#/definitions/Session'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: |
-        The auth service is responsable for handling our conomy user session. The /auth endpoint with POST method create a user session
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/CreateSession'
-        - type: string
-          in: header
-          name: X-Application-id
-          description: IMEI or app identifier
-      tags:
-        - Auth
-      security:
-        - firebase: []
-  /v1/auth/refresh:
-    post:
-      summary: Refresh Token
-      operationId: post-v1-auth-refresh
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/Session'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: The auth service is responsable for handling our conomy user session. The /auth/refresh endpoint with POST method refreshes the user session
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/CreateSession'
-          description: ''
-        - type: string
-          in: header
-          name: X-Refresh-Token
-          description: Conomy refresh token
-        - type: string
-          in: header
-          name: X-Application-Id
-          description: IMEI or app identifier
-      tags:
-        - Auth
-      security:
-        - firebase: []
-    parameters: []
-  /v1/auth/validate:
-    parameters: []
-    get:
-      summary: Validate session
-      operationId: get-v1-auth-validate
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: Conomy user identifier
-              message:
-                type: string
-                description: human readable message
-              expiration:
-                type: string
-                description: 'Expiration time [min]'
-              _links:
-                type: array
-                items:
-                  $ref: '#/definitions/_links'
-      description: The auth service is responsable for handling our conomy user session. The /auth/validate endpoint with GET method validates the conomy user token
-      tags:
-        - Auth
-      security:
-        - firebase: []
-      parameters:
-        - type: string
-          in: header
-          name: Conomy-Token
-          description: User conomy token
-        - type: string
-          in: header
-          name: X-Application-id
-          description: IMEI or app identifier
 definitions:
   Address:
     type: object
@@ -1734,6 +1098,67 @@ definitions:
         example: 1dhHkkf76
     required:
       - userExternalId
+  SwitchTransaction:
+    description: ''
+    type: object
+    properties:
+      idConomyCardReferenceToken:
+        type: string
+        minLength: 1
+      amount:
+        type: string
+        minLength: 1
+      currency:
+        type: string
+        minLength: 1
+      transactionId:
+        type: string
+        minLength: 1
+    required:
+      - idConomyCardReferenceToken
+      - amount
+      - currency
+      - transactionId
+    x-examples:
+      example-1:
+        idConomyCardReferenceToken: test
+        amount: test
+        currency: clp
+        transactionId: test
+  SwitchTransactionResponse:
+    description: ''
+    type: object
+    properties:
+      idConomyCardReferenceToken:
+        type: string
+        minLength: 1
+      amount:
+        type: string
+        minLength: 1
+      currency:
+        type: string
+        minLength: 1
+      transactionId:
+        type: string
+        minLength: 1
+      links:
+        type: array
+        items:
+          required: []
+          properties: {}
+    required:
+      - idConomyCardReferenceToken
+      - amount
+      - currency
+      - transactionId
+      - links
+    x-examples:
+      example-1:
+        idConomyCardReferenceToken: asd
+        amount: as
+        currency: clp
+        transactionId: iasd
+        links: []
   UserPin:
     type: object
     title: UserPin
