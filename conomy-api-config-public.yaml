@@ -11,8 +11,8 @@ produces:
 securityDefinitions:
   apitoken:
     type: apiKey
-    name: key
-    in: query
+    name: x-api-key
+    in: header
 paths:
   /v1/transaction:
     post:
