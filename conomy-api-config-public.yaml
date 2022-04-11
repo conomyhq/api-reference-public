@@ -1,32 +1,72 @@
 swagger: '2.0'
 info:
-  title: "Conomy Developers \U0001F4D9 API Reference"
-  description: "This is **Conomy Developers**, the portal where you cand find our API Reference with everything you need to use our APIs. We've tried to build a friendly documentation, if you have any doubt please don't hesitate to reach us out at hola@conomyhq.com. We hope you enjoy this site \U0001F44B.\n\nCurrently we have a microservices backend architecture serving for different purposes. You can find their description in the left menu with the detail of each of their specific endpoints.\n\n**Addresses Service**: Users addresses information, you can fetch address data with its specific user id, bringing parameters like region, commune, first_address and an optional description address.\n\n**Cards Service**: Cards information, search and match any card that is owned by specific user id and respond an array of card objects. \n\n**Transactions Service**: This service provides transactions information, you can fetch transaction data with its specific card id, bringing parameters like title, amount, currency among others.\n\n**Users Service**: This service provides users information, with its user id you can get all the user data and also make some changes to its personal information.\n\n**Authorization Service**: This service lets the user to have its private pin, letting him take control over his personal data with a configured pin pass. \n\n**Others...*\n\nhttps://giphy.com/gifs/barkpost-barkpost-happy-wednesday-working-like-a-dog-eYilisUwipOEM"
+  title: conomy-business-rules
+  description: Conomy business rules
   version: 1.0.0
-  contact:
-    email: hola@conomyhq.com
-    name: Conomy app
-host: conomy-data-report-composite-ylggeyc7ba-uc.a.run.app
+host: business-rule-flow-1a0miegm3njhz.apigateway.conomy-6cc91.cloud.goog
 schemes:
   - https
 produces:
   - application/json
 securityDefinitions:
-  firebase:
-    name: API Key
+  apitoken:
     type: apiKey
+    name: key
     in: header
 paths:
+  /v1/transaction:
+    post:
+      tags:
+        - transaction
+      summary: Post a new transaction to apply business rules
+      operationId: postTransaction
+      description: Apply business rules to every transaction
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: Transaction
+          description: Transaction to apply business rules
+          schema:
+            $ref: '#/definitions/Transaction'
+      security:
+        - apitoken: []
+      responses:
+        '201':
+          description: Transaction created
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: invalid input
+        '401':
+          description: invalid token
+        '409':
+          description: an existing item already exists
+        '422':
+          description: invalid Json
+        '500':
+          description: internal error
   '/card/{card_id}':
-    parameters:
-      - type: string
-        name: card_id
-        in: path
-        required: true
-        description: card ID
     get:
+      tags:
+        - Card
+      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{card_id} with the method GET fetch the information about a specific id.'
       summary: "Get a specific card by card ID \U0001F4B3"
       operationId: getCardId
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - type: string
+          name: card_id
+          in: path
+          required: true
+          description: card ID
+      security:
+        - apitoken: []
       responses:
         '200':
           description: Card information
@@ -63,15 +103,6 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
-      tags:
-        - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{card_id} with the method GET fetch the information about a specific id.'
-      parameters: []
-      x-google-backend:
-        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
-        path_translation: APPEND_PATH_TO_ADDRESS
-      security:
-        - firebase: []
   /card:
     post:
       tags:
@@ -81,10 +112,8 @@ paths:
       description: 'The Cards service delivers cards data. The /cards endpoint with POST method adds a card owned by a specific user id and save it on an array of card objects, which includes all its cards attributes.'
       consumes:
         - application/json
-      security:
-        - firebase: []
       x-google-backend:
-        address: 'https://conomy-card-service-h4gib2s4ya-uc.a.run.app'
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
         - in: body
@@ -92,6 +121,8 @@ paths:
           description: Card schema
           schema:
             $ref: '#/definitions/CardCreate'
+      security:
+        - apitoken: []
       responses:
         '201':
           description: Card information
@@ -132,31 +163,13 @@ paths:
   '/conomyCard/{conomycard_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
+      security:
+        - apitoken: []
       responses:
         '200':
           description: Response a Conomy Card Object
           schema:
             $ref: '#/definitions/ConomyCard'
-          examples:
-            example-1:
-              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              issuing_bank: BancoDeChile
-              card_brand: MasterCard
-              cardholder_name: Pablo insulza
-              pan: '************1234'
-              currency: CLP
-              is_active: false
-              created_at: '2017-07-21T17:32:28Z'
-              updated_at: '2017-07-21T17:32:28Z'
-              active_card:
-                id: string
-                issuing_bank: string
-                card_brand: string
-                pan: string
-                is_active: true
-                currency: string
-              description: ''
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -192,6 +205,9 @@ paths:
       description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch a specific card by its id.
       tags:
         - Conomy Card
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
     parameters:
       - type: string
         name: conomycard_id
@@ -203,25 +219,13 @@ paths:
     post:
       summary: "Create a new Conomy Card \U0001F4B3"
       operationId: postConomyCard
+      security:
+        - apitoken: []
       responses:
         '200':
           description: Response a Conomy Card Object
           schema:
             $ref: '#/definitions/ConomyCardCreate'
-          examples:
-            example-1:
-              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              user_id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              issuing_bank: BancoDeChile
-              card_brand: MasterCard
-              cardholder_name: Pablo insulza
-              pan: '************1234'
-              currency: CLP
-              is_active: false
-              created_at: '2017-07-21T17:32:28Z'
-              updated_at: '2017-07-21T17:32:28Z'
-              active_card: true
-              description: ''
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -262,6 +266,9 @@ paths:
           schema:
             $ref: '#/definitions/ConomyCardCreate'
           description: Request are all the attributes but active default payment card and description
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
   /user:
     post:
       tags:
@@ -272,9 +279,9 @@ paths:
       consumes:
         - application/json
       security:
-        - firebase: []
+        - apitoken: []
       x-google-backend:
-        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
         - in: body
@@ -326,10 +333,8 @@ paths:
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
       description: 'The Users service provides user information. The /users/{id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
-      security:
-        - api_key: []
       x-google-backend:
-        address: 'https://conomy-user-service-h4gib2s4ya-uc.a.run.app'
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -367,6 +372,8 @@ paths:
               detail: Internal Server Error
               type: ServerError
               code: 500
+      security:
+        - apitoken: []
     parameters:
       - type: string
         name: user_id
@@ -428,8 +435,19 @@ paths:
               code: 500
       tags:
         - Transaction Switch
+      security:
+        - apitoken: []
     parameters: []
 definitions:
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+    required:
+      - _id
   Address:
     type: object
     description: This is a model to represent user address
@@ -793,130 +811,6 @@ definitions:
       - cardholderName
       - pan
       - currency
-  Transaction:
-    type: object
-    x-examples: {}
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      card_id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-      description:
-        type: string
-        example: clothes
-      category:
-        type: string
-        example: bars&restaurants
-      amount:
-        type: number
-        format: float
-        example: -196690
-      currency:
-        type: string
-        example: CLP
-      transaction_date:
-        type: integer
-        example: 1616021369
-      expanded:
-        $ref: '#/definitions/ExpandedInfo'
-      created_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      updated_at:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      issuing_bank:
-        type: string
-        example: Banco de Chile
-      transaction_type:
-        type: string
-        description: if is in/out transaction
-        example: out
-      merchant:
-        type: string
-        example: Bar Alonso
-      brand_category:
-        type: string
-        description: e.g. Master Card merchant code
-        example: '303'
-      taxing_code:
-        type: string
-        description: e.g. SII code
-        example: '2'
-    required:
-      - id
-      - description
-      - amount
-      - currency
-      - transaction_date
-      - expanded
-      - created_at
-      - updated_at
-  TransactionModify:
-    type: object
-    x-examples: {}
-    properties:
-      description:
-        type: string
-        example: clothes
-      category:
-        type: string
-        example: bars&restaurants
-      amount:
-        type: number
-        format: float
-        example: -196690
-      currency:
-        type: string
-        example: CLP
-      issuing_bank:
-        type: string
-        example: Banco de Chile
-      transaction_type:
-        type: string
-        example: out
-      merchant:
-        type: string
-        example: la tiendita
-      brand_category:
-        type: string
-        example: '403'
-        description: category provided by MasterCard for example
-      taxing_code:
-        type: string
-        description: Code provided by tax service
-        example: '22'
-  ExpandedInfo:
-    type: object
-    x-examples: {}
-    properties:
-      location:
-        type: string
-        example: 'Santiago, Chile'
-      receipt:
-        type: string
-        example: url
-      score:
-        type: number
-        format: float
-        example: 3.5
-  CategoryItem:
-    type: object
-    properties:
-      type:
-        type: string
-        description: type descriptor
-        example: pharmacy
-      total:
-        type: number
-        description: total sum of category transactions
-        example: -30000
   User:
     type: object
     description: Conomy User Model
@@ -1144,7 +1038,6 @@ definitions:
       links:
         type: array
         items:
-          required: []
           properties: {}
     required:
       - idConomyCardReferenceToken
@@ -1159,27 +1052,6 @@ definitions:
         currency: clp
         transactionId: iasd
         links: []
-  UserPin:
-    type: object
-    title: UserPin
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: b92e761a-279a-11ec-9621-0242ac130002
-        description: Firebase ID
-      user_id:
-        type: string
-      password_pin:
-        type: string
-        example: vK6q83OnsWqRCN3C37Ikl/T4DwWpnumo1CR305oEkkhRdp4ua6TJeif309Es0x9t7snE04hu48eLw5zSVg/+y5rWNPBFg4rnka6j0btuD3htbdkm8emx+d6JcOk8/xlIWr4ifZvF5t5fuj2fqWZzgDxnF5TJxWWLETHGCl1FduK3rZj4Yh6MtoYjhqqVVuFaXwoZEka77K5HO2sQ11l03qnbAk+cV+ZjNyAD24Qgi+wrRG0pGJ3BHUy7K0jF1umKCJDd8ILfM7GD1/+fuTU4RMMJ0PFpbKnMp3kTSwwTpSJ0j3tgchXvfTc4sAx/aQgdVerdHnhFSMnoVbsV/TiBRg==
-      created_at:
-        type: string
-      updated_at:
-        type: string
-    required:
-      - id
-      - password_pin
   Error400:
     title: BadRequestError
     type: object
@@ -1265,337 +1137,3 @@ definitions:
       - code
       - type
       - detail
-  GoalandChallenge:
-    title: Goal&Challenge Response
-    type: object
-    description: Goal and challenge response model
-    properties:
-      id:
-        type: string
-      userId:
-        type: string
-      userExternalId:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          $ref: '#/definitions/RuleFiltered'
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
-      created_at:
-        type: string
-      updated_at:
-        type: string
-  GoalandChallengeResponse:
-    title: Goal&Challenge
-    type: object
-    description: Goal and challenge model
-    properties:
-      id:
-        type: string
-      userId:
-        type: string
-      userExternalId:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          $ref: '#/definitions/RuleFiltered'
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
-      created_at:
-        type: string
-      updated_at:
-        type: string
-      _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
-  GoalandChallengeFiltered:
-    title: Goal&ChallengeFiltered
-    type: object
-    description: Goal and challenge model
-    properties:
-      id:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          $ref: '#/definitions/RuleFiltered'
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
-  GoalandChallengeFilteredResponse:
-    title: Goal&ChallengeFilteredResponse
-    type: object
-    description: Goal and challenge filtered response model
-    properties:
-      id:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          $ref: '#/definitions/RuleFiltered'
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
-      _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
-  GoalandChallengeModify:
-    title: Goal&ChallengeModify
-    type: object
-    description: Goal and challenge model
-    properties:
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      rules:
-        type: array
-        description: rulesId
-        items:
-          type: string
-  GoalandChallengeCreate:
-    title: Goal&ChallengeCreate
-    type: object
-    description: Goal and challenge model
-    properties:
-      userId:
-        type: string
-      userExternalId:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-  GoalandChallengeCreateResponse:
-    title: Goal&ChallengeCreate Response
-    type: object
-    description: Goal and challenge response model
-    properties:
-      userId:
-        type: string
-      userExternalId:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
-  CreateSession:
-    title: CreateSession
-    type: object
-    properties:
-      userExternalId:
-        type: string
-        description: u-payments user id
-      ttl:
-        type: integer
-        description: Time to live. Value for the period of time that session should exist
-    required:
-      - userExternalId
-  Session:
-    title: Session
-    type: object
-    properties:
-      conomyToken:
-        type: string
-        description: User conomy token
-      refreshToken:
-        type: string
-        description: Refresh Token
-      expiration:
-        type: string
-        description: 'Expiration time [min]'
-      _links:
-        type: array
-        description: A list of link types and descriptions for token validation. Conomy provides this paramenter
-        items:
-          $ref: '#/definitions/_links'
-  _links:
-    title: _links
-    type: object
-    description: A list of link types and descriptions.
-    properties:
-      rel:
-        type: string
-        description: This describes the type of links
-      route:
-        type: string
-        description: This property contais a full-qualified URL
-      method:
-        type: string
-        description: The HTTP method that should be used
-      targetSchema:
-        type: string
-        description: 'For requests, this is a URL representing the schema that the response should conform to.'
-      schema:
-        type: string
-        description: 'For HTTP methods that can receive bodies (POST and PUT), this is a URL representing the schema that the body should conform to.'
-    required:
-      - rel
-      - route
-      - method
-  RefreshToken:
-    title: RefreshToken
-    type: object
-    description: ''
-    properties:
-      userExternalUuid:
-        type: string
-        description: u-payments user id
-      conomyToken:
-        type: string
-        description: User conomy token
-      ttl:
-        type: string
-        description: Time to live. Value for the period of time that session should exist
-    required:
-      - userExternalUuid
-      - conomyToken
-      - ttl
-  ValidatedSession:
-    title: ValidatedSession
-    type: object
-    properties:
-      userExternalUuid:
-        type: string
-      message:
-        type: string
-    required:
-      - userExternalUuid
-      - message
-consumes:
-  - application/json
-responses: {}
