@@ -12,7 +12,7 @@ securityDefinitions:
   apitoken:
     type: apiKey
     name: key
-    in: header
+    in: query
 paths:
   /v1/transaction:
     post:
