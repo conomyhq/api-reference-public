@@ -441,11 +441,14 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  /v1/goals-challenges:
+  /v1/goals-challenges/composite:
     post:
       summary: Create goal or challenge
       tags:
         - Goals & Challenges
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '201':
           description: Created
@@ -480,6 +483,9 @@ paths:
     get:
       summary: Get goals and challenges by user_id
       operationId: get-v1-goals-challenges
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: OK
@@ -517,9 +523,12 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
-  '/v1/goals-challenges/{id}':
+  '/v1/goals-challenges/composite/{id}':
     get:
       summary: Get goal or challenge by id
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: OK
@@ -550,6 +559,9 @@ paths:
     put:
       summary: Modify goal or challenge by id
       operationId: put-v1-goals-challenge
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: OK
@@ -588,6 +600,9 @@ paths:
     delete:
       summary: Delete goal or challenge by id
       operationId: delete-v1-goals-challenges-id
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '204':
           description: No Content
@@ -611,7 +626,7 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
-  '/v1/goals-challenges/{id}/confirm':
+  '/v1/goals-challenges/composite/{id}/confirm':
     parameters:
       - type: string
         name: id
@@ -621,6 +636,9 @@ paths:
     post:
       summary: Complete the setup of an objective or challenge
       operationId: post-v1-goals-challenges-id-confirm
+      x-google-backend:
+        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
           description: OK
