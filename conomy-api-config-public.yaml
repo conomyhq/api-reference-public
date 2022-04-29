@@ -1202,7 +1202,11 @@ definitions:
   SwitchTransaction:
     description: ''
     type: object
+    x-examples: {}
     properties:
+      identifier:
+        type: string
+        minLength: 1
       idConomyCardReferenceToken:
         type: string
         minLength: 1
@@ -1216,16 +1220,11 @@ definitions:
         type: string
         minLength: 1
     required:
+      - identifier
       - idConomyCardReferenceToken
       - amount
       - currency
       - transactionId
-    x-examples:
-      example-1:
-        idConomyCardReferenceToken: test
-        amount: test
-        currency: clp
-        transactionId: test
   SwitchTransactionResponse:
     description: ''
     type: object
