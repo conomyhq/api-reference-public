@@ -965,7 +965,7 @@ paths:
           schema:
             $ref: '#/definitions/Error404'
       operationId: get-api-v1-content-blogpost
-      description: Returns a list of objects of type Blog post.
+      description: 'This service allows us to obtain a list of all the blogs that are created on the platform. '
       parameters:
         - type: string
           in: header
@@ -1048,7 +1048,8 @@ paths:
           schema:
             $ref: '#/definitions/Error404'
       operationId: get-api-v1-content-blogpost-id
-      description: Returns all information about Blog post object.
+      description: |
+        The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {id}.
       parameters:
         - type: string
           in: header
@@ -1085,15 +1086,13 @@ paths:
         '401':
           description: Unauthorized
           schema:
-            type: object
-            properties: {}
+            $ref: '#/definitions/Error401'
         '404':
           description: Not Found
           schema:
-            type: object
-            properties: {}
+            $ref: '#/definitions/Error404'
       operationId: get-api-v1-content-owner-id
-      description: Returns all information about Owner object.
+      description: 'Get Owner will give us the information of the person who has created a blog through the use of a unique {id}. '
       parameters:
         - type: string
           in: header
@@ -1107,7 +1106,7 @@ paths:
         required: true
     get:
       summary: Get media
-      tags: 
+      tags:
         - Blog
       responses:
         '200':
@@ -1135,20 +1134,22 @@ paths:
         '401':
           description: Unauthorized
           schema:
-            type: object
-            properties: {}
+            $ref: '#/definitions/Error401'
         '404':
           description: Not Found
           schema:
-            type: object
-            properties: {}
+            $ref: '#/definitions/Error404'
       operationId: get-api-v1-content-_media-id
-      description: Returns all information about Media object.
+      description: |
+        The _media service will allow us to access and obtain the thumbnail and header images of the owners' accounts. It is necessary to enter the {id} of the image, while hydration defaults to 0 and only accepts one level of hydration. 
       parameters:
         - type: string
           in: query
           name: hydrate
           description: hydrate the relations with an object
+          minLength: 0
+          maxLength: 1
+          default: '0'
         - type: string
           in: header
           name: X-AUTH-TOKEN
