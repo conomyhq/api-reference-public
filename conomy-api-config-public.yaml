@@ -743,11 +743,16 @@ paths:
         - Goals & Challenges
   /v1/auth:
     parameters:
+      - in: body
+        name: body
+        schema:
+          $ref: '#/definitions/GetTokenBody'
+        description: This request require an user id from uapyment and and estimated time to live
       - type: string
-        name: upayments_uuid
-        in: query
+        name: X-Application-Id
+        in: header
         required: true
-        description: Upayment user identifier
+        description: App id
     post:
       summary: Create a new jwt token to interactuate with conomy services
       operationId: post-v1-auth
@@ -820,6 +825,17 @@ paths:
         in: header
         required: true
         description: Refresh token id
+      - in: body
+        name: body
+        schema:
+          type: object
+          properties:
+            ttl:
+              type: string
+              description: time to live until token expire
+              example: "2018-12-10T13:45:00.000Z"
+          
+        description: This request require an user id from uapyment and and estimated time to live
     post:
       summary: Refresh a jwt token
       operationId: post-v1-auth-refresh
@@ -1184,14 +1200,35 @@ definitions:
       - upaymentsId
       - appId
       - exp
+  GetTokenBody:
+    type: object
+    description: Body schema to fetch a jwt token
+    properties:
+      user_upayments_uuid:
+        type: string
+        description: Upayment user id who is applying to the token
+        example: "52SNfMWOktWVxsfyks6felsafAU24"
+      ttl:
+        type: string
+        description: Duration/Date until expire
+        example: "2018-12-10T13:45:00.000Z"
+
+    required:
+      - user_upayments_uuid
+      - ttl
+
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
     properties:
       conomyToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: Conomy jwt token
+        example: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9"
       refreshToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: refresh jwt token
+        example: "eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM"
       expiration:
         description: Unix timestamp
         type: string
