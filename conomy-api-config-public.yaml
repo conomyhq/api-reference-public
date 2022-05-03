@@ -857,7 +857,7 @@ paths:
           schema:
             $ref: '#/definitions/BlogList'
           examples:
-            example-1:
+            example:
               total_count: 2
               total_pages: 1
               current_page: 1
@@ -867,8 +867,11 @@ paths:
                   slug: transaccion_que_no_ocurrio
                   title: Transacción que no ocurrió
                   writer:
-                    - type: internal
-                      dataUrl: /api/v1/content/owner/owner-338894
+                    - id: owner-338894
+                      type: internal
+                      name: Pablo
+                      last_name: Acuña
+                      role: CEO
                   content: |
                     <p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.</p>
 
@@ -908,14 +911,39 @@ paths:
                     contentType: blogpost
                     objectTitle: Transacción que no ocurrió
                     workflow_state: saved
-                  thumbnail: []
-                  headerImage: []
+                  thumbnail:
+                    - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
+                      url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                      size: 5647499
+                      type: image
+                      width: 5573
+                      height: 3715
+                      source: unsplash
+                      fileName: photo-1647292545223-7a736ec55b1b.jpg
+                      mimeType: image/jpeg
+                      extension: jpg
+                      externalId: PJtwruJbqKM
+                  headerImage:
+                    - id: _header-a62fbebf-0574-4180-996a-7a5ea7802bde
+                      url: /image/0x0/_header-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                      size: 5647499
+                      type: header
+                      width: 5573
+                      height: 3715
+                      source: unsplash
+                      fileName: photo-16fsafsaE5223-7a736ec55b1b.jpg
+                      mimeType: image/jpeg
+                      extension: jpg
+                      externalId: PJtGAwJbqKM
                 - id: blogpost-71163
                   slug: tarjetas_credito_pago_minimo
                   title: 'Tarjetas de crédito: Pago mínimo'
                   writer:
-                    - type: internal
-                      dataUrl: /api/v1/content/owner/owner-338894
+                    - id: owner-338434
+                      type: internal
+                      name: Taladro
+                      last_name: Bauker
+                      role: Frontend engineer
                   content: |
                     <p>Desmitificando el pago mínimo, ¿Te conviene?</p>
 
@@ -954,8 +982,30 @@ paths:
                     contentType: blogpost
                     objectTitle: 'Tarjetas de crédito: Pago mínimo'
                     workflow_state: saved
-                  thumbnail: []
-                  headerImage: []
+                  thumbnail:
+                    - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
+                      url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                      size: 5647499
+                      type: image
+                      width: 5573
+                      height: 3715
+                      source: unsplash
+                      fileName: photo-1647292545223-7a736ec55b1b.jpg
+                      mimeType: image/jpeg
+                      extension: jpg
+                      externalId: PJtwruJbqKM
+                  headerImage:
+                    - id: _header-a62fbebf-0574-4180-996a-7a5ea7802bde
+                      url: /image/0x0/_header-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                      size: 5647499
+                      type: header
+                      width: 5573
+                      height: 3715
+                      source: unsplash
+                      fileName: photo-16fsafsaE5223-7a736ec55b1b.jpg
+                      mimeType: image/jpeg
+                      extension: jpg
+                      externalId: PJtGAwJbqKM
         '401':
           description: Unauthorized
           schema:
@@ -1000,8 +1050,11 @@ paths:
               slug: tarjetas_credito_pago_minimo
               title: 'Tarjetas de crédito: Pago mínimo'
               writer:
-                - dataUrl: /api/v1/content/owner/owner-338894
+                - id: owner-338434
                   type: internal
+                  name: Taladro
+                  last_name: Bauker
+                  role: Frontend engineer
               content: |
                 <p>Desmitificando el pago mínimo, ¿Te conviene?</p>
 
@@ -1034,11 +1087,29 @@ paths:
                 <p>Pablo Acuña, CEO Conomy<br />
                 &nbsp;</p>
               thumbnail:
-                - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-                  type: internal
+                - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
+                  url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                  size: 5647499
+                  type: image
+                  width: 5573
+                  height: 3715
+                  source: unsplash
+                  fileName: photo-1647292545223-7a736ec55b1b.jpg
+                  mimeType: image/jpeg
+                  extension: jpg
+                  externalId: PJtwruJbqKM
               headerImage:
-                - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-                  type: internal
+                - id: _header-a62fbebf-0574-4180-996a-7a5ea7802bde
+                  url: /image/0x0/_header-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
+                  size: 5647499
+                  type: header
+                  width: 5573
+                  height: 3715
+                  source: unsplash
+                  fileName: photo-16fsafsaE5223-7a736ec55b1b.jpg
+                  mimeType: image/jpeg
+                  extension: jpg
+                  externalId: PJtGAwJbqKM
         '401':
           description: Unauthorized
           schema:
@@ -2769,7 +2840,7 @@ definitions:
     description: ''
     type: object
     x-examples:
-      example-1:
+      example:
         id: owner-338894
         name: Pablo
         role: CEO
@@ -2840,7 +2911,7 @@ definitions:
     description: ''
     type: object
     x-examples:
-      example-1:
+      example:
         id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
         url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
         size: 5647499
