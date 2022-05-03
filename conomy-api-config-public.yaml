@@ -2355,6 +2355,7 @@ definitions:
               workflow_state: saved
             thumbnail: []
             headerImage: []
+    description: 'Model who represents '
     properties:
       total_count:
         type: number
@@ -2390,90 +2391,156 @@ definitions:
             writer:
               type: array
               uniqueItems: true
-              minItems: 1
               description: It contains the data of the blog creator
+              minItems: 1
               items:
                 type: object
                 properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  role:
+                    type: string
+                  last_name:
+                    type: string
                   type:
                     type: string
-                    minLength: 1
-                  dataUrl:
-                    type: string
-                    minLength: 1
-                    description: Path containing the blog creator's general data
                 required:
+                  - id
+                  - name
+                  - role
+                  - last_name
                   - type
-                  - dataUrl
             content:
               type: string
               minLength: 1
               description: Story that belongs to the blog
-            internal:
-              type: object
-              description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-              properties:
-                createdAt:
-                  type: string
-                  minLength: 1
-                  description: Date of blog creation
-                deletedAt:
-                  type: string
-                  description: Blog deletion date
-                updatedAt:
-                  type: string
-                  minLength: 1
-                  description: Date of last modification made to the blog
-                contentType:
-                  type: string
-                  minLength: 1
-                objectTitle:
-                  type: string
-                  minLength: 1
-                  description: Blog title
-                workflow_state:
-                  type: string
-                  minLength: 1
-                  description: Current blog workflow status
-              required:
-                - createdAt
-                - deletedAt
-                - updatedAt
-                - contentType
-                - objectTitle
-                - workflow_state
             thumbnail:
               type: array
               items:
                 type: object
                 properties:
-                  dataUrl:
-                    type: string
-                    description: Path containing the thumbnail image of the blog's creator
                   type:
                     type: string
+                  id:
+                    type: string
+                    description: Unique id for images
+                  url:
+                    type: string
+                    description: Address where the image is stored
+                  size:
+                    type: string
+                    description: Total file size
+                  width:
+                    type: string
+                    description: Total image width
+                  height:
+                    type: string
+                    description: Total image height
+                  source:
+                    type: string
+                  fileName:
+                    type: string
+                    description: Image file name
+                  mimeType:
+                    type: string
+                  extension:
+                    type: string
+                    description: |
+                      Image extension
+                  externalId:
+                    type: string
+                required:
+                  - type
+                  - id
+                  - url
+                  - size
+                  - source
+                  - fileName
+                  - mimeType
+                  - extension
             headerImage:
               type: array
               items:
                 type: object
                 properties:
-                  dataUrl:
-                    type: string
-                    description: Path that contains the header image of the blog
                   type:
                     type: string
+                  id:
+                    type: string
+                    description: Unique id for header image
+                  url:
+                    type: string
+                    description: Address where the header is stored
+                  size:
+                    type: string
+                    description: Total file size
+                  width:
+                    type: string
+                    description: Total header width
+                  height:
+                    type: string
+                    description: Total header height
+                  source:
+                    type: string
+                  fileName:
+                    type: string
+                    description: Header file name
+                  mimeType:
+                    type: string
+                  extension:
+                    type: string
+                    description: Header extension
+                  externalId:
+                    type: string
+                required:
+                  - type
+                  - id
+                  - url
+                  - size
+                  - source
+                  - fileName
+                  - mimeType
+                  - extension
           required:
             - id
             - slug
             - title
             - content
+      internal:
+        type: object
+        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
+        properties:
+          createdAt:
+            type: string
+            description: Date of blog creation
+          deletedAt:
+            type: string
+            description: Date and time of blog deletion
+          updatedAt:
+            type: string
+            description: Date of last modification made to the blog
+          objectTitle:
+            type: string
+            description: Blog title
+          workflow_state:
+            type: string
+            description: Current blog workflow status
+          contentType:
+            type: string
+        required:
+          - createdAt
+          - deletedAt
+          - updatedAt
+          - objectTitle
+          - workflow_state
     required:
       - total_count
       - total_pages
       - current_page
       - count
       - data
-    description: 'Model who represents '
   BlogPostObject:
     description: ''
     type: object
