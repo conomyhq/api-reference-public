@@ -16,6 +16,10 @@ securityDefinitions:
     type: apiKey
     name: x-api-key
     in: header
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /v1/transaction:
     post:
@@ -741,7 +745,7 @@ paths:
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
       tags:
         - Goals & Challenges
-  /v1/auth:
+  /api/auth:
     parameters:
       - in: body
         name: body
@@ -780,7 +784,7 @@ paths:
       description: 'With this method a new jwt token will be created in the conomy authentication service, along with this will come a refresh token that will serve to renew said token and also an expiration date in unix timestamp format, in addition to this the useful links will be referenced of the api'
       tags:
         - Auth
-  /v1/auth/validate:
+  /api/auth/validate:
     parameters:
       - type: string
         name: X-Application-Id
@@ -788,6 +792,8 @@ paths:
         required: true
         description: App id
     get:
+      security:
+        - Bearer: []
       summary: Check if the token is valid or not
       operationId: get-v1-auth-validate
       responses:
@@ -813,7 +819,7 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
-  /v1/auth/refresh:
+  /api/auth/refresh:
     parameters:
       - type: string
         name: X-Application-Id
@@ -821,7 +827,7 @@ paths:
         required: true
         description: App id
       - type: string
-        name: X-Refresh-Id
+        name: X-Refresh-Token
         in: header
         required: true
         description: Refresh token id
@@ -831,9 +837,9 @@ paths:
           type: object
           properties:
             ttl:
-              type: string
-              description: time to live until token expire
-              example: "2018-12-10T13:45:00.000Z"
+              type: integer
+              description: time to live until token expire, unix timestamp
+              example: 1651007906
           
         description: This request require an user id from uapyment and and estimated time to live
     post:
@@ -1191,10 +1197,10 @@ definitions:
       appId:
         description: app idientifier
         type: string
-        example: 12612361236123
+        example: 123456
       exp:
         description: Unix timestamp
-        type: string
+        type: integer
         example: 1651007906
     required:
       - upaymentsId
@@ -1209,9 +1215,9 @@ definitions:
         description: Upayment user id who is applying to the token
         example: "52SNfMWOktWVxsfyks6felsafAU24"
       ttl:
-        type: string
+        type: integer
         description: Duration/Date until expire
-        example: "2018-12-10T13:45:00.000Z"
+        example: 1651007906
 
     required:
       - user_upayments_uuid
