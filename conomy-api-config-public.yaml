@@ -21,41 +21,6 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
-  /v1/transaction:
-    post:
-      tags:
-        - transaction
-      summary: Post a new transaction to apply business rules
-      operationId: postTransaction
-      description: Apply business rules to every transaction
-      consumes:
-        - application/json
-      x-google-backend:
-        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
-        path_translation: APPEND_PATH_TO_ADDRESS
-      parameters:
-        - in: body
-          name: Transaction
-          description: Transaction to apply business rules
-          schema:
-            $ref: '#/definitions/Transaction'
-      security:
-        - apitoken: []
-      responses:
-        '201':
-          description: Transaction created
-          schema:
-            $ref: '#/definitions/Transaction'
-        '400':
-          description: invalid input
-        '401':
-          description: invalid token
-        '409':
-          description: an existing item already exists
-        '422':
-          description: invalid Json
-        '500':
-          description: internal error
   '/card/{card_id}':
     get:
       tags:
@@ -838,9 +803,8 @@ paths:
           properties:
             ttl:
               type: integer
-              description: time to live until token expire, unix timestamp
+              description: 'time to live until token expire, unix timestamp'
               example: 1651007906
-          
         description: This request require an user id from uapyment and and estimated time to live
     post:
       summary: Refresh a jwt token
@@ -1213,16 +1177,14 @@ definitions:
       user_upayments_uuid:
         type: string
         description: Upayment user id who is applying to the token
-        example: "52SNfMWOktWVxsfyks6felsafAU24"
+        example: 52SNfMWOktWVxsfyks6felsafAU24
       ttl:
         type: integer
         description: Duration/Date until expire
         example: 1651007906
-
     required:
       - user_upayments_uuid
       - ttl
-
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
@@ -1230,11 +1192,11 @@ definitions:
       conomyToken:
         type: string
         description: Conomy jwt token
-        example: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9"
+        example: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
       refreshToken:
         type: string
         description: refresh jwt token
-        example: "eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM"
+        example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
         description: Unix timestamp
         type: string
