@@ -446,6 +446,7 @@ paths:
           schema:
             $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
+          x-examples: {}
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
     parameters: []
@@ -636,6 +637,7 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/GoalandChallenge'
+          x-examples: {}
       tags:
         - Goals & Challenges
       x-internal: true
@@ -711,20 +713,21 @@ paths:
       tags:
         - Goals & Challenges
   /api/auth:
-    parameters:
-      - in: body
-        name: body
-        schema:
-          $ref: '#/definitions/GetTokenBody'
-        description: This request require an user id from uapyment and and estimated time to live
-      - type: string
-        name: X-Application-Id
-        in: header
-        required: true
-        description: App id
     post:
       summary: Create a new jwt token to interactuate with conomy services
       operationId: post-v1-auth
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GetTokenBody'
+          description: This request require an user id from uapyment and and estimated time to live
+          x-examples: {}
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
       responses:
         '200':
           description: OK
@@ -750,17 +753,17 @@ paths:
       tags:
         - Auth
   /api/auth/validate:
-    parameters:
-      - type: string
-        name: X-Application-Id
-        in: header
-        required: true
-        description: App id
     get:
       security:
         - Bearer: []
       summary: Check if the token is valid or not
       operationId: get-v1-auth-validate
+      parameters:
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
       responses:
         '200':
           description: OK
@@ -809,6 +812,28 @@ paths:
     post:
       summary: Refresh a jwt token
       operationId: post-v1-auth-refresh
+      parameters:
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
+        - type: string
+          name: X-Refresh-Token
+          in: header
+          required: true
+          description: Refresh token id
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ttl:
+                type: integer
+                description: 'time to live until token expire, unix timestamp'
+                example: 1651007906
+                x-examples: {}
+          description: This request require an user id from uapyment and and estimated time to live
       responses:
         '200':
           description: OK
