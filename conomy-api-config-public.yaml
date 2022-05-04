@@ -2353,21 +2353,20 @@ definitions:
                 mimeType: image/jpeg
                 extension: jpg
                 externalId: PJtwruJbqKM
-    description: 'Model who represents '
     properties:
       total_count:
         type: number
-        description: Number of the total pages with blogs
+        description: Number of the total blogs
       total_pages:
         type: number
         description: Number of the total pages with blogs
-        minimum: 5
       current_page:
         type: number
         description: Number of the current page
       count:
         type: number
         description: Number of blogs in the current page
+        minimum: 10
       data:
         type: array
         uniqueItems: true
@@ -2553,7 +2552,7 @@ definitions:
       tag:
         type: string
         minLength: 1
-        description: Title slug for urls
+        description: Title tag for urls
       title:
         type: string
         minLength: 1
