@@ -857,38 +857,6 @@ paths:
                       name: Pablo
                       role: CEO
                       last_name: Acuña
-                  content: |
-                    <p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.</p>
-
-                    <p>Les quiero contar una historia <strong>-REAL-</strong> que empezó cuando estaba en mis primeros años de universidad, pero que terminó recién el año pasado.</p>
-
-                    <p>Era muy normal que en algunas semanas del año, dentro del campus de la universidad existieran stands de bancos que invitaban a los estudiantes a abrir una cuenta con ellos. Por lo general estas cuentas eran gratuitas -o eso te prometían- hasta los 30 años (se podrán imaginar, que por esto la historia recién terminó el año pasado).&nbsp;</p>
-
-                    <p>En esta ocasión había un banco -que por respeto prefiero no decir el nombre- que ofrecía además de una cuenta gratuita hasta cumplir 30 años -clásico-, la camiseta de la selección de Alexis Sanchez, Arturo Vidal o Claudio Bravo de regalo. ¡Tremenda promoción! Pensándolo ahora, es muy bueno para ser cierto….</p>
-
-                    <p>Y bueno, nunca he sido tan fanático del fútbol y ya tenía cuenta en otro banco, pero puntualmente ese mes era septiembre y se venía el 18. En esas fechas los gastos por lo general suben y como buen estudiante estaba medio corto de lucas. Entonces, se me encendió la ampolleta y pensé: “puedo sacar esta cuenta gratis y vender la camiseta, así gano plata y después cierro la cuenta antes de los 30. La polera me sale gratis y la podría vender ¡Increíble oportunidad!”.</p>
-
-                    <p>No vi ningún tipo de problema en mi lógica y me aventuré a abrir la cuenta. Una de las condiciones para que me entregaran mi camiseta de Alexis -me decanté por la del “Niño Maravilla”- era activar las tarjetas de mi nuevo banco. Lo hice, y acto seguido recibí los contratos que tenía que firmar. Ni los miré -craso error-, solo pensaba en el 18 de septiembre que se venía y estampé mi rúbrica en todos los papeles. Me entregaron mis tarjetas y la “7” de Alexis. La publiqué en internet y la vendí la misma semana. Me gané 45 lucas sin hacer nada más que firmar. Negocio redondo, pensé.</p>
-
-                    <p>No volví a pensar en mi nuevo banco hasta que ya estaba cercano a cumplir 30 años, la cuenta iba a pasar a tener un costo mensual y como no me gusta perder plata, fui al banco para cerrarla.</p>
-
-                    <p>Llegué a la sucursal y me atendieron con mucha amabilidad -para qué voy a mentir-. La anfitriona me indicó que debía pasar a atención al cliente para cerrar mi cuenta. Voy y la señorita me dice que hay un problema con cerrar mi cuenta. Según sus palabras, yo debía aproximadamente ¡¡500 mil pesos!!. Quedé como Condorito -¡Plop!-. “¿Cómo? No entiendo nada”, le digo.<br />
-                    Le conté la historia de mi cuenta y le aseguré que nunca había usado ninguna tarjeta del banco, nunca realicé una compra, solo activé la cuenta y acepté mi polera de regalo. No hice absolutamente nada más con el banco.</p>
-
-                    <p>La señorita revisó mi historial del banco y me dijo que no tenía más información en detalle anterior al 2016 y mi deuda era anterior a esa fecha. Rarísimo. Siguió revisando y me comentó que toda la deuda es producto de una compra que se hizo por 20 mil pesos y que como nunca se pagó siguió acumulando intereses hasta llegar al tope de mi cuenta -por suerte que mi cuenta solo tenía de cupo 500 mil pesos pensé-. Nunca me supieron en qué gasté esas 20 lucas.</p>
-
-                    <p>Le pregunté si podía hacer algo, acudir a alguna entidad fiscalizadora o algo. Me dijo muy amablemente: “De poder puedes, pero hacer un reclamo por una transacción con una antigüedad mayor a 5 años es difícil que te vaya bien”.</p>
-
-                    <p>Entonces no tenía mucho que hacer. Para cerrar mi cuenta tenía que pagar esa deuda que no correspondía a mis gastos. Creo que es injusto que este mismo banco no se haya dado el tiempo todos los meses desde que abrí mi cuenta, en llamarme para preguntarme si quería un crédito y nadie nunca se molestó en decirme nada sobre esta deuda que seguía creciendo mes a mes.</p>
-
-                    <p>El sistema a veces es injusto, te hace responsable por responsabilidades de otros y no hay más salida que pagar.</p>
-
-                    <p>Las finanzas personales no deberían ser así. Deberían ser fáciles, sin letra chica, que no me ofrezcan una camiseta gratis por la que pensé ganar 45 mil pesos, pero por la que en verdad perdí 455 mil -no considero el valor del dinero en el tiempo para simplificar el análisis-.&nbsp;</p>
-
-                    <p>Fundar Conomy es una de las cosas más desafiantes que he vivido, sin embargo la motivación de poder aportar a las finanzas personales de millones de chilenos y latinoamericanos es aún más grande.</p>
-
-                    <p>Conomy está para ayudarte a que no te pasen cosas como las que me pasaron a mí, a enseñarte a ahorrar, invertir, a ayudarte a mejorar la tasa de interés que te ofrece el banco, a optar por los mejores productos financieros del mercado y todo esto sin tener que hacer un gran esfuerzo.<br />
-                    &nbsp;</p>
                   internal:
                     createdAt: '2022-03-15T16:21:25+00:00'
                     deletedAt: ''
@@ -909,52 +877,21 @@ paths:
                   slug: tarjetas_credito_pago_minimo
                   title: 'Tarjetas de crédito: Pago mínimo'
                   writer:
-                    - id: owner-338894
-                      name: Taladro
+                    - type: internal
+                      id: owner-338894
+                      name: Felipe
                       role: CTO
-                      last_name: Tactico
-                  content: |
-                    <p>Desmitificando el pago mínimo, ¿Te conviene?</p>
-
-                    <p>Las tarjetas de crédito son una muy buena herramienta para sacar el mayor provecho de tus finanzas, siempre y cuando, &nbsp;-<em>y aquí es donde esta la letra chica</em>- sepamos cómo funcionan&nbsp;</p>
-
-                    <p>Uno de los grandes problemas de las personas que usan tarjetas de crédito es producto del pago mínimo: ¿Qué es? ¿Cómo funciona? ¿Es favorable para el que lo usa? En este artículo les contaremos todos los detalles sobre esta modalidad, si te conviene o no y sus consecuencias.</p>
-
-                    <p>Las tarjetas de crédito -independiente de la marca y del banco de emisión- nos entregan la opción del “pago mínimo” cuando nos enfrentamos al pago de nuestras cartolas mensuales y claro, puede sonar altamente atractivo cancelar solo una fracción del monto que debemos, pero ¿Cómo afecta esto en nuestras finanzas?</p>
-
-                    <p>El pago mínimo generalmente corresponde al 10% de la deuda total del mes, entonces, cuando elegimos este tipo de pago, no estamos pagando toda nuestra deuda -lógicamente- y de esta manera el monto que debíamos sigue acumulando intereses. Es decir, cuando usas esta opción de tu tarjeta de crédito, lo que haces es aumentar el monto total que finalmente tendrás que pagar.</p>
-
-                    <p><em>EXPLICANDO CON PERAS, MANZANAS Y CONOMY</em></p>
-
-                    <p><em>Imaginemos que tu deuda total en la tarjeta de crédito es de $100.000 pesos y que en marzo la cuota que debes pagar es de $30.000 pesos. En ese caso, el pago mínimo (siguiendo la lógica del 10% del total adeudado) sería aproximadamente $3.000. Ahora, si pagamos solo $3.000, pero nuestra deuda total era $30.000, hay $27.000 de deuda que no se pagaron en marzo y en consecuencia seguirán acumulando intereses. Como los intereses son un % del total que las personas deben, mientras más debes más pagas en intereses.&nbsp;</em></p>
-
-                    <p>Además de aumentar -<em>o no disminuir, mejor dicho</em>- el monto total adeudado al costear el pago mínimo de tu tarjeta de crédito, hay otro concepto perjudicial en esta misma acción: La tasa de intereses que te cobran es diferente y… <strong>¡Claro que es más alta!</strong></p>
-
-                    <p>Cuando no pagas el monto facturado total de tu tarjeta de crédito, el interés cambia y pasan a cobrarte el llamado “interés rotativo” a cambio del interés que deberías pagar. Este interés rotativo siempre es más alto que el interés por cuotas y suele estar cerca del máximo convencional, que es el monto máximo permitido por la ley.</p>
-
-                    <p>RESUMIMOS Y RECOMENDAMOS</p>
-
-                    <p>Cuando optas por el pago mínimo, estás comprometiéndote a pagar más a tu banco por la plata que ya debías, por dos conceptos: (1) mayor monto sobre el que se calculan los intereses a pagar y (2) una tasa de interés más alta producto del interés rotativo.</p>
-
-                    <p>Hay que dejar claro que el pago mínimo no siempre es algo malo. Hacerlo sirve para que el crédito siga vigente y no inhabilitar la tarjeta, y además, funciona también para que no te cobren el interés por mora, que es adicional al rotativo. Cuando no tienes otra opción de pago, siempre es mejor pagar el monto mínimo que pagar nada.</p>
-
-                    <p>Si frecuentemente debes hacer efectivo el pago mínimo y no te alcanza para pagar el monto completo, te recomendamos dos cosas: (1) cada vez que puedas abonar a tu tarjeta y de esta forma estarás disminuyendo el monto total de deuda y en consecuencia los intereses totales a pagar. Por otra parte, (2) trata de acomodar tus gastos a montos que si puedas pagar, y con la función de presupuesto dentro de Conomy app puedes ordenar tus gastos con un par de clics, y la misma aplicación te ayudará a saber cuánto puedes gastar para cumplir tus objetivos: Ya sea el pagar tu tarjeta de crédito, ahorrar para unas vacaciones o poder enfocarse en el ansiado pie del departamento que tanto buscas.</p>
-
-                    <p>Espero que este artículo te haya sido útil. Si conoces a alguien que le pueda servir, recomiéndale nuestro blog y no dudes en compartir este y todos los demás textos con quien tú quieras.</p>
-
-                    <p>Pablo Acuña, CEO Conomy<br />
-                    &nbsp;</p>
-                  internal:
-                    createdAt: '2022-03-15T16:33:03+00:00'
-                    deletedAt: ''
-                    updatedAt: '2022-03-16T12:05:44+00:00'
-                    contentType: blogpost
-                    objectTitle: 'Tarjetas de crédito: Pago mínimo'
-                    workflow_state: saved
-                  media:
+                      last_name: García
+                  createdAt: '2022-03-15T16:33:03+00:00'
+                  deletedAt: ''
+                  updatedAt: '2022-03-16T12:05:44+00:00'
+                  contentType: blogpost
+                  objectTitle: 'Tarjetas de crédito: Pago mínimo'
+                  workflow_state: saved
+                - media:
                     - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
                       url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
-                      type: header
+                      type: image
                       source: unsplash
                       fileName: photo-1647292545223-7a736ec55b1b.jpg
                       mimeType: image/jpeg
