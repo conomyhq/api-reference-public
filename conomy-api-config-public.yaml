@@ -864,7 +864,7 @@ paths:
               count: 2
               data:
                 - id: blogpost-674209
-                  slug: transaccion_que_no_ocurrio
+                  tag: transaccion_que_no_ocurrio
                   title: Transacción que no ocurrió
                   writer:
                     - id: owner-338894
@@ -1009,7 +1009,7 @@ paths:
           examples:
             example:
               id: blogpost-674209
-              slug: transaccion_que_no_ocurrio
+              tag: transaccion_que_no_ocurrio
               title: Transacción que no ocurrió
               writer:
                 - id: owner-338894
@@ -2242,7 +2242,7 @@ definitions:
         count: 2
         data:
           - id: blogpost-674209
-            slug: transaccion_que_no_ocurrio
+            tag: transaccion_que_no_ocurrio
             title: Transacción que no ocurrió
             writer:
               - id: owner-338894
@@ -2490,7 +2490,7 @@ definitions:
     x-examples:
       example:
         id: blogpost-674209
-        slug: transaccion_que_no_ocurrio
+        tag: transaccion_que_no_ocurrio
         title: Transacción que no ocurrió
         writer:
           - id: owner-338894
@@ -2550,7 +2550,7 @@ definitions:
         type: string
         minLength: 1
         description: Unique id for each blog
-      slug:
+      tag:
         type: string
         minLength: 1
         description: Title slug for urls
@@ -2650,7 +2650,7 @@ definitions:
             - extension
     required:
       - id
-      - slug
+      - tag
       - title
       - content
       - internal
