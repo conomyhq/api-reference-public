@@ -1253,9 +1253,13 @@ definitions:
     description: Response schema for a get token method
     properties:
       conomyToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: Conomy jwt token
+        example: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9"
       refreshToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: refresh jwt token
+        example: "eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM"
       expiration:
         description: Unix timestamp
         type: string
