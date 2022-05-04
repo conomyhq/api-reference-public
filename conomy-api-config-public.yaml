@@ -1096,7 +1096,7 @@ paths:
           schema:
             $ref: '#/definitions/OwnerBlog'
           examples:
-            example-1:
+            example:
               id: owner-338894
               name: Taladro
               role: Frontend engineer
