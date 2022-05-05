@@ -863,6 +863,7 @@ paths:
                 - id: blogpost-674209
                   tag: transaccion_que_no_ocurrio
                   title: Transacción que no ocurrió
+                  estimatedTime: '2022-03-15T16:21:25+00:00'
                   writer:
                     - id: owner-338894
                       name: Pablo
@@ -887,9 +888,9 @@ paths:
                 - id: blogpost-71163
                   slug: tarjetas_credito_pago_minimo
                   title: 'Tarjetas de crédito: Pago mínimo'
+                  estimatedTime: '2022-03-15T16:21:25+00:00'
                   writer:
-                    - type: internal
-                      id: owner-338894
+                    - id: owner-338894
                       name: Felipe
                       role: CTO
                       last_name: García
@@ -945,6 +946,7 @@ paths:
               id: blogpost-674209
               tag: transaccion_que_no_ocurrio
               title: Transacción que no ocurrió
+              estimatedTime: '2022-03-15T16:21:25+00:00'
               writer:
                 - id: owner-338894
                   name: Pablo
@@ -2201,6 +2203,7 @@ definitions:
           - id: blogpost-674209
             tag: transaccion_que_no_ocurrio
             title: Transacción que no ocurrió
+            estimatedTime: '2022-03-15T16:21:25+00:00'
             writer:
               - id: owner-338894
                 name: Pablo
@@ -2225,9 +2228,9 @@ definitions:
           - id: blogpost-71163
             slug: tarjetas_credito_pago_minimo
             title: 'Tarjetas de crédito: Pago mínimo'
+            estimatedTime: '2022-03-15T16:21:25+00:00'
             writer:
-              - type: internal
-                id: owner-338894
+              - id: owner-338894
                 name: Felipe
                 role: CTO
                 last_name: García
