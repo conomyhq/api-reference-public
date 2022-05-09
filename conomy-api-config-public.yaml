@@ -1126,7 +1126,7 @@ definitions:
     type: object
     description: Jwt token format used by conomy
     properties:
-      upaymentsId:
+      userId:
         description: upayment user idientifier
         type: string
         example: 52SNfMWOktWVxsfyks6felsafAU24
