@@ -846,7 +846,7 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
-  /api/content/blogpost:
+  /blog/post:
     get:
       summary: Get list of blogs
       tags:
@@ -912,6 +912,13 @@ paths:
                       mimeType: image/jpeg
                       extension: jpg
                       externalId: PJtwruJbqKM
+                - internal:
+                    createdAt: '2022-03-15T16:21:25+00:00'
+                    deletedAt: ''
+                    updatedAt: '2022-03-16T12:04:35+00:00'
+                    contentType: blogpost
+                    objectTitle: 'Tarjetas de crédito: Pago mínimo'
+                    workflow_state: saved
         '401':
           description: Unauthorized
           schema:
@@ -929,7 +936,7 @@ paths:
           description: Personal Auth token generated for user in Headless CMS application
           required: true
     parameters: []
-  '/api/content/blogpost/{id}':
+  '/blog/post/{id}':
     parameters:
       - type: string
         name: id
@@ -950,6 +957,7 @@ paths:
               tag: transaccion_que_no_ocurrio
               title: Transacción que no ocurrió
               estimatedTime: '2022-03-15T16:21:25+00:00'
+              createdAt: '2022-03-15T16:21:25+00:00'
               writer:
                 - id: owner-338894
                   name: Pablo
@@ -987,13 +995,6 @@ paths:
 
                 <p>Conomy está para ayudarte a que no te pasen cosas como las que me pasaron a mí, a enseñarte a ahorrar, invertir, a ayudarte a mejorar la tasa de interés que te ofrece el banco, a optar por los mejores productos financieros del mercado y todo esto sin tener que hacer un gran esfuerzo.<br />
                 &nbsp;</p>
-              internal:
-                createdAt: '2022-03-15T16:21:25+00:00'
-                deletedAt: ''
-                updatedAt: '2022-03-16T12:04:35+00:00'
-                contentType: blogpost
-                objectTitle: Transacción que no ocurrió
-                workflow_state: saved
               media:
                 - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
                   url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
@@ -1015,102 +1016,6 @@ paths:
       description: |
         The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {id}.
       parameters:
-        - type: string
-          in: header
-          name: X-AUTH-TOKEN
-          description: Personal Auth token generated for user in Headless CMS application
-  '/api/content/owner/{id}':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Get Owner
-      tags:
-        - Blog
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/OwnerBlog'
-          examples:
-            example:
-              id: owner-338894
-              name: Taladro
-              role: Frontend engineer
-              internal:
-                createdAt: '2022-03-16T12:02:24+00:00'
-                deletedAt: ''
-                updatedAt: '2022-03-16T12:03:20+00:00'
-                contentType: owner
-                objectTitle: ''
-                workflow_state: saved
-              last_name: Táctico
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-      operationId: get-api-v1-content-owner-id
-      description: 'Get Owner will give us the information of the person who has created a blog through the use of a unique {id}. '
-      parameters:
-        - type: string
-          in: header
-          name: X-AUTH-TOKEN
-          description: Personal Auth token generated for user in Headless CMS application
-  '/api/content/_media/{id}':
-    parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Get media
-      tags:
-        - Blog
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/MediaBlog'
-          examples:
-            example:
-              id: _media-698d20aa-193a-47b3-be4d-550c1aab47e7
-              extension: png
-              fileName: example_image.png
-              mimeType: image/png
-              type: header
-              source: disk
-              externalId: ''
-              url: /image/0x0/_media-698d20aa-193a-47b3-be4d-550c1aab47e7.png
-              internal:
-                contentType: _media
-                createdAt: '2022-04-20T18:31:28+00:00'
-                updatedAt: '2022-04-20T18:31:28+00:00'
-                deletedAt: ''
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
-      operationId: get-api-v1-content-_media-id
-      description: |
-        The _media service will allow us to access and obtain the thumbnail and header images of the owners' accounts. It is necessary to enter the {id} of the image, while hydration defaults to 0 and only accepts one level of hydration. 
-      parameters:
-        - type: string
-          in: query
-          name: hydrate
-          description: hydrate the relations with an object
-          minLength: 0
-          maxLength: 1
-          default: '0'
         - type: string
           in: header
           name: X-AUTH-TOKEN
@@ -2233,12 +2138,15 @@ definitions:
       total_count:
         type: number
         description: Number of the total blogs
+        example: 2
       total_pages:
         type: number
         description: Number of the total pages with blogs
+        example: 1
       current_page:
         type: number
         description: Number of the current page
+        example: 1
       count:
         type: number
         description: Number of blogs in the current page
@@ -2248,111 +2156,7 @@ definitions:
         uniqueItems: true
         minItems: 1
         items:
-          type: object
-          properties:
-            id:
-              type: string
-              minLength: 1
-              description: Unique id for each blog
-            tag:
-              type: string
-              minLength: 1
-              description: Title tag for urls
-            title:
-              type: string
-              minLength: 1
-              description: Blog title
-            estimatedTime:
-              type: string
-              description: Estimated reading time in date format ISO 8601
-            writer:
-              type: array
-              uniqueItems: true
-              description: It contains the data of the blog creator
-              minItems: 1
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique id belonging to a single Owner
-                  name:
-                    type: string
-                    description: Owner's name
-                  role:
-                    type: string
-                    description: Role within conomy
-                  last_name:
-                    type: string
-                    description: Owner's last name
-                required:
-                  - id
-                  - name
-                  - role
-                  - last_name
-            media:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique id for images
-                  url:
-                    type: string
-                    description: Address where the image is stored
-                  type:
-                    type: string
-                    description: Define whether it is a header or a thumbnail image
-                  fileName:
-                    type: string
-                    description: Image file name
-                  mimeType:
-                    type: string
-                  extension:
-                    type: string
-                    description: Image extension
-                  externalId:
-                    type: string
-                  source:
-                    type: string
-                required:
-                  - id
-                  - url
-                  - fileName
-                  - mimeType
-                  - extension
-          required:
-            - id
-            - tag
-            - title
-      internal:
-        type: object
-        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        properties:
-          createdAt:
-            type: string
-            description: Date of blog creation
-          deletedAt:
-            type: string
-            description: Date and time of blog deletion
-          updatedAt:
-            type: string
-            description: Date of last modification made to the blog
-          objectTitle:
-            type: string
-            description: Blog title
-          workflow_state:
-            type: string
-            description: Current blog workflow status
-          contentType:
-            type: string
-        required:
-          - createdAt
-          - deletedAt
-          - updatedAt
-          - objectTitle
-          - workflow_state
+          $ref: '#/definitions/BlogPostObject'
     required:
       - total_count
       - total_pages
@@ -2404,13 +2208,6 @@ definitions:
 
           <p>Conomy está para ayudarte a que no te pasen cosas como las que me pasaron a mí, a enseñarte a ahorrar, invertir, a ayudarte a mejorar la tasa de interés que te ofrece el banco, a optar por los mejores productos financieros del mercado y todo esto sin tener que hacer un gran esfuerzo.<br />
           &nbsp;</p>
-        internal:
-          createdAt: '2022-03-15T16:21:25+00:00'
-          deletedAt: ''
-          updatedAt: '2022-03-16T12:04:35+00:00'
-          contentType: blogpost
-          objectTitle: Transacción que no ocurrió
-          workflow_state: saved
         media:
           - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
             url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
@@ -2425,17 +2222,21 @@ definitions:
         type: string
         minLength: 1
         description: Unique id for each blog
+        example: '"blogpost-674209"'
       tag:
         type: string
         minLength: 1
         description: Title tag for urls
+        example: '"transaccion_que_no_ocurrio"'
       title:
         type: string
         minLength: 1
         description: Blog title
+        example: '"Transacción que no ocurrió"'
       estimatedTime:
-        type: string
+        type: number
         description: Estimated reading time in date format ISO 8601
+        example: 400
       writer:
         type: array
         uniqueItems: true
@@ -2446,15 +2247,19 @@ definitions:
             id:
               type: string
               description: Unique id belonging to a single Owner
+              example: '"owner-338894"'
             name:
               type: string
               description: Owner's name
+              example: '"Pablo"'
             last_name:
               type: string
               description: Owner's last name
+              example: '"Acuña"'
             role:
               type: string
               description: Role within conomy
+              example: '"CEO"'
           required:
             - id
             - name
@@ -2463,32 +2268,6 @@ definitions:
       content:
         type: string
         minLength: 1
-      internal:
-        type: object
-        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        properties:
-          createdAt:
-            type: string
-            minLength: 1
-            description: Date of blog creation
-          deletedAt:
-            type: string
-            description: Blog deletion date
-          updatedAt:
-            type: string
-            minLength: 1
-            description: Date of last modification made to the blog
-          contentType:
-            type: string
-            minLength: 1
-          objectTitle:
-            type: string
-            minLength: 1
-            description: Blog title
-          workflow_state:
-            type: string
-            minLength: 1
-            description: Current blog workflow status
       media:
         type: array
         description: thumbnail image belonging to the creator of the blog
@@ -2498,126 +2277,75 @@ definitions:
             id:
               type: string
               description: Unique id for images
-            type:
+              example: '"_media-a62fbebf-0574-4180-996a-7a5ea7802bde"'
+            type_media:
               type: string
+              example: '"image"'
             url:
               type: string
               description: Address where the image is stored
+              example: '"/image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg"'
             source:
               type: string
+              example: '"unsplash"'
             fileName:
               type: string
               description: Image file name
+              example: '"photo-1647292545223-7a736ec55b1b.jpg"'
             mimeType:
               type: string
+              example: '"image/jpeg"'
             extension:
               type: string
               description: Image extension
+              example: '"jpg"'
             externalId:
               type: string
+              example: '"PJtwruJbqKM"'
           required:
             - id
-            - type
+            - type_media
             - url
             - source
             - fileName
             - mimeType
             - extension
+      internal:
+        type: array
+        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
+        items:
+          type: object
+          properties:
+            createdAt:
+              type: string
+              description: Date of blog creation
+              example: '"2022-03-15T16:21:25+00:00"'
+            deletedAt:
+              type: string
+              description: Date and time of blog deletion
+            updatedAt:
+              type: string
+              description: Date of last modification made to the blog
+              example: '"2022-03-16T12:04:35+00:00"'
+            objectTitle:
+              type: string
+              description: Blog title
+              example: '"Transacción que no ocurrió"'
+            contentType:
+              type: string
+              example: '"blogpost"'
+            workflow_state:
+              type: string
+              description: Current blog workflow status
+              example: '"saved"'
+          required:
+            - createdAt
+            - deletedAt
+            - updatedAt
+            - objectTitle
+            - workflow_state
     required:
       - id
       - tag
       - title
       - content
-      - internal
-  OwnerBlog:
-    description: ''
-    type: object
-    x-examples:
-      example:
-        id: owner-338894
-        name: Pablo
-        role: CEO
-        internal:
-          createdAt: '2022-03-16T12:02:24+00:00'
-          deletedAt: ''
-          updatedAt: '2022-03-16T12:03:20+00:00'
-          contentType: owner
-          objectTitle: ''
-          workflow_state: saved
-        last_name: Acuña
-    properties:
-      id:
-        type: string
-        minLength: 1
-        description: Unique id belonging to a single Owner
-      name:
-        type: string
-        minLength: 1
-        description: owner's name
-      role:
-        type: string
-        minLength: 1
-        description: Role within conomy
-      last_name:
-        type: string
-        minLength: 1
-        description: Owner's last name
-    required:
-      - id
-      - name
-      - role
-      - last_name
-  MediaBlog:
-    description: ''
-    type: object
-    x-examples:
-      example:
-        id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
-        url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
-        size: 5647499
-        type: image
-        width: 5573
-        height: 3715
-        source: unsplash
-        fileName: photo-1647292545223-7a736ec55b1b.jpg
-        internal:
-          createdAt: '2022-03-15T16:38:05+00:00'
-          deletedAt: ''
-          updatedAt: '2022-03-15T16:38:05+00:00'
-          contentType: _media
-          objectTitle: ''
-          workflow_state: saved
-        mimeType: image/jpeg
-        extension: jpg
-        externalId: PJtwruJbqKM
-    properties:
-      id:
-        type: string
-        minLength: 1
-        description: Unique id for images
-      url:
-        type: string
-        minLength: 1
-        description: Address where the image is stored
-      type:
-        type: string
-        minLength: 1
-      source:
-        type: string
-        minLength: 1
-      mimeType:
-        type: string
-        minLength: 1
-      extension:
-        type: string
-        minLength: 1
-      externaiId:
-        type: string
-        minLength: 1
-    required:
-      - id
-      - url
-      - type
-      - source
-      - mimeType
-      - extension
