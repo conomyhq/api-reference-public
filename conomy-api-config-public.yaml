@@ -2390,3 +2390,4 @@ definitions:
       - tag
       - title
       - content
+basePath: /dev
