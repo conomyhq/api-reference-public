@@ -352,9 +352,9 @@ paths:
         in: path
         required: true
         description: User ID
-  /transaction:
+  /switch:
     post:
-      summary: "Transaction switch \U0001F511"
+      summary: "Switch Transaction \U0001F511"
       operationId: transactionSwitch
       description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
       consumes:
@@ -757,11 +757,13 @@ paths:
       x-google-backend:
         address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - apitoken: []
     parameters: []
   /api/auth/validate:
     get:
       security:
-        - Bearer: []
+        - apitoken: []
       summary: Check if the token is valid or not
       operationId: get-v1-auth-validate
       parameters:
@@ -851,6 +853,8 @@ paths:
       x-google-backend:
         address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - apitoken: []
     parameters: []
   /blog/post:
     get:
@@ -941,6 +945,8 @@ paths:
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
           required: true
+      security:
+        - apitoken: []
     parameters: []
   '/blog/post/{id}':
     parameters:
@@ -1026,6 +1032,8 @@ paths:
           in: header
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
+      security:
+        - apitoken: []
 definitions:
   Transaction:
     type: object
