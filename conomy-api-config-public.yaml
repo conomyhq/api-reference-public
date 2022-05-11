@@ -754,6 +754,9 @@ paths:
       description: 'With this method a new jwt token will be created in the conomy authentication service, along with this will come a refresh token that will serve to renew said token and also an expiration date in unix timestamp format, in addition to this the useful links will be referenced of the api'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
     parameters: []
   /api/auth/validate:
     get:
@@ -790,6 +793,9 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
     parameters: []
   /api/auth/refresh:
     post:
@@ -842,6 +848,9 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
     parameters: []
   /blog/post:
     get:
