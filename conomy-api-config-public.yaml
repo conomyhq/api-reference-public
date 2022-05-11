@@ -1057,11 +1057,15 @@ definitions:
         example: 52SNfMWOktWVxsfyks6felsafAU24
       ttl:
         type: integer
-        description: Duration/Date until expire
+        description: Duration time (min)
         example: 1651007906
     required:
       - user_upayments_uuid
       - ttl
+    x-examples:
+      example-1:
+        user_upayments_uuid: 52SNfMWOktWVxsfyks6felsafAU24
+        ttl: 5
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
@@ -1075,7 +1079,7 @@ definitions:
         description: refresh jwt token
         example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
-        description: Unix timestamp
+        description: Expiration date (unix time)
         type: string
         example: 1651007906
       _links:
@@ -1094,11 +1098,11 @@ definitions:
       conomyToken:
         type: string
         description: Conomy jwt token
-        example: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9"
+        example: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
       refreshToken:
         type: string
         description: refresh jwt token
-        example: "eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM"
+        example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
         description: Unix timestamp
         type: string
