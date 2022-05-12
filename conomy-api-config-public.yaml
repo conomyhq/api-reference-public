@@ -449,6 +449,8 @@ paths:
           x-examples: {}
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
     get:
       summary: Get goals and challenges by user_id
@@ -493,6 +495,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
   /v1/goals-challenges/composite/challenges:
     get:
       summary: Get Active challenges in app
@@ -531,6 +535,8 @@ paths:
             $ref: '#/definitions/Error500'
       operationId: get-v1-active-challenges
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
   /v1/goals-challenges/composite/rules:
     get:
@@ -570,6 +576,8 @@ paths:
             $ref: '#/definitions/Error500'
       operationId: get-v1-active-rules
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
   '/v1/goals-challenges/composite/{id}':
     get:
@@ -604,6 +612,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
     put:
       summary: Modify goal or challenge by id
       operationId: put-v1-goals-challenge
@@ -641,6 +651,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
     parameters:
       - type: string
         name: id
@@ -675,6 +687,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
   '/v1/goals-challenges/composite/{id}/confirm':
     parameters:
       - type: string
@@ -712,6 +726,8 @@ paths:
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
       tags:
         - Goals & Challenges
+      security:
+        - apitoken: []
   /api/auth:
     post:
       summary: Create a new jwt token to interactuate with conomy services
