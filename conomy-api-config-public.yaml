@@ -941,22 +941,22 @@ paths:
             $ref: '#/definitions/BlogPostObject'
           examples:
             example-1:
-              id: '"blogpost-674209"'
-              tag: '"transaccion_que_no_ocurrio"'
-              title: '"Transacción que no ocurrió"'
+              id: blogpost-674209
+              tag: transaccion_que_no_ocurrio
+              title: Transacción que no ocurrió
               estimatedTime: 6
               writer:
-                - id: '"owner-338894"'
-                  name: '"Pablo"'
-                  last_name: '"Acuña"'
-                  role: '"CEO"'
+                - id: owner-338894
+                  name: Pablo
+                  last_name: Acuña
+                  role: CEO
                   image:
-                    - dataUrl: '"/api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945"'
-              content: '"<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
+                    - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
+              content: '<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
               internal:
-                - createdAt: '"2022-03-15T16:21:25+00:00"'
+                - createdAt: '2022-03-15T16:21:25+00:00'
                   deletedAt: string
-                  updatedAt: '"2022-03-16T12:04:35+00:00"'
+                  updatedAt: '2022-03-16T12:04:35+00:00'
                   contentType: blogpost
         '401':
           description: Unauthorized
@@ -2059,62 +2059,7 @@ definitions:
       - method
   BlogList:
     type: object
-    x-examples:
-      example:
-        total_count: 2
-        total_pages: 1
-        current_page: 1
-        count: 2
-        data:
-          - id: blogpost-674209
-            tag: transaccion_que_no_ocurrio
-            title: Transacción que no ocurrió
-            estimatedTime: '2022-03-15T16:21:25+00:00'
-            writer:
-              - id: owner-338894
-                name: Pablo
-                role: CEO
-                last_name: Acuña
-            internal:
-              createdAt: '2022-03-15T16:21:25+00:00'
-              deletedAt: ''
-              updatedAt: '2022-03-16T12:04:35+00:00'
-              contentType: blogpost
-              objectTitle: Transacción que no ocurrió
-              workflow_state: saved
-            media:
-              - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
-                url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
-                type: image
-                source: unsplash
-                fileName: photo-1647292545223-7a736ec55b1b.jpg
-                mimeType: image/jpeg
-                extension: jpg
-                externalId: PJtwruJbqKM
-          - id: blogpost-71163
-            slug: tarjetas_credito_pago_minimo
-            title: 'Tarjetas de crédito: Pago mínimo'
-            estimatedTime: '2022-03-15T16:21:25+00:00'
-            writer:
-              - id: owner-338894
-                name: Felipe
-                role: CTO
-                last_name: García
-            createdAt: '2022-03-15T16:33:03+00:00'
-            deletedAt: ''
-            updatedAt: '2022-03-16T12:05:44+00:00'
-            contentType: blogpost
-            objectTitle: 'Tarjetas de crédito: Pago mínimo'
-            workflow_state: saved
-          - media:
-              - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
-                url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
-                type: image
-                source: unsplash
-                fileName: photo-1647292545223-7a736ec55b1b.jpg
-                mimeType: image/jpeg
-                extension: jpg
-                externalId: PJtwruJbqKM
+    x-examples: {}
     properties:
       totalCount:
         type: number
@@ -2148,41 +2093,24 @@ definitions:
   BlogPostObject:
     description: ''
     type: object
-    x-examples:
-      example-1:
-        id: '"blogpost-674209"'
-        tag: '"transaccion_que_no_ocurrio"'
-        title: '"Transacción que no ocurrió"'
-        estimatedTime: 6
-        writer:
-          - id: '"owner-338894"'
-            name: '"Pablo"'
-            last_name: '"Acuña"'
-            role: '"CEO"'
-            image:
-              - dataUrl: '"/api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945"'
-        content: '"<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
-        internal:
-          - createdAt: '"2022-03-15T16:21:25+00:00"'
-            deletedAt: string
-            updatedAt: '"2022-03-16T12:04:35+00:00"'
-            contentType: blogpost
+    x-examples: {}
+    title: ''
     properties:
       id:
         type: string
         minLength: 1
         description: Unique id for each blog
-        example: '"blogpost-674209"'
+        example: blogpost-674209
       tag:
         type: string
         minLength: 1
         description: Title tag for urls
-        example: '"transaccion_que_no_ocurrio"'
+        example: transaccion_que_no_ocurrio
       title:
         type: string
         minLength: 1
         description: Blog title
-        example: '"Transacción que no ocurrió"'
+        example: Transacción que no ocurrió
       estimatedTime:
         type: number
         description: Estimated reading time in date format ISO 8601
@@ -2197,19 +2125,19 @@ definitions:
             id:
               type: string
               description: Unique id belonging to a single Owner
-              example: '"owner-338894"'
+              example: owner-338894
             name:
               type: string
               description: Owner's name
-              example: '"Pablo"'
+              example: Pablo
             last_name:
               type: string
               description: Owner's last name
-              example: '"Acuña"'
+              example: Acuña
             role:
               type: string
               description: Role within conomy
-              example: '"CEO"'
+              example: CEO
             image:
               type: array
               items:
@@ -2217,7 +2145,7 @@ definitions:
                 properties:
                   dataUrl:
                     type: string
-                    example: '"/api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945"'
+                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
           required:
             - id
             - name
@@ -2226,7 +2154,7 @@ definitions:
       content:
         type: string
         minLength: 1
-        example: '"<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
+        example: '<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
       internal:
         type: array
         description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
@@ -2236,14 +2164,14 @@ definitions:
             createdAt:
               type: string
               description: Date of blog creation
-              example: '"2022-03-15T16:21:25+00:00"'
+              example: '2022-03-15T16:21:25+00:00'
             deletedAt:
               type: string
               description: Date and time of blog deletion
             updatedAt:
               type: string
               description: Date of last modification made to the blog
-              example: '"2022-03-16T12:04:35+00:00"'
+              example: '2022-03-16T12:04:35+00:00'
             contentType:
               type: string
               example: blogpost
@@ -2259,24 +2187,7 @@ definitions:
   BlogPostListData:
     description: ''
     type: object
-    x-examples:
-      example-1:
-        id: blogpost-674209
-        tag: transaccion_que_no_ocurrio
-        title: Transacción que no ocurrió
-        estimatedTime: 6
-        writer:
-          - id: owner-338894
-            name: Pablo
-            last_name: Acuña
-            role: CEO
-            image:
-              - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-        internal:
-          - createdAt: '2022-03-15T16:21:25+00:00'
-            deletedAt: string
-            updatedAt: '2022-03-16T12:04:35+00:00'
-            contentType: blogpost
+    x-examples: {}
     title: BlogPostList
     properties:
       id:
