@@ -16,42 +16,11 @@ securityDefinitions:
     type: apiKey
     name: x-api-key
     in: header
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
-  /v1/transaction:
-    post:
-      tags:
-        - transaction
-      summary: Post a new transaction to apply business rules
-      operationId: postTransaction
-      description: Apply business rules to every transaction
-      consumes:
-        - application/json
-      x-google-backend:
-        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
-        path_translation: APPEND_PATH_TO_ADDRESS
-      parameters:
-        - in: body
-          name: Transaction
-          description: Transaction to apply business rules
-          schema:
-            $ref: '#/definitions/Transaction'
-      security:
-        - apitoken: []
-      responses:
-        '201':
-          description: Transaction created
-          schema:
-            $ref: '#/definitions/Transaction'
-        '400':
-          description: invalid input
-        '401':
-          description: invalid token
-        '409':
-          description: an existing item already exists
-        '422':
-          description: invalid Json
-        '500':
-          description: internal error
   '/card/{card_id}':
     get:
       tags:
@@ -477,6 +446,7 @@ paths:
           schema:
             $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
+          x-examples: {}
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
     parameters: []
@@ -667,6 +637,7 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/GoalandChallenge'
+          x-examples: {}
       tags:
         - Goals & Challenges
       x-internal: true
@@ -741,16 +712,24 @@ paths:
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
       tags:
         - Goals & Challenges
-  /v1/auth:
-    parameters:
-      - type: string
-        name: upayments_uuid
-        in: query
-        required: true
-        description: Upayment user identifier
+  /api/auth:
     post:
       summary: Create a new jwt token to interactuate with conomy services
       operationId: post-v1-auth
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/GetTokenBody'
+          description: This request require an user id from uapyment and and estimated time to live
+          x-examples: {}
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
       responses:
         '200':
           description: OK
@@ -775,16 +754,19 @@ paths:
       description: 'With this method a new jwt token will be created in the conomy authentication service, along with this will come a refresh token that will serve to renew said token and also an expiration date in unix timestamp format, in addition to this the useful links will be referenced of the api'
       tags:
         - Auth
-  /v1/auth/validate:
-    parameters:
-      - type: string
-        name: X-Application-Id
-        in: header
-        required: true
-        description: App id
+    parameters: []
+  /api/auth/validate:
     get:
+      security:
+        - Bearer: []
       summary: Check if the token is valid or not
       operationId: get-v1-auth-validate
+      parameters:
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
       responses:
         '200':
           description: OK
@@ -808,21 +790,35 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
-  /v1/auth/refresh:
-    parameters:
-      - type: string
-        name: X-Application-Id
-        in: header
-        required: true
-        description: App id
-      - type: string
-        name: X-Refresh-Id
-        in: header
-        required: true
-        description: Refresh token id
+    parameters: []
+  /api/auth/refresh:
     post:
       summary: Refresh a jwt token
       operationId: post-v1-auth-refresh
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          name: X-Application-Id
+          in: header
+          required: true
+          description: App id
+        - type: string
+          name: X-Refresh-Token
+          in: header
+          required: true
+          description: Refresh token id
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ttl:
+                type: integer
+                description: 'time to live until token expire, unix timestamp'
+                example: 1651007906
+                x-examples: {}
+          description: This request require an user id from uapyment and and estimated time to live
       responses:
         '200':
           description: OK
@@ -846,6 +842,7 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
+    parameters: []
   /blog/post:
     get:
       summary: Get list of blogs
@@ -1034,30 +1031,49 @@ definitions:
     type: object
     description: Jwt token format used by conomy
     properties:
-      upaymentsId:
+      userId:
         description: upayment user idientifier
         type: string
         example: 52SNfMWOktWVxsfyks6felsafAU24
       appId:
         description: app idientifier
         type: string
-        example: 12612361236123
+        example: 123456
       exp:
         description: Unix timestamp
-        type: string
+        type: integer
         example: 1651007906
     required:
       - upaymentsId
       - appId
       - exp
+  GetTokenBody:
+    type: object
+    description: Body schema to fetch a jwt token
+    properties:
+      user_upayments_uuid:
+        type: string
+        description: Upayment user id who is applying to the token
+        example: 52SNfMWOktWVxsfyks6felsafAU24
+      ttl:
+        type: integer
+        description: Duration/Date until expire
+        example: 1651007906
+    required:
+      - user_upayments_uuid
+      - ttl
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
     properties:
       conomyToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: Conomy jwt token
+        example: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
       refreshToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: refresh jwt token
+        example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
         description: Unix timestamp
         type: string
@@ -1076,9 +1092,13 @@ definitions:
     description: Response schema for a get token method
     properties:
       conomyToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: Conomy jwt token
+        example: "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9"
       refreshToken:
-        $ref: '#/definitions/Token'
+        type: string
+        description: refresh jwt token
+        example: "eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM"
       expiration:
         description: Unix timestamp
         type: string
