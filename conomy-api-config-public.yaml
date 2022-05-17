@@ -2135,88 +2135,57 @@ definitions:
                 extension: jpg
                 externalId: PJtwruJbqKM
     properties:
-      total_count:
+      totalCount:
         type: number
         description: Number of the total blogs
-        example: 2
-      total_pages:
+        example: 4
+      totalPages:
         type: number
         description: Number of the total pages with blogs
         example: 1
-      current_page:
+      currentPage:
         type: number
         description: Number of the current page
         example: 1
       count:
         type: number
         description: Number of blogs in the current page
-        minimum: 10
+        maximum: 10
+        example: 4
       data:
         type: array
         uniqueItems: true
         minItems: 1
         items:
-          $ref: '#/definitions/BlogPostObject'
+          $ref: '#/definitions/BlogPostListData'
     required:
-      - total_count
-      - total_pages
-      - current_page
+      - totalCount
+      - totalPages
+      - currentPage
       - count
       - data
   BlogPostObject:
     description: ''
     type: object
     x-examples:
-      example:
-        id: blogpost-674209
-        tag: transaccion_que_no_ocurrio
-        title: Transacción que no ocurrió
+      example-1:
+        id: '"blogpost-674209"'
+        tag: '"transaccion_que_no_ocurrio"'
+        title: '"Transacción que no ocurrió"'
+        estimatedTime: 6
         writer:
-          - id: owner-338894
-            name: Pablo
-            role: CEO
-            last_name: Acuña
-        content: |
-          <p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.</p>
-
-          <p>Les quiero contar una historia <strong>-REAL-</strong> que empezó cuando estaba en mis primeros años de universidad, pero que terminó recién el año pasado.</p>
-
-          <p>Era muy normal que en algunas semanas del año, dentro del campus de la universidad existieran stands de bancos que invitaban a los estudiantes a abrir una cuenta con ellos. Por lo general estas cuentas eran gratuitas -o eso te prometían- hasta los 30 años (se podrán imaginar, que por esto la historia recién terminó el año pasado).&nbsp;</p>
-
-          <p>En esta ocasión había un banco -que por respeto prefiero no decir el nombre- que ofrecía además de una cuenta gratuita hasta cumplir 30 años -clásico-, la camiseta de la selección de Alexis Sanchez, Arturo Vidal o Claudio Bravo de regalo. ¡Tremenda promoción! Pensándolo ahora, es muy bueno para ser cierto….</p>
-
-          <p>Y bueno, nunca he sido tan fanático del fútbol y ya tenía cuenta en otro banco, pero puntualmente ese mes era septiembre y se venía el 18. En esas fechas los gastos por lo general suben y como buen estudiante estaba medio corto de lucas. Entonces, se me encendió la ampolleta y pensé: “puedo sacar esta cuenta gratis y vender la camiseta, así gano plata y después cierro la cuenta antes de los 30. La polera me sale gratis y la podría vender ¡Increíble oportunidad!”.</p>
-
-          <p>No vi ningún tipo de problema en mi lógica y me aventuré a abrir la cuenta. Una de las condiciones para que me entregaran mi camiseta de Alexis -me decanté por la del “Niño Maravilla”- era activar las tarjetas de mi nuevo banco. Lo hice, y acto seguido recibí los contratos que tenía que firmar. Ni los miré -craso error-, solo pensaba en el 18 de septiembre que se venía y estampé mi rúbrica en todos los papeles. Me entregaron mis tarjetas y la “7” de Alexis. La publiqué en internet y la vendí la misma semana. Me gané 45 lucas sin hacer nada más que firmar. Negocio redondo, pensé.</p>
-
-          <p>No volví a pensar en mi nuevo banco hasta que ya estaba cercano a cumplir 30 años, la cuenta iba a pasar a tener un costo mensual y como no me gusta perder plata, fui al banco para cerrarla.</p>
-
-          <p>Llegué a la sucursal y me atendieron con mucha amabilidad -para qué voy a mentir-. La anfitriona me indicó que debía pasar a atención al cliente para cerrar mi cuenta. Voy y la señorita me dice que hay un problema con cerrar mi cuenta. Según sus palabras, yo debía aproximadamente ¡¡500 mil pesos!!. Quedé como Condorito -¡Plop!-. “¿Cómo? No entiendo nada”, le digo.<br />
-          Le conté la historia de mi cuenta y le aseguré que nunca había usado ninguna tarjeta del banco, nunca realicé una compra, solo activé la cuenta y acepté mi polera de regalo. No hice absolutamente nada más con el banco.</p>
-
-          <p>La señorita revisó mi historial del banco y me dijo que no tenía más información en detalle anterior al 2016 y mi deuda era anterior a esa fecha. Rarísimo. Siguió revisando y me comentó que toda la deuda es producto de una compra que se hizo por 20 mil pesos y que como nunca se pagó siguió acumulando intereses hasta llegar al tope de mi cuenta -por suerte que mi cuenta solo tenía de cupo 500 mil pesos pensé-. Nunca me supieron en qué gasté esas 20 lucas.</p>
-
-          <p>Le pregunté si podía hacer algo, acudir a alguna entidad fiscalizadora o algo. Me dijo muy amablemente: “De poder puedes, pero hacer un reclamo por una transacción con una antigüedad mayor a 5 años es difícil que te vaya bien”.</p>
-
-          <p>Entonces no tenía mucho que hacer. Para cerrar mi cuenta tenía que pagar esa deuda que no correspondía a mis gastos. Creo que es injusto que este mismo banco no se haya dado el tiempo todos los meses desde que abrí mi cuenta, en llamarme para preguntarme si quería un crédito y nadie nunca se molestó en decirme nada sobre esta deuda que seguía creciendo mes a mes.</p>
-
-          <p>El sistema a veces es injusto, te hace responsable por responsabilidades de otros y no hay más salida que pagar.</p>
-
-          <p>Las finanzas personales no deberían ser así. Deberían ser fáciles, sin letra chica, que no me ofrezcan una camiseta gratis por la que pensé ganar 45 mil pesos, pero por la que en verdad perdí 455 mil -no considero el valor del dinero en el tiempo para simplificar el análisis-.&nbsp;</p>
-
-          <p>Fundar Conomy es una de las cosas más desafiantes que he vivido, sin embargo la motivación de poder aportar a las finanzas personales de millones de chilenos y latinoamericanos es aún más grande.</p>
-
-          <p>Conomy está para ayudarte a que no te pasen cosas como las que me pasaron a mí, a enseñarte a ahorrar, invertir, a ayudarte a mejorar la tasa de interés que te ofrece el banco, a optar por los mejores productos financieros del mercado y todo esto sin tener que hacer un gran esfuerzo.<br />
-          &nbsp;</p>
-        media:
-          - id: _media-a62fbebf-0574-4180-996a-7a5ea7802bde
-            url: /image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg
-            type: image
-            source: unsplash
-            fileName: photo-1647292545223-7a736ec55b1b.jpg
-            mimeType: image/jpeg
-            extension: jpg
-            externalId: PJtwruJbqKM
+          - id: '"owner-338894"'
+            name: '"Pablo"'
+            last_name: '"Acuña"'
+            role: '"CEO"'
+            image:
+              - dataUrl: '"/api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945"'
+        content: '"<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
+        internal:
+          - createdAt: '"2022-03-15T16:21:25+00:00"'
+            deletedAt: string
+            updatedAt: '"2022-03-16T12:04:35+00:00"'
+            contentType: blogpost
     properties:
       id:
         type: string
@@ -2236,7 +2205,7 @@ definitions:
       estimatedTime:
         type: number
         description: Estimated reading time in date format ISO 8601
-        example: 400
+        example: 6
       writer:
         type: array
         uniqueItems: true
@@ -2260,6 +2229,14 @@ definitions:
               type: string
               description: Role within conomy
               example: '"CEO"'
+            image:
+              type: array
+              items:
+                type: object
+                properties:
+                  dataUrl:
+                    type: string
+                    example: '"/api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945"'
           required:
             - id
             - name
@@ -2268,48 +2245,7 @@ definitions:
       content:
         type: string
         minLength: 1
-      media:
-        type: array
-        description: thumbnail image belonging to the creator of the blog
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique id for images
-              example: '"_media-a62fbebf-0574-4180-996a-7a5ea7802bde"'
-            type_media:
-              type: string
-              example: '"image"'
-            url:
-              type: string
-              description: Address where the image is stored
-              example: '"/image/0x0/_media-a62fbebf-0574-4180-996a-7a5ea7802bde.jpg"'
-            source:
-              type: string
-              example: '"unsplash"'
-            fileName:
-              type: string
-              description: Image file name
-              example: '"photo-1647292545223-7a736ec55b1b.jpg"'
-            mimeType:
-              type: string
-              example: '"image/jpeg"'
-            extension:
-              type: string
-              description: Image extension
-              example: '"jpg"'
-            externalId:
-              type: string
-              example: '"PJtwruJbqKM"'
-          required:
-            - id
-            - type_media
-            - url
-            - source
-            - fileName
-            - mimeType
-            - extension
+        example: '"<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
       internal:
         type: array
         description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
@@ -2327,25 +2263,121 @@ definitions:
               type: string
               description: Date of last modification made to the blog
               example: '"2022-03-16T12:04:35+00:00"'
-            objectTitle:
-              type: string
-              description: Blog title
-              example: '"Transacción que no ocurrió"'
             contentType:
               type: string
-              example: '"blogpost"'
-            workflow_state:
-              type: string
-              description: Current blog workflow status
-              example: '"saved"'
+              example: blogpost
           required:
             - createdAt
             - deletedAt
             - updatedAt
-            - objectTitle
-            - workflow_state
     required:
       - id
       - tag
       - title
       - content
+  BlogPostListData:
+    description: ''
+    type: object
+    x-examples:
+      example-1:
+        id: blogpost-674209
+        tag: transaccion_que_no_ocurrio
+        title: Transacción que no ocurrió
+        estimatedTime: 6
+        writer:
+          - id: owner-338894
+            name: Pablo
+            last_name: Acuña
+            role: CEO
+            image:
+              - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
+        internal:
+          - createdAt: '2022-03-15T16:21:25+00:00'
+            deletedAt: string
+            updatedAt: '2022-03-16T12:04:35+00:00'
+            contentType: blogpost
+    title: BlogPostList
+    properties:
+      id:
+        type: string
+        minLength: 1
+        description: Unique id for each blog
+        example: blogpost-674209
+      tag:
+        type: string
+        minLength: 1
+        description: Title tag for urls
+        example: transaccion_que_no_ocurrio
+      title:
+        type: string
+        minLength: 1
+        description: Blog title
+        example: Transacción que no ocurrió
+      estimatedTime:
+        type: number
+        description: Estimated reading time in date format ISO 8601
+        example: 6
+      writer:
+        type: array
+        uniqueItems: true
+        minItems: 1
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique id belonging to a single Owner
+              example: owner-338894
+            name:
+              type: string
+              description: Owner's name
+              example: Pablo
+            last_name:
+              type: string
+              description: Owner's last name
+              example: Acuña
+            role:
+              type: string
+              description: Role within conomy
+              example: CEO
+            image:
+              type: array
+              items:
+                type: object
+                properties:
+                  dataUrl:
+                    type: string
+                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
+          required:
+            - id
+            - name
+            - last_name
+            - role
+      internal:
+        type: array
+        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
+        items:
+          type: object
+          properties:
+            createdAt:
+              type: string
+              description: Date of blog creation
+              example: '2022-03-15T16:21:25+00:00'
+            deletedAt:
+              type: string
+              description: Date and time of blog deletion
+            updatedAt:
+              type: string
+              description: Date of last modification made to the blog
+              example: '2022-03-16T12:04:35+00:00'
+            contentType:
+              type: string
+              example: blogpost
+          required:
+            - createdAt
+            - deletedAt
+            - updatedAt
+    required:
+      - id
+      - tag
+      - title
