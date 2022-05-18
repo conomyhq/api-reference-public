@@ -872,7 +872,7 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  /blog/post:
+  /blog/post/:
     get:
       summary: Get list of blogs
       tags:
@@ -921,8 +921,18 @@ paths:
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
           required: true
-      security:
-        - apitoken: []
+        - type: string
+          in: query
+          name: page
+          description: Current page number
+          minLength: 1
+          default: '1'
+        - type: string
+          in: query
+          name: limit
+          description: limit of blogs on a page
+          maxLength: 10
+          default: '10'
     parameters: []
   '/blog/post/{id}':
     parameters:
@@ -930,6 +940,7 @@ paths:
         name: id
         in: path
         required: true
+        description: Post id
     get:
       summary: Get blog post object
       tags:
@@ -2061,23 +2072,18 @@ definitions:
     type: object
     x-examples: {}
     properties:
-      totalCount:
+      totalBlogs:
         type: number
         description: Number of the total blogs
         example: 4
       totalPages:
         type: number
-        description: Number of the total pages with blogs
+        description: 'Number of the total pages '
         example: 1
       currentPage:
         type: number
         description: Number of the current page
         example: 1
-      count:
-        type: number
-        description: Number of blogs in the current page
-        maximum: 10
-        example: 4
       data:
         type: array
         uniqueItems: true
@@ -2085,10 +2091,9 @@ definitions:
         items:
           $ref: '#/definitions/BlogPostListData'
     required:
-      - totalCount
+      - totalBlogs
       - totalPages
       - currentPage
-      - count
       - data
   BlogPostObject:
     description: ''
