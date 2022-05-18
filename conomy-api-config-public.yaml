@@ -352,9 +352,9 @@ paths:
         in: path
         required: true
         description: User ID
-  /transaction:
+  /switch:
     post:
-      summary: "Transaction switch \U0001F511"
+      summary: "Switch Transaction \U0001F511"
       operationId: transactionSwitch
       description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
       consumes:
@@ -449,6 +449,8 @@ paths:
           x-examples: {}
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
     get:
       summary: Get goals and challenges by user_id
@@ -493,6 +495,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
   /v1/goals-challenges/composite/challenges:
     get:
       summary: Get Active challenges in app
@@ -531,6 +535,8 @@ paths:
             $ref: '#/definitions/Error500'
       operationId: get-v1-active-challenges
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
   /v1/goals-challenges/composite/rules:
     get:
@@ -570,6 +576,8 @@ paths:
             $ref: '#/definitions/Error500'
       operationId: get-v1-active-rules
       x-internal: true
+      security:
+        - apitoken: []
     parameters: []
   '/v1/goals-challenges/composite/{id}':
     get:
@@ -604,6 +612,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
     put:
       summary: Modify goal or challenge by id
       operationId: put-v1-goals-challenge
@@ -641,6 +651,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
     parameters:
       - type: string
         name: id
@@ -675,6 +687,8 @@ paths:
       tags:
         - Goals & Challenges
       x-internal: true
+      security:
+        - apitoken: []
   '/v1/goals-challenges/composite/{id}/confirm':
     parameters:
       - type: string
@@ -712,6 +726,8 @@ paths:
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
       tags:
         - Goals & Challenges
+      security:
+        - apitoken: []
   /api/auth:
     post:
       summary: Create a new jwt token to interactuate with conomy services
@@ -754,11 +770,16 @@ paths:
       description: 'With this method a new jwt token will be created in the conomy authentication service, along with this will come a refresh token that will serve to renew said token and also an expiration date in unix timestamp format, in addition to this the useful links will be referenced of the api'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - apitoken: []
     parameters: []
   /api/auth/validate:
     get:
       security:
-        - Bearer: []
+        - apitoken: []
       summary: Check if the token is valid or not
       operationId: get-v1-auth-validate
       parameters:
@@ -790,6 +811,9 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
     parameters: []
   /api/auth/refresh:
     post:
@@ -842,6 +866,11 @@ paths:
             $ref: '#/definitions/Error500'
       tags:
         - Auth
+      x-google-backend:
+        address: 'https://conomy-jwt-auth-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+        - apitoken: []
     parameters: []
   /blog/post/:
     get:
@@ -956,6 +985,8 @@ paths:
           in: header
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
+      security:
+        - apitoken: []
 definitions:
   Transaction:
     type: object
@@ -996,11 +1027,15 @@ definitions:
         example: 52SNfMWOktWVxsfyks6felsafAU24
       ttl:
         type: integer
-        description: Duration/Date until expire
+        description: Duration time (min)
         example: 1651007906
     required:
       - user_upayments_uuid
       - ttl
+    x-examples:
+      example-1:
+        user_upayments_uuid: 52SNfMWOktWVxsfyks6felsafAU24
+        ttl: 5
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
@@ -1014,9 +1049,9 @@ definitions:
         description: refresh jwt token
         example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
-        description: Unix timestamp
         type: string
-        example: 1651007906
+        description: Expiration date (unix time)
+        example: '5'
       _links:
         type: array
         items:
@@ -1063,16 +1098,14 @@ definitions:
         format: uuid
         example: 52SNfMWOktWVxsfyks6felsafAU24
       expiration:
-        description: Unix timestamp
         type: string
         example: 1651007906
+        description: Expiration date
       _links:
         type: array
         items:
           $ref: '#/definitions/_links'
     required:
-      - conomyToken
-      - refreshToken
       - expiration
       - _links
   Address:
