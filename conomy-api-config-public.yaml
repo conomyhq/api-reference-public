@@ -456,7 +456,7 @@ paths:
       summary: Get goals and challenges by user_id
       operationId: get-v1-goals-challenges
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -503,7 +503,7 @@ paths:
       tags:
         - Goals & Challenges
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -544,7 +544,7 @@ paths:
       tags:
         - Goals & Challenges
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -583,7 +583,7 @@ paths:
     get:
       summary: Get goal or challenge by id
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -700,7 +700,7 @@ paths:
       summary: Complete the setup of an objective or challenge
       operationId: post-v1-goals-challenges-id-confirm
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
