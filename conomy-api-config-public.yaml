@@ -854,28 +854,32 @@ paths:
           schema:
             $ref: '#/definitions/BlogList'
           examples:
-            example-1:
-              totalCount: 4
+            example:
+              totalBlogs: 4
               totalPages: 1
               currentPage: 1
-              count: 4
               data:
                 - id: blogpost-674209
                   tag: transaccion_que_no_ocurrio
                   title: Transacción que no ocurrió
                   estimatedTime: 6
                   writer:
-                    - id: owner-338894
-                      name: Pablo
-                      last_name: Acuña
-                      role: CEO
-                      image:
-                        - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
+                    id: owner-338894
+                    name: Taladro
+                    lastName: Táctico
+                    image:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
                   internal:
-                    - createdAt: '2022-03-15T16:21:25+00:00'
-                      deletedAt: string
-                      updatedAt: '2022-03-16T12:04:35+00:00'
-                      contentType: blogpost
+                    contentType: blogpost
+                    createdAt: '2022-05-26T15:16:09+00:00'
+                    updatedAt: '2022-05-26T15:16:09+00:00'
+                    deletedAt: ' '
+                  description: Les quiero contar una historia *-REAL-*
+                  media:
+                    thumbnail:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+                    headerImage:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
         '401':
           description: Unauthorized
           schema:
@@ -905,13 +909,12 @@ paths:
           maxLength: 10
           default: '10'
     parameters: []
-  '/blog/post/{id}':
+  '/blog/post/{tag}':
     parameters:
       - type: string
-        name: id
+        name: tag
         in: path
         required: true
-        description: Post id
     get:
       summary: Get blog post object
       tags:
@@ -920,26 +923,31 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/BlogPostObject'
+            $ref: '#/definitions/BlogPost'
           examples:
-            example-1:
+            example:
               id: blogpost-674209
               tag: transaccion_que_no_ocurrio
               title: Transacción que no ocurrió
               estimatedTime: 6
               writer:
-                - id: owner-338894
-                  name: Pablo
-                  last_name: Acuña
-                  role: CEO
-                  image:
-                    - dataUrl: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-              content: '<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
+                id: owner-338894
+                name: Taladro
+                lastName: Táctico
+                image:
+                  dataUrl: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
               internal:
-                - createdAt: '2022-03-15T16:21:25+00:00'
-                  deletedAt: string
-                  updatedAt: '2022-03-16T12:04:35+00:00'
-                  contentType: blogpost
+                contentType: blogpost
+                createdAt: '2022-05-26T15:16:09+00:00'
+                updatedAt: '2022-05-26T15:16:09+00:00'
+                deletedAt: ' '
+              description: Les quiero contar una historia *-REAL-*
+              media:
+                thumbnail:
+                  dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+                headerImage:
+                  dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+              content: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento'
         '401':
           description: Unauthorized
           schema:
@@ -950,12 +958,16 @@ paths:
             $ref: '#/definitions/Error404'
       operationId: get-api-v1-content-blogpost-id
       description: |
-        The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {id}.
+        The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {tag}.
       parameters:
         - type: string
           in: header
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
+        - type: string
+          in: query
+          name: filters
+          description: 'Tag of the post you want to access '
 definitions:
   Transaction:
     type: object
@@ -2037,7 +2049,33 @@ definitions:
       - method
   BlogList:
     type: object
-    x-examples: {}
+    x-examples:
+      example:
+        totalBlogs: 4
+        totalPages: 1
+        currentPage: 1
+        data:
+          - id: blogpost-674209
+            tag: transaccion_que_no_ocurrio
+            title: Transacción que no ocurrió
+            estimatedTime: 6
+            writer:
+              id: owner-338894
+              name: Taladro
+              lastName: Táctico
+              image:
+                dataUrl: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
+            internal:
+              contentType: blogpost
+              createdAt: '2022-05-26T15:16:09+00:00'
+              updatedAt: '2022-05-26T15:16:09+00:00'
+              deletedAt: ' '
+            description: Les quiero contar una historia *-REAL-*
+            media:
+              thumbnail:
+                dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+              headerImage:
+                dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
     properties:
       totalBlogs:
         type: number
@@ -2062,100 +2100,7 @@ definitions:
       - totalPages
       - currentPage
       - data
-  BlogPostObject:
     description: ''
-    type: object
-    x-examples: {}
-    title: ''
-    properties:
-      id:
-        type: string
-        minLength: 1
-        description: Unique id for each blog
-        example: blogpost-674209
-      tag:
-        type: string
-        minLength: 1
-        description: Title tag for urls
-        example: transaccion_que_no_ocurrio
-      title:
-        type: string
-        minLength: 1
-        description: Blog title
-        example: Transacción que no ocurrió
-      estimatedTime:
-        type: number
-        description: Estimated reading time in date format ISO 8601
-        example: 6
-      writer:
-        type: array
-        uniqueItems: true
-        minItems: 1
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique id belonging to a single Owner
-              example: owner-338894
-            name:
-              type: string
-              description: Owner's name
-              example: Pablo
-            last_name:
-              type: string
-              description: Owner's last name
-              example: Acuña
-            role:
-              type: string
-              description: Role within conomy
-              example: CEO
-            image:
-              type: array
-              items:
-                type: object
-                properties:
-                  dataUrl:
-                    type: string
-                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-          required:
-            - id
-            - name
-            - last_name
-            - role
-      content:
-        type: string
-        minLength: 1
-        example: '<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
-      internal:
-        type: array
-        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        items:
-          type: object
-          properties:
-            createdAt:
-              type: string
-              description: Date of blog creation
-              example: '2022-03-15T16:21:25+00:00'
-            deletedAt:
-              type: string
-              description: Date and time of blog deletion
-            updatedAt:
-              type: string
-              description: Date of last modification made to the blog
-              example: '2022-03-16T12:04:35+00:00'
-            contentType:
-              type: string
-              example: blogpost
-          required:
-            - createdAt
-            - deletedAt
-            - updatedAt
-    required:
-      - id
-      - tag
-      - title
-      - content
   BlogPostListData:
     description: ''
     type: object
@@ -2182,65 +2127,141 @@ definitions:
         description: Estimated reading time in date format ISO 8601
         example: 6
       writer:
-        type: array
-        uniqueItems: true
-        minItems: 1
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique id belonging to a single Owner
-              example: owner-338894
-            name:
-              type: string
-              description: Owner's name
-              example: Pablo
-            last_name:
-              type: string
-              description: Owner's last name
-              example: Acuña
-            role:
-              type: string
-              description: Role within conomy
-              example: CEO
-            image:
-              type: array
-              items:
-                type: object
-                properties:
-                  dataUrl:
-                    type: string
-                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-          required:
-            - id
-            - name
-            - last_name
-            - role
+        type: object
+        properties:
+          id:
+            type: string
+            example: owner-338894
+          name:
+            type: string
+            example: Taladro
+          lastName:
+            type: string
+            example: Táctico
+          image:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
       internal:
-        type: array
+        type: object
         description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        items:
-          type: object
-          properties:
-            createdAt:
-              type: string
-              description: Date of blog creation
-              example: '2022-03-15T16:21:25+00:00'
-            deletedAt:
-              type: string
-              description: Date and time of blog deletion
-            updatedAt:
-              type: string
-              description: Date of last modification made to the blog
-              example: '2022-03-16T12:04:35+00:00'
-            contentType:
-              type: string
-              example: blogpost
-          required:
-            - createdAt
-            - deletedAt
-            - updatedAt
+        properties:
+          contentType:
+            type: string
+            example: blogpost
+          createdAt:
+            type: string
+            example: '2022-05-26T15:16:09+00:00'
+          updatedAt:
+            type: string
+            example: '2022-05-26T15:16:09+00:00'
+          deletedAt:
+            type: string
+            example: ' '
+      description:
+        type: string
+        example: Les quiero contar una historia *-REAL-*
+      media:
+        type: object
+        properties:
+          thumbnail:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+          headerImage:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+    required:
+      - id
+      - tag
+      - title
+  BlogPost:
+    description: ''
+    type: object
+    x-examples: {}
+    title: BlogPostList
+    properties:
+      id:
+        type: string
+        minLength: 1
+        description: Unique id for each blog
+        example: blogpost-674209
+      tag:
+        type: string
+        minLength: 1
+        description: Title tag for urls
+        example: transaccion_que_no_ocurrio
+      title:
+        type: string
+        minLength: 1
+        description: Blog title
+        example: Transacción que no ocurrió
+      estimatedTime:
+        type: number
+        description: Estimated reading time in date format ISO 8601
+        example: 6
+      writer:
+        type: object
+        properties:
+          id:
+            type: string
+            example: owner-338894
+          name:
+            type: string
+            example: Taladro
+          lastName:
+            type: string
+            example: Táctico
+          image:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
+      internal:
+        type: object
+        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
+        properties:
+          contentType:
+            type: string
+            example: blogpost
+          createdAt:
+            type: string
+            example: '2022-05-26T15:16:09+00:00'
+          updatedAt:
+            type: string
+            example: '2022-05-26T15:16:09+00:00'
+          deletedAt:
+            type: string
+            example: ' '
+      description:
+        type: string
+        example: Les quiero contar una historia *-REAL-*
+      media:
+        type: object
+        properties:
+          thumbnail:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+          headerImage:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+      content:
+        type: string
+        example: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento'
     required:
       - id
       - tag
