@@ -1709,6 +1709,8 @@ definitions:
         type: string
       targetAmount:
         type: number
+      currentAmount:
+        type: number
       rules:
         type: array
         items:
@@ -1716,8 +1718,7 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
+
       created_at:
         type: string
       updated_at:
@@ -1750,6 +1751,8 @@ definitions:
         type: string
       targetAmount:
         type: number
+      currentAmount:
+        type: number
       rules:
         type: array
         items:
@@ -1757,8 +1760,6 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
       created_at:
         type: string
       updated_at:
@@ -1791,6 +1792,8 @@ definitions:
         type: string
       targetAmount:
         type: number
+      currentAmount:
+        type: number
       rules:
         type: array
         items:
@@ -1798,8 +1801,6 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
   GoalandChallengeFilteredResponse:
     title: Goal&ChallengeFilteredResponse
     type: object
@@ -1824,6 +1825,8 @@ definitions:
         type: string
       targetAmount:
         type: number
+      currentAmount:
+        type: number
       rules:
         type: array
         items:
@@ -1831,8 +1834,6 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      currentAmount:
-        type: number
       _links:
         type: array
         items:
@@ -1858,6 +1859,8 @@ definitions:
       endTime:
         type: string
       targetAmount:
+        type: number
+      currentAmount:
         type: number
       status:
         type: string
@@ -1893,6 +1896,8 @@ definitions:
         type: string
       targetAmount:
         type: number
+      currentAmount:
+        type: number
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
@@ -1921,6 +1926,8 @@ definitions:
       endTime:
         type: string
       targetAmount:
+        type: number
+      currentAmount:
         type: number
       status:
         type: string
