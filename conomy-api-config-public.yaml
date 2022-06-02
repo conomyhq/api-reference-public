@@ -313,6 +313,29 @@ paths:
           description: search results matching criteria
           schema:
             $ref: '#/definitions/User'
+          examples:
+            example-1:
+              id: b92e761a-279a-11ec-9621-0242ac130002
+              userExternalId: string
+              name: Mauricio
+              nickName: JFT
+              lastName: Gatica
+              email: string
+              maritalStatus: string
+              phone: '+5691238159123'
+              dni: 12.612.412-2
+              career: string
+              address: Bellas Artes
+              status: active
+              contractId: 1dhHkkf76
+              rulesId:
+                - af1gs
+                - l2b3f
+                - hjg3k3
+        '201':
+          description: Created
+          schema:
+            type: object
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -352,6 +375,39 @@ paths:
         in: path
         required: true
         description: User ID
+    delete:
+      summary: "Delete a specific user\U0001F62F"
+      operationId: deleteUser
+      responses:
+        '200':
+          description: search results matching criteria. Ok delete
+          schema:
+            $ref: '#/definitions/User'
+          examples: {}
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The Users service provides user information. The /users/{id} endpoint with a DELETE method delete a specific user by its user id from the db.'
+      security:
+        - apitoken: []
   /switch:
     post:
       summary: "Switch Transaction \U0001F511"
@@ -872,6 +928,56 @@ paths:
       security:
         - apitoken: []
     parameters: []
+  /user/deleteRule:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-user-deleteRule
+      x-internal: false
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserDeleteRule'
+          description: ''
+    delete:
+      summary: Delete a rule by User ID
+      operationId: deleteUserRule
+      responses:
+        '200':
+          description: Delete rule by user id OK
+          schema:
+            $ref: '#/definitions/UserDeleteRuleResponse'
+        '201':
+          description: Created
+          schema:
+            $ref: ''
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error500'
+      description: 'The Users service provides user information. The /users/{id}/rule endpoint with a DELETE method delete  a specific rule by its user id from the db.'
+      security:
+        - apitoken: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserDeleteRule'
+          description: 'Request body contains the user id and rule id, which will be searched to eliminate'
 definitions:
   Transaction:
     type: object
@@ -1718,7 +1824,6 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-
       created_at:
         type: string
       updated_at:
@@ -2170,3 +2275,23 @@ definitions:
       - id
       - tag
       - title
+  UserDeleteRule:
+    title: UserDeleteRule
+    x-stoplight:
+      id: 645p7cj6e54et
+    type: object
+    x-examples: {}
+    properties:
+      id:
+        type: string
+      ruleId:
+        type: string
+  UserDeleteRuleResponse:
+    title: UserDeleteRuleResponse
+    x-stoplight:
+      id: hbm1aveg426kw
+    type: object
+    properties:
+      id:
+        type: string
+    description: ''
