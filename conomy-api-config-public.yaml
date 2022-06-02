@@ -375,39 +375,6 @@ paths:
         in: path
         required: true
         description: User ID
-    delete:
-      summary: "Delete a specific user\U0001F62F"
-      operationId: deleteUser
-      responses:
-        '200':
-          description: search results matching criteria. Ok delete
-          schema:
-            $ref: '#/definitions/User'
-          examples: {}
-        '201':
-          description: Created
-          schema:
-            type: object
-            properties: {}
-        '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Invalid or missing authentication token.
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Data not found in the DB.
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The Users service provides user information. The /users/{id} endpoint with a DELETE method delete a specific user by its user id from the db.'
-      security:
-        - apitoken: []
   /switch:
     post:
       summary: "Switch Transaction \U0001F511"
@@ -929,21 +896,9 @@ paths:
         - apitoken: []
     parameters: []
   /user/deleteRule:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-user-deleteRule
-      x-internal: false
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/UserDeleteRule'
-          description: ''
-    delete:
-      summary: Delete a rule by User ID
-      operationId: deleteUserRule
+    patch:
+      summary: Update user rules by UserID
+      operationId: patchUserRule
       responses:
         '200':
           description: Delete rule by user id OK
@@ -952,7 +907,8 @@ paths:
         '201':
           description: Created
           schema:
-            $ref: ''
+            type: object
+            properties: {}
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -969,7 +925,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      description: 'The Users service provides user information. The /users/{id}/rule endpoint with a DELETE method delete  a specific rule by its user id from the db.'
+      description: 'The Users service provides user information. The /users/deleteRule endpoint with a PATCH method, update user rules, deleting a specific rule of specific user by  user id from the db.'
       security:
         - apitoken: []
       parameters:
@@ -977,7 +933,7 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/UserDeleteRule'
-          description: 'Request body contains the user id and rule id, which will be searched to eliminate'
+          description: ''
 definitions:
   Transaction:
     type: object
@@ -2291,7 +2247,9 @@ definitions:
     x-stoplight:
       id: hbm1aveg426kw
     type: object
+    description: ''
     properties:
       id:
         type: string
-    description: ''
+      ruleId:
+        type: string
