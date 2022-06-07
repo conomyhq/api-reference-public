@@ -2508,7 +2508,5 @@ definitions:
     type: object
     description: ''
     properties:
-      id:
-        type: string
-      ruleId:
-        type: string
+      isDeleted:
+        type: boolean
