@@ -25,9 +25,62 @@ paths:
     get:
       tags:
         - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /cards/{card_id} with the method GET fetch the information about a specific id.'
+      description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method GET fetch the information about a specific id.'
       summary: "Get a specific card by card ID \U0001F4B3"
       operationId: getCardId
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - type: string
+          name: card_id
+          in: path
+          required: true
+          description: card ID
+      security:
+        - apitoken: []
+      responses:
+        '200':
+          description: Card information
+          schema:
+            $ref: '#/definitions/Card'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+    delete:
+      tags:
+        - Card
+      description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method DELETE deletes the information about a specific card id.'
+      summary: "Get a specific card by card ID \U0001F4B3"
+      operationId: DeleteCard
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -81,7 +134,7 @@ paths:
         - Card
       summary: "Create a card and add to a specific user \U0001F45B"
       operationId: createCard
-      description: 'The Cards service delivers cards data. The /cards endpoint with POST method adds a card owned by a specific user id and save it on an array of card objects, which includes all its cards attributes.'
+      description: 'The Cards service delivers cards data. The /card endpoint with POST method adds a card owned by a specific user id and save it on an array of card objects, which includes all its cards attributes.'
       consumes:
         - application/json
       x-google-backend:
@@ -92,7 +145,7 @@ paths:
           name: Card
           description: Card schema
           schema:
-            $ref: '#/definitions/CardCreate'
+            $ref: '#/definitions/CardPatch'
       security:
         - apitoken: []
       responses:
@@ -132,6 +185,61 @@ paths:
               type: ServerError
               code: 500
     parameters: []
+    patch:
+      tags:
+        - Card
+      summary: "Update a card \U0001F45B"
+      operationId: patchCard
+      description: 'The Cards service delivers cards data. The /card endpoint with PATCH method updates a card by a specific id.Only set if isActive, isSelected'
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: Card
+          description: Card schema
+          schema:
+            $ref: '#/definitions/CardPatch'
+      security:
+        - apitoken: []
+      responses:
+        '201':
+          description: Card information
+          schema:
+            $ref: '#/definitions/Card'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
   '/conomyCard/{conomycard_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
@@ -186,6 +294,53 @@ paths:
         in: path
         required: true
         description: Conomy card ID
+    delete:
+      summary: "Delete a specific Conomy Card by its conomyCardId \U0001F4B3"
+      security:
+        - apitoken: []
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            $ref: '#/definitions/ConomyCard'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+      operationId: deleteConomyCardId
+      description: The Conomy Card service provides all the data about Conomy Cards and the DELETE method deletes a specific card by its id.
+      tags:
+        - Conomy Card
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
   /conomyCard:
     parameters: []
     post:
@@ -241,13 +396,68 @@ paths:
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
+    patch:
+      summary: "Update a Conomy Card \U0001F4B3"
+      operationId: patchConomyCard
+      consumes:
+        - application/json
+      tags:
+        - Conomy Card
+      x-google-backend:
+        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      description: The Conomy Card service host all the data about Conomy Cards and the PATCH method updates a Conomy Card based on the allowed attributes.
+      parameters:
+        - in: body
+          name: ConomyCard
+          schema:
+            $ref: '#/definitions/ConomyCardPatch'
+          description: Request if is active or not
+      security:
+        - apitoken: []
+      responses:
+        '200':
+          description: Response a Conomy Card Object
+          schema:
+            $ref: '#/definitions/ConomyCard'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
   /user:
     post:
       tags:
         - User
       summary: "Create a new user in the db \U0001F929"
       operationId: addUser
-      description: 'The Users services provides user information. The /users endpoint with a POST method register a new user in the db with its personal information such as name, last name, national id, phone among other data.'
+      description: 'The Users services provides user information. The /user endpoint with a POST method register a new user in the db with its personal information such as name, last name, national id, phone among other data.'
       consumes:
         - application/json
       security:
@@ -298,6 +508,15 @@ paths:
               type: ServerError
               code: 500
     parameters: []
+    patch:
+      summary: "Update a user in the db \U0001F929"
+      operationId: patchUser
+      responses:
+        '200':
+          description: OK
+      description: The Users services provides user information. The /user endpoint with a PATCH method updates defined updatables attributes in the db.
+      tags:
+        - User
   '/user/{user_id}':
     get:
       tags:
@@ -960,7 +1179,7 @@ definitions:
       appId:
         description: app idientifier
         type: string
-        example: "123456"
+        example: '123456'
       exp:
         description: Unix timestamp
         type: integer
@@ -1028,7 +1247,7 @@ definitions:
       expiration:
         description: Unix timestamp
         type: string
-        example: "1651007906"
+        example: '1651007906'
       _links:
         type: array
         items:
@@ -1048,10 +1267,10 @@ definitions:
       userId:
         type: string
         format: uuid
-        example: 52SNfMWOktWVxsfyks6felsafAU24
+        example: 123e4567-e89b-12d3-a456-426614174000
       expiration:
         type: string
-        example: "1651007906"
+        example: '1651007906'
         description: Expiration date
       _links:
         type: array
@@ -1330,6 +1549,22 @@ definitions:
       - cardholderName
       - pan
       - currency
+  CardPatch:
+    type: object
+    x-examples: {}
+    title: CardPatch
+    description: Description of a PATCH method where is possible to update selected card
+    properties:
+      id:
+        type: string
+        description: Card external identifier
+      isActive:
+        type: boolean
+        example: false
+        description: Card state
+    required:
+      - id
+      - isActive
   ConomyCard:
     type: object
     title: Conomy Card
@@ -1417,12 +1652,31 @@ definitions:
         description: Card Currency
       description:
         type: string
+      isActive:
+        type: string
+        example: 'true'
     required:
       - externalId
       - cardBrand
       - cardholderName
       - pan
       - currency
+      - isActive
+  ConomyCardPatch:
+    type: object
+    title: Conomy Card Patch
+    description: Description of a PATCH method where is possible to update selected card
+    properties:
+      id:
+        type: string
+        format: objectId
+        example: 628e7dccc22a0821b516fb55
+      isActive:
+        type: string
+        example: 'true'
+    required:
+      - id
+      - isActive
   User:
     type: object
     description: Conomy User Model
