@@ -925,7 +925,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      description: 'The Users service provides user information. The /users/deleteRule endpoint with a PATCH method, updates user rules, deleting a specific rule of specific user by  user id from the db.'
+      description: 'The Users service provides user information. The /user/deleteRule endpoint with a PATCH method, updates user rules, deleting a specific rule of specific user by user id from the db.'
       security:
         - apitoken: []
       parameters:
@@ -960,7 +960,7 @@ definitions:
       appId:
         description: app idientifier
         type: string
-        example: 123456
+        example: "123456"
       exp:
         description: Unix timestamp
         type: integer
@@ -1028,7 +1028,7 @@ definitions:
       expiration:
         description: Unix timestamp
         type: string
-        example: 1651007906
+        example: "1651007906"
       _links:
         type: array
         items:
@@ -1051,7 +1051,7 @@ definitions:
         example: 52SNfMWOktWVxsfyks6felsafAU24
       expiration:
         type: string
-        example: 1651007906
+        example: "1651007906"
         description: Expiration date
       _links:
         type: array
