@@ -895,7 +895,7 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  /user/deleteRule:
+  '/user/deleteRule/{userId}/{ruleId}':
     patch:
       summary: Update user rules by UserID
       operationId: patchUserRule
@@ -939,6 +939,17 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       tags:
         - User
+    parameters:
+      - type: string
+        name: userId
+        in: path
+        required: true
+        description: User id
+      - type: string
+        name: ruleId
+        in: path
+        required: true
+        description: Rule id
 definitions:
   Transaction:
     type: object
@@ -960,7 +971,7 @@ definitions:
       appId:
         description: app idientifier
         type: string
-        example: "123456"
+        example: '123456'
       exp:
         description: Unix timestamp
         type: integer
@@ -1028,7 +1039,7 @@ definitions:
       expiration:
         description: Unix timestamp
         type: string
-        example: "1651007906"
+        example: '1651007906'
       _links:
         type: array
         items:
@@ -1051,7 +1062,7 @@ definitions:
         example: 52SNfMWOktWVxsfyks6felsafAU24
       expiration:
         type: string
-        example: "1651007906"
+        example: '1651007906'
         description: Expiration date
       _links:
         type: array
