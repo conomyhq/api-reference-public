@@ -79,7 +79,7 @@ paths:
       tags:
         - Card
       description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method DELETE deletes the information about a specific card id.'
-      summary: "Get a specific card by card ID \U0001F4B3"
+      summary: "Delete a specific card by card ID \U0001F4B3"
       operationId: DeleteCard
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
