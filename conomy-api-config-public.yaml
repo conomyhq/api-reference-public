@@ -596,7 +596,7 @@ paths:
         description: User ID
   /switch:
     post:
-      summary: "Switch Transaction \U0001F511"
+      summary: "Switch Transaction from Processor\U0001F511"
       operationId: transactionSwitch
       description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
       consumes:
@@ -654,8 +654,8 @@ paths:
     parameters: []
   /switchTowallet:
     post:
-      summary: "Switch Transaction \U0001F511"
-      operationId: transactionSwitch
+      summary: "Switch Transaction To Wallet \U0001F511"
+      operationId: transactionSwitchToWallet
       description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
       consumes:
         - application/json
@@ -667,7 +667,7 @@ paths:
           name: User
           description: User schema
           schema:
-            $ref: '#/definitions/SwitchTransaction'
+            $ref: '#/definitions/SwitchTransactionToWallet'
           x-examples: {}
       responses:
         '201':
