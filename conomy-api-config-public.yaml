@@ -652,6 +652,64 @@ paths:
       security:
         - apitoken: []
     parameters: []
+  /switchTowallet:
+    post:
+      summary: "Switch Transaction \U0001F511"
+      operationId: transactionSwitch
+      description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
+      consumes:
+        - application/json
+      x-google-backend:
+        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
+        path_translation: APPEND_PATH_TO_ADDRESS
+      parameters:
+        - in: body
+          name: User
+          description: User schema
+          schema:
+            $ref: '#/definitions/SwitchTransaction'
+          x-examples: {}
+      responses:
+        '201':
+          description: matching user
+          schema:
+            $ref: '#/definitions/SwitchTransactionResponse'
+        '400':
+          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Invalid or missing authentication token.
+          examples:
+            Unauthorized Error:
+              detail: Jwt is missing
+              type: AuthError
+              code: 401
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Data not found in the DB.
+          examples:
+            Not Found Error:
+              detail: The user could not be found in the DB
+              type: NotFoundError
+              code: 404
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            Server Error:
+              detail: Internal Server Error
+              type: ServerError
+              code: 500
+      tags:
+        - Transaction Switch
+      security:
+        - apitoken: []
+    parameters: []
   /v1/goals-challenges/composite:
     post:
       summary: Create goal or challenge
@@ -1889,12 +1947,85 @@ definitions:
       transactionId:
         type: string
         minLength: 1
+      description:
+        type: string
+        minLength: 1
+      timestamp:
+        type: string
+        minLength: 1
+        format: date-time
+        default: 'yyyy-mm-dd hh:mm:ss'
+      origin:
+        type: string
+        minLength: 1
+        default: AliExpress GRB
     required:
       - identifier
       - idConomyCardReferenceToken
       - amount
       - currency
       - transactionId
+      - description
+      - timestamp
+      - origin
+  SwitchTransactionInWallet:
+    description: ''
+    type: object
+    x-examples: {}
+    properties:
+      identifier:
+        type: string
+        minLength: 1
+      idConomyCardReferenceToken:
+        type: string
+        minLength: 1
+      amount:
+        type: string
+        minLength: 1
+      currency:
+        type: string
+        minLength: 1
+      transactionId:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 1
+      timestamp:
+        type: string
+        minLength: 1
+        format: date-time
+        default: 'yyyy-mm-dd hh:mm:ss'
+      origin:
+        type: string
+        minLength: 1
+        default: AliExpress GRB
+      idCard:
+        type: string
+        minLength: 1
+        format: ObjectId
+    required:
+      - identifier
+      - idConomyCardReferenceToken
+      - amount
+      - currency
+      - transactionId
+      - description
+      - timestamp
+      - origin
+      - idCard
+  SwitchTransactionToWallet:
+    description: ''
+    x-examples: {}
+    title: ''
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+          $ref: '#/definitions/SwitchTransactionInWallet'
+      totalAmount:
+        type: number
   SwitchTransactionResponse:
     description: ''
     type: object
