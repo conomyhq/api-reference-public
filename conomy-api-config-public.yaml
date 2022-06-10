@@ -659,9 +659,6 @@ paths:
       description: The Switch service receive transaction's information. The /transaction endpoint with a POST method register every transaction.
       consumes:
         - application/json
-      x-google-backend:
-        address: 'https://conomy-switch-service-ylggeyc7ba-uc.a.run.app'
-        path_translation: APPEND_PATH_TO_ADDRESS
       parameters:
         - in: body
           name: User
