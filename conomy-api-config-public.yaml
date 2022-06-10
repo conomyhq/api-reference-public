@@ -1202,9 +1202,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-        '':
-          schema:
-            $ref: ''
       description: 'The Users service provides user information. The /user/deleteRule endpoint with a PATCH method, updates user rules, deleting a specific rule of specific user by user id from the db.'
       security:
         - apitoken: []
@@ -1946,7 +1943,6 @@ definitions:
       timestamp:
         type: string
         minLength: 1
-        format: date-time
         default: 'yyyy-mm-dd hh:mm:ss'
       origin:
         type: string
@@ -1987,7 +1983,6 @@ definitions:
       timestamp:
         type: string
         minLength: 1
-        format: date-time
         default: 'yyyy-mm-dd hh:mm:ss'
       origin:
         type: string
