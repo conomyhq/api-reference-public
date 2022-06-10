@@ -1922,6 +1922,7 @@ definitions:
       identifier:
         type: string
         minLength: 1
+        description: Upayment user id
       idConomyCardReferenceToken:
         type: string
         minLength: 1
