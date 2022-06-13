@@ -1490,7 +1490,7 @@ definitions:
         description: user conomy identifier
       issuingBank:
         type: string
-        example: BancoDeChile
+        example: Banco De Chile
         description: Issuing Bank
       cardBrand:
         type: string
@@ -1517,7 +1517,8 @@ definitions:
         description: User-defined card color (HEX)
       cardType:
         type: string
-        description: 'PREPAID, DEBIT, CREDIT'
+        description: 'PREPAID, DEBIT, CREDIT, UNDEFINED'
+        example: 'CREDIT, DEBIT, UNDEFINED'
       description:
         type: string
         description: Info shown on conomy app
@@ -1564,7 +1565,7 @@ definitions:
         description: User conomy id
       issuingBank:
         type: string
-        example: BancoDeChile
+        example: Banco De Chile
         description: Issuing Bank
       cardBrand:
         type: string
@@ -1636,7 +1637,6 @@ definitions:
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       issuingBank:
         type: string
-        example: BancoDeChile
         description: Issuing Bank
       cardBrand:
         type: string
@@ -1690,7 +1690,6 @@ definitions:
         example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       issuingBank:
         type: string
-        example: BancoDeChile
         description: Issuing Bank
       cardBrand:
         type: string
@@ -1745,7 +1744,7 @@ definitions:
         description: User u-payments uuid
       name:
         type: string
-        example: Mauricio
+        example: MAURICIO
         description: User name
       nickName:
         type: string
@@ -1753,21 +1752,18 @@ definitions:
         description: user nickname
       lastName:
         type: string
-        example: Gatica
+        example: GATICA
         description: user last name
       email:
         type: string
         description: user email
-      maritalStatus:
-        type: string
-        description: 'MARRIED, SINGLE, DIVORCED, WIDOW '
       phone:
         type: string
         example: '+5691238159123'
         description: phone number
       dni:
         type: string
-        example: 12.612.412-2
+        example: 12612412-2
         description: Unique country identifier
       career:
         type: string
@@ -1795,7 +1791,6 @@ definitions:
       - name
       - lastName
       - email
-      - maritalStatus
       - phone
       - dni
       - career
@@ -1820,36 +1815,10 @@ definitions:
         civil_status: string
         email: string
     properties:
-      name:
-        type: string
-        description: User name
-      lastName:
-        type: string
-        description: User last name
       email:
         type: string
         minLength: 1
         description: user email
-      nickName:
-        type: string
-        minLength: 1
-        description: user nick name
-      phone:
-        type: string
-        minLength: 1
-        description: phone number
-      career:
-        type: string
-        minLength: 1
-        description: user career/ocuppation
-      gender:
-        type: string
-        minLength: 1
-        description: 'FEMALE, MALE, OTHER'
-      maritalStatus:
-        type: string
-        minLength: 1
-        description: 'User civil status. MARRIED, SINGLE, DIVORCED, WIDOW'
       address:
         type: string
         example: Bellas Artes
@@ -1875,11 +1844,11 @@ definitions:
         description: user u-payments uuid
       name:
         type: string
-        example: Mauricio
+        example: MAURICIO
         description: user name
       lastName:
         type: string
-        example: Gatica
+        example: GATICA
         description: user last name
       nickName:
         type: string
@@ -1889,20 +1858,17 @@ definitions:
         description: user email
       dni:
         type: string
-        example: 12.612.412-2
+        example: 12612412-2
         description: Unique country identifier
       phone:
         type: string
-        description: User phone number
+        description: '+56981234567'
       career:
         type: string
         description: user career/ocuppation
       gender:
         type: string
         description: 'FEMALE, MALE, OTHER'
-      maritalStatus:
-        type: string
-        description: 'MARRIED, SINGLE, DIVORCED, WIDOW'
       address:
         type: string
         example: Bellas Artes
