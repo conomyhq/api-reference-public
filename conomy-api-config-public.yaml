@@ -514,9 +514,19 @@ paths:
       responses:
         '200':
           description: OK
+          schema:
+            $ref: '#/definitions/User'
       description: The Users services provides user information. The /user endpoint with a PATCH method updates defined updatables attributes in the db.
       tags:
         - User
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserModify'
+          description: There are some attributes that are modifiable
+      security:
+        - apitoken: []
   '/user/{user_id}':
     get:
       tags:
