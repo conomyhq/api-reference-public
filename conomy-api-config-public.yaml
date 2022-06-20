@@ -2139,7 +2139,9 @@ definitions:
       rules:
         type: array
         items:
-          $ref: '#/definitions/RuleFiltered'
+          type: string
+      payDayAmount:
+        type: string
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
@@ -2180,10 +2182,12 @@ definitions:
       rules:
         type: array
         items:
-          $ref: '#/definitions/RuleFiltered'
+          type: string
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+      payDayAmount:
+        type: string
       created_at:
         type: string
       updated_at:
@@ -2221,7 +2225,7 @@ definitions:
       rules:
         type: array
         items:
-          $ref: '#/definitions/RuleFiltered'
+          type: string
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
@@ -2254,7 +2258,7 @@ definitions:
       rules:
         type: array
         items:
-          $ref: '#/definitions/RuleFiltered'
+          type: string
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
@@ -2353,6 +2357,8 @@ definitions:
         type: number
       currentAmount:
         type: number
+      payDayAmount:
+        type: string
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
