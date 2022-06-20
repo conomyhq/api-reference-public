@@ -760,7 +760,7 @@ paths:
         - apitoken: []
     parameters: []
     get:
-      summary: Get goals and challenges by user_id
+      summary: Get goals and challenges by userid
       operationId: get-v1-goals-challenges
       x-google-backend:
         address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
