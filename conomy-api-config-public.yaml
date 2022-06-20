@@ -1427,6 +1427,8 @@ definitions:
     properties:
       id:
         type: string
+      name:
+        type: string
       type:
         type: string
         description: Rule's type
@@ -1468,17 +1470,19 @@ definitions:
     properties:
       id:
         type: string
+      name:
+        type: string
       type:
         type: string
         description: Rule's type
       description:
         type: string
         description: Rule description for human reading
-      leftVariable:
-        type: string
-      rightVariable:
+      variable:
         type: string
       operation:
+        type: string
+      rule_id:
         type: string
     required:
       - id
