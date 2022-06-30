@@ -717,13 +717,13 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  /v1/goals-challenges/composite:
+  /goals-challenges/composite:
     post:
       summary: Create goal or challenge
       tags:
         - Goals & Challenges
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '201':
@@ -804,7 +804,7 @@ paths:
       x-internal: true
       security:
         - apitoken: []
-  /v1/goals-challenges/composite/challenges:
+  /goals-challenges/composite/challenges:
     get:
       summary: Get Active challenges in app
       tags:
@@ -845,7 +845,7 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  /v1/goals-challenges/composite/rules:
+  /goals-challenges/composite/rules:
     get:
       summary: Get Actives rules in app
       tags:
@@ -886,7 +886,7 @@ paths:
       security:
         - apitoken: []
     parameters: []
-  '/v1/goals-challenges/composite/{id}':
+  '/goals-challenges/composite/{id}':
     get:
       summary: Get goal or challenge by id
       x-google-backend:
@@ -925,7 +925,7 @@ paths:
       summary: Modify goal or challenge by id
       operationId: put-v1-goals-challenge
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '200':
@@ -969,7 +969,7 @@ paths:
       summary: Delete goal or challenge by id
       operationId: delete-v1-goals-challenges-id
       x-google-backend:
-        address: 'https://gc-composite-service-conomy-ylggeyc7ba-uc.a.run.app'
+        address: 'https://conomy-composite-goals-and-challenges-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '204':
@@ -996,7 +996,7 @@ paths:
       x-internal: true
       security:
         - apitoken: []
-  '/v1/goals-challenges/composite/{id}/confirm':
+  '/goals-challenges/composite/{id}/confirm':
     parameters:
       - type: string
         name: id
