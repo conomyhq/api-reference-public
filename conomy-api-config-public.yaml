@@ -771,12 +771,10 @@ paths:
           schema:
             type: object
             properties:
-              goalschallenges:
-                $ref: '#/definitions/GoalandChallenge'
-              _links:
+              goalAndChallenge:
                 type: array
                 items:
-                  $ref: '#/definitions/_links'
+                  $ref: '#/definitions/GoalandChallengeResponse'
         '400':
           description: Bad Request
           schema:
@@ -804,7 +802,7 @@ paths:
       x-internal: true
       security:
         - apitoken: []
-  /goals-challenges/composite/challenges:
+  /goals-challenges/composite/challengesDefault:
     get:
       summary: Get Active challenges in app
       tags:
@@ -824,6 +822,11 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/_links'
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
         '400':
           description: Bad Request
           schema:
@@ -844,6 +847,7 @@ paths:
       x-internal: true
       security:
         - apitoken: []
+      description: ''
     parameters: []
   /goals-challenges/composite/rules:
     get:
@@ -1030,7 +1034,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error500'
-      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt.'
+      description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt, assigning with a status ACTIVE'
       tags:
         - Goals & Challenges
       security:
@@ -1436,16 +1440,10 @@ definitions:
       description:
         type: string
         description: Rule description for human reading
-      processes:
-        type: array
-        description: Processes are atomic operations that when accomplished in sequence define and apply the rule as a whole
-        items:
-          $ref: '#/definitions/RuleProcess'
     required:
       - id
       - type
       - description
-      - processes
   RuleFiltered:
     type: object
     description: Rule that defines business rules and has its atomic processes to apply to the transaction
@@ -2123,6 +2121,7 @@ definitions:
         type: string
       type:
         type: string
+        description: 'GOAL , CHALLENGE, CHALLENGE_DEFAULT'
       description:
         type: object
         properties:
@@ -2149,14 +2148,32 @@ definitions:
       status:
         type: string
         description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      created_at:
+      createdAt:
         type: string
-      updated_at:
+      updatedAt:
         type: string
   GoalandChallengeResponse:
-    title: Goal&Challenge
     type: object
-    description: Goal and challenge model
+    x-examples:
+      example-1:
+        id: string
+        userId: string
+        userExternalId: string
+        type: string
+        description:
+          title: string
+          image: string
+          color: string
+          detail: string
+        endTime: string
+        targetAmount: 0
+        currentAmount: 0
+        rules:
+          - string
+        payDayAmount: string
+        status: string
+        created_at: string
+        updated_at: string
     properties:
       id:
         type: string
@@ -2187,89 +2204,16 @@ definitions:
         type: array
         items:
           type: string
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
       payDayAmount:
         type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-      _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
-  GoalandChallengeFiltered:
-    title: Goal&ChallengeFiltered
-    type: object
-    description: Goal and challenge model
-    properties:
-      id:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      currentAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          type: string
       status:
         type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-  GoalandChallengeFilteredResponse:
-    title: Goal&ChallengeFilteredResponse
-    type: object
-    description: Goal and challenge filtered response model
-    properties:
-      id:
+      createdAt:
         type: string
-      type:
+      updatedAt:
         type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      currentAmount:
-        type: number
-      rules:
-        type: array
-        items:
-          type: string
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
       _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
+        $ref: '#/definitions/_links'
   GoalandChallengeModify:
     title: Goal&ChallengeModify
     type: object
@@ -2303,9 +2247,27 @@ definitions:
         items:
           type: string
   GoalandChallengeCreate:
-    title: Goal&ChallengeCreate
     type: object
-    description: Goal and challenge model
+    x-examples:
+      example-1:
+        id: string
+        userId: string
+        userExternalId: string
+        type: string
+        description:
+          title: string
+          image: string
+          color: string
+          detail: string
+        endTime: string
+        targetAmount: 0
+        currentAmount: 0
+        rules:
+          - string
+        payDayAmount: string
+        status: string
+        created_at: string
+        updated_at: string
     properties:
       userId:
         type: string
@@ -2313,6 +2275,7 @@ definitions:
         type: string
       type:
         type: string
+        description: 'GOAL,CHALLENGE,CHALLENGE_DEFAULT'
       description:
         type: object
         properties:
@@ -2324,52 +2287,29 @@ definitions:
             type: string
           detail:
             type: string
+        required:
+          - title
       endTime:
         type: string
       targetAmount:
         type: number
       currentAmount:
         type: number
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-  GoalandChallengeCreateResponse:
-    title: Goal&ChallengeCreate Response
-    type: object
-    description: Goal and challenge response model
-    properties:
-      userId:
-        type: string
-      userExternalId:
-        type: string
-      type:
-        type: string
-      description:
-        type: object
-        properties:
-          title:
-            type: string
-          image:
-            type: string
-          color:
-            type: string
-          detail:
-            type: string
-      endTime:
-        type: string
-      targetAmount:
-        type: number
-      currentAmount:
-        type: number
+      rules:
+        type: array
+        items:
+          type: string
       payDayAmount:
         type: string
       status:
         type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
-      _links:
-        type: array
-        items:
-          $ref: '#/definitions/_links'
+        description: 'INACTIVE,ACTIVE,COMPLETE,PENDING'
+    required:
+      - userId
+      - userExternalId
+      - type
+  GoalandChallengeCreateResponse:
+    $ref: '#/definitions/GoalandChallengeResponse'
   _links:
     title: _links
     type: object
