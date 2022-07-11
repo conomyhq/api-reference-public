@@ -25,9 +25,9 @@ paths:
     get:
       tags:
         - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method GET fetch the information about a specific id.'
+      description: 'The Cards service provides information about user''s wallet, and the endpoint /card/{card_id} with the method GET fetch the information about a specific id.'
       summary: "Get a specific card by card ID \U0001F4B3"
-      operationId: getCardId
+      operationId: getCardById
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -41,45 +41,39 @@ paths:
         - apitoken: []
       responses:
         '200':
-          description: Card information
+          description: OK
           schema:
             $ref: '#/definitions/Card'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              externalId: card_7774180d53114815b405d14d9c0e5931
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: Banco De Chile
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              isActive: false
+              color: '#DF1CFF'
+              cardType: CREDIT
+              description: '************1234'
+              priority: MAIN
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2017-07-21T17:32:28Z'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
     delete:
       tags:
         - Card
       description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method DELETE deletes the information about a specific card id.'
-      summary: "Delete a specific card by card ID \U0001F4B3"
+      summary: "Delete a specific card by card ID \U0001F4B3 (WIP)"
       operationId: DeleteCard
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
@@ -93,41 +87,22 @@ paths:
       security:
         - apitoken: []
       responses:
-        '200':
-          description: Card information
-          schema:
-            $ref: '#/definitions/Card'
+        '204':
+          $ref: '#/responses/204'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
+    parameters:
+      - type: string
+        name: card_id
+        in: path
+        required: true
+        description: Unique identifier of thecard to be used
   /card:
     post:
       tags:
@@ -145,45 +120,53 @@ paths:
           name: Card
           description: Card schema
           schema:
-            $ref: '#/definitions/CardPatch'
+            $ref: '#/definitions/CardCreate'
+          x-examples:
+            Create card:
+              externalId: string
+              userId: string
+              issuingBank: Banco De Chile
+              cardBrand: MasterCard
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              isActive: false
+              color: string
+              cardType: string
+              description: string
+              priority: string
       security:
         - apitoken: []
       responses:
         '201':
           description: Card information
           schema:
-            $ref: '#/definitions/CardCreate'
+            $ref: '#/definitions/Card'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              externalId: card_7774180d53114815b405d14d9c0e5931
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: Banco De Chile
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              isActive: false
+              color: '#DF1CFF'
+              cardType: CREDIT
+              description: '************1234'
+              priority: MAIN
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2017-07-21T17:32:28Z'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
     parameters: []
     patch:
       tags:
@@ -210,36 +193,13 @@ paths:
           schema:
             $ref: '#/definitions/Card'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
   '/conomyCard/{conomycard_id}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
@@ -1609,9 +1569,12 @@ definitions:
     properties:
       id:
         type: string
+        description: Card unique identifier
+        example: 62cc8f8a5136f82e4f4d3531
       externalId:
         type: string
         description: Card external identifier
+        example: card_7774180d53114815b405d14d9c0e5931
       userId:
         type: string
         format: uuid
@@ -1623,7 +1586,7 @@ definitions:
         description: Issuing Bank
       cardBrand:
         type: string
-        example: MasterCard
+        example: MASTERCARD
         description: 'MASTERCARD, VISA, AMEX, MAGNA'
       cardholderName:
         type: string
@@ -1644,24 +1607,29 @@ definitions:
       color:
         type: string
         description: User-defined card color (HEX)
+        example: '#DF1CFF'
       cardType:
         type: string
         description: 'PREPAID, DEBIT, CREDIT, UNDEFINED'
-        example: 'CREDIT, DEBIT, UNDEFINED'
+        example: CREDIT
       description:
         type: string
-        description: Info shown on conomy app
+        description: Info to be shown on conomy app
+        example: '************1234'
       priority:
         type: string
         description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
+        example: MAIN
       createdAt:
         type: string
         format: date-time
         example: '2017-07-21T17:32:28Z'
+        description: Creation date
       updatedAt:
         type: string
         format: date-time
         example: '2017-07-21T17:32:28Z'
+        description: Date of last update
     required:
       - issuingBank
       - cardBrand
@@ -1669,6 +1637,9 @@ definitions:
       - pan
       - currency
       - isActive
+    x-tags:
+      - Card
+    description: Description of card model
   CardCreate:
     type: object
     x-examples:
@@ -1685,20 +1656,25 @@ definitions:
         color: string
         card_account_type: cuenta vista
         description: {}
+    x-tags:
+      - Card
+    description: Description of a Post method where is possible to create a new card
     properties:
       externalId:
         type: string
         description: Card external identifier
+        example: card_a1fc36da7180412c9c0a70b092464d67
       userId:
         type: string
         description: User conomy id
+        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       issuingBank:
         type: string
         example: Banco De Chile
         description: Issuing Bank
       cardBrand:
         type: string
-        example: MasterCard
+        example: MASTERCARD
         description: 'MASTERCARD, VISA, AMEX, MAGNA'
       cardholderName:
         type: string
@@ -1719,17 +1695,22 @@ definitions:
       color:
         type: string
         description: User-defined card color (HEX)
+        example: '#DF1CFF'
       cardType:
         type: string
         description: 'PREPAID, DEBIT, CREDIT'
+        example: CREDIT
       description:
         type: string
-        description: Info shown on conomy app
+        description: Info to be shown on conomy app
+        example: '************1234'
       priority:
         type: string
         description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
+        example: MAIN
     required:
       - externalId
+      - userId
       - issuingBank
       - cardBrand
       - cardholderName
@@ -1751,6 +1732,8 @@ definitions:
     required:
       - id
       - isActive
+    x-tags:
+      - Card
   ConomyCard:
     type: object
     title: Conomy Card
@@ -2803,3 +2786,90 @@ definitions:
     properties:
       isDeleted:
         type: boolean
+  204Response:
+    title: 204Response
+    x-stoplight:
+      id: xh24v055fr7g9
+    type: object
+    properties:
+      id:
+        type: string
+    required:
+      - id
+    x-examples:
+      204 Response:
+        id: 507f191e810c19729de860ea
+responses:
+  '204':
+    description: No content
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      $ref: '#/definitions/204Response'
+    examples:
+      No content example:
+        id: 507f191e810c19729de860ea
+  '400':
+    description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      $ref: '#/definitions/Error400'
+    examples:
+      400 Error:
+        code: 2
+        type: GenericError
+        detail: A required parameter for this API operation is invalid or has not been provided
+  '401':
+    description: Invalid or missing authentication token.
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      $ref: '#/definitions/Error401'
+    examples:
+      401 Error:
+        code: 401
+        type: AuthError
+        detail: Jwt is missing
+  '404':
+    description: Data not found
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      $ref: '#/definitions/Error404'
+    examples:
+      404 Error:
+        code: 404
+        type: NotFoundError
+        detail: The user could not be found in the DB
+  '500':
+    description: Internal server error.
+    content:
+      application/json:
+        schema:
+          properties:
+            id:
+              type: string
+    schema:
+      $ref: '#/definitions/Error500'
+    examples:
+      500 error:
+        code: 500
+        type: ServerError
+        detail: Internal Server Error
