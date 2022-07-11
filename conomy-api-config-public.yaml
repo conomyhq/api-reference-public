@@ -1231,8 +1231,6 @@ paths:
   /blog/post:
     get:
       summary: "Get list of blogs \U0001F4D6"
-      tags:
-        - Blog
       responses:
         '200':
           description: OK
@@ -1295,6 +1293,8 @@ paths:
           default: 10
           maximum: 20
       description: This service allows us to obtain a list of all the blogs that are created on the platform.
+      tags:
+        - Blog
   '/blog/post/{tag}':
     parameters:
       - type: string
