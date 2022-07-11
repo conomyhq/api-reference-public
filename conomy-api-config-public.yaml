@@ -1254,9 +1254,22 @@ paths:
           description: Internal Server Error
           schema:
             type: object
+            x-examples:
+              example-1:
+                code: 404
+                type: NotFoundError
+                detail: The user could not be found in the DB
             properties:
-              Error obtaining post list from flotiq:
+              code:
+                type: integer
+                example: 500
+              type:
                 type: string
+                example: ErrorObtainingList
+              detail:
+                type: string
+                example: Error obtaining post list from flotiq
+          examples: {}
       operationId: get-blog-post
       parameters:
         - type: string
@@ -1268,7 +1281,7 @@ paths:
           in: query
           name: offset
           description: Current page number
-          default: '1'
+          default: 1
           minLength: 1
         - type: number
           in: query
@@ -1287,8 +1300,6 @@ paths:
         description: Tag of the post to which the content is to be retrieved
     get:
       summary: "Get blog post object \U0001F4D6"
-      tags:
-        - Blog
       responses:
         '200':
           description: OK
@@ -1310,11 +1321,24 @@ paths:
           description: Internal Server Error
           schema:
             type: object
+            x-examples:
+              example-1:
+                code: 500
+                type: ErrorObtainingList
+                detail: Error obtaining post list from flotiq
             properties:
-              Error obtaining post list from flotiq:
+              code:
+                type: integer
+                example: 500
+              type:
                 type: string
+                example: ErrorObtainingList
+              detail:
+                type: string
+                example: Error obtaining post list from flotiq
       operationId: get-blog-post-tag
       description: 'The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {tag}.'
+      x-internal: false
 definitions:
   Transaction:
     type: object
