@@ -1343,6 +1343,8 @@ paths:
       operationId: get-blog-post-tag
       description: 'The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {tag}.'
       x-internal: false
+      tags:
+        - Blog
 definitions:
   Transaction:
     type: object
