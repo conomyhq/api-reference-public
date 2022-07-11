@@ -1236,6 +1236,37 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/BlogList'
+          examples:
+            example-1:
+              totalBlogs: 1
+              totalPages: 1
+              currentPage: 1
+              data:
+                - id: blogpost-341099
+                  tag: nuestra_historia
+                  title: Nuestra historia
+                  estimatedTime: 7
+                  writer:
+                    id: owner-338894
+                    name: Pablo
+                    last_name: Acuña
+                    image:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-966f25c5-6cda-45e8-97aa-2f2b2cc5da99.png'
+                  internal:
+                    contentType: blogpost
+                    createdAt: '2022-05-31T18:50:47+00:00'
+                    updatedAt: '2022-06-28T18:11:51+00:00'
+                    deletedAt: ''
+                  media:
+                    thumbnail:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                    headerImage:
+                      dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                  description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
+                  breadCrum:
+                    id: breadcrum-982488
+                    name: Nosotros
+                  published: true
         '400':
           description: Bad Request
           schema:
@@ -1311,6 +1342,29 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/BlogPostObject'
+          examples:
+            example-1:
+              id: blogpost-341099
+              tag: nuestra_historia
+              title: Nuestra historia
+              estimatedTime: 7
+              writer:
+                id: owner-338894
+                name: Pablo
+                last_name: Acuña
+                image:
+                  dataUrl: 'https://api.flotiq.com/image/0x0/_media-966f25c5-6cda-45e8-97aa-2f2b2cc5da99.png'
+              internal:
+                contentType: blogpost
+                createdAt: '2022-05-31T18:50:47+00:00'
+                updatedAt: '2022-06-28T18:11:51+00:00'
+                deletedAt: ''
+              content: 'Hola, mi nombre es Pablo, tengo 31 años y soy ingeniero comercial. Desde que empecé mi carrera, siempre me gustaron los ramos y temas de Economía, Finanzas y Contabilidad, quizás este ultimo un poco menos. Pero independiente de eso, desde bastante chico, incluso antes de terminar la Universidad... '
+              description: Esta es la histora de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
+              breadCrum:
+                id: breadcrum-982488
+                name: Nosotros
+              published: true
         '400':
           description: Bad Request
           schema:
@@ -2693,6 +2747,7 @@ definitions:
           name: Nosotros
         published: true
     description: ''
+    title: ''
     properties:
       id:
         type: string
@@ -2740,10 +2795,13 @@ definitions:
             type: string
           createdAt:
             type: string
+            format: date-time
           updatedAt:
             type: string
+            format: date-time
           deletedAt:
             type: string
+            format: date-time
         required:
           - contentType
       media:
