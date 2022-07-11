@@ -854,7 +854,7 @@ paths:
           schema:
             $ref: '#/definitions/BlogList'
           examples:
-            example:
+            example-1:
               totalBlogs: 4
               totalPages: 1
               currentPage: 1
@@ -873,13 +873,17 @@ paths:
                     contentType: blogpost
                     createdAt: '2022-05-26T15:16:09+00:00'
                     updatedAt: '2022-05-26T15:16:09+00:00'
-                    deletedAt: ' '
+                    deletedAt: ''
                   description: Les quiero contar una historia *-REAL-*
                   media:
                     thumbnail:
                       dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
                     headerImage:
                       dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+                  breadCrumb:
+                    id: breadcrum-982488
+                    name: Nosotros
+                  published: true
         '401':
           description: Unauthorized
           schema:
@@ -896,18 +900,18 @@ paths:
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
           required: true
-        - type: string
+        - type: number
           in: query
-          name: page
+          name: offset
           description: Current page number
           minLength: 1
-          default: '1'
-        - type: string
+          default: 1
+        - type: number
           in: query
-          name: limit
+          name: count
           description: limit of blogs on a page
           maxLength: 10
-          default: '10'
+          default: 10
     parameters: []
   '/blog/post/{tag}':
     parameters:
@@ -915,6 +919,7 @@ paths:
         name: tag
         in: path
         required: true
+        description: 'Tag of the post to which the content is to be retrieved '
     get:
       summary: Get blog post object
       tags:
@@ -925,7 +930,7 @@ paths:
           schema:
             $ref: '#/definitions/BlogPost'
           examples:
-            example:
+            example-1:
               id: blogpost-674209
               tag: transaccion_que_no_ocurrio
               title: Transacción que no ocurrió
@@ -940,14 +945,18 @@ paths:
                 contentType: blogpost
                 createdAt: '2022-05-26T15:16:09+00:00'
                 updatedAt: '2022-05-26T15:16:09+00:00'
-                deletedAt: ' '
+                deletedAt: ''
               description: Les quiero contar una historia *-REAL-*
               media:
                 thumbnail:
                   dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
                 headerImage:
                   dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
-              content: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento'
+              content: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento...'
+              breadcrumb:
+                id: string
+                name: string
+              published: true
         '401':
           description: Unauthorized
           schema:
@@ -964,10 +973,6 @@ paths:
           in: header
           name: X-AUTH-TOKEN
           description: Personal Auth token generated for user in Headless CMS application
-        - type: string
-          in: query
-          name: filters
-          description: 'Tag of the post you want to access '
 definitions:
   Transaction:
     type: object
@@ -2104,7 +2109,33 @@ definitions:
   BlogPostListData:
     description: ''
     type: object
-    x-examples: {}
+    x-examples:
+      example-1:
+        id: blogpost-674209
+        tag: transaccion_que_no_ocurrio
+        title: Transacción que no ocurrió
+        estimatedTime: 6
+        writer:
+          id: owner-338894
+          name: Taladro
+          lastName: Táctico
+          image:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
+        internal:
+          contentType: blogpost
+          createdAt: '2022-05-26T15:16:09+00:00'
+          updatedAt: '2022-05-26T15:16:09+00:00'
+          deletedAt: ' '
+        description: Les quiero contar una historia *-REAL-*
+        media:
+          thumbnail:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+          headerImage:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+        breadCrumb:
+          id: breadcrum-982488
+          name: Nosotros
+        published: true
     title: BlogPostList
     properties:
       id:
@@ -2178,6 +2209,15 @@ definitions:
               dataUrl:
                 type: string
                 example: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+      breadCrumb:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+      published:
+        type: boolean
     required:
       - id
       - tag
@@ -2185,7 +2225,34 @@ definitions:
   BlogPost:
     description: ''
     type: object
-    x-examples: {}
+    x-examples:
+      example-1:
+        id: blogpost-674209
+        tag: transaccion_que_no_ocurrio
+        title: Transacción que no ocurrió
+        estimatedTime: 6
+        writer:
+          id: owner-338894
+          name: Taladro
+          lastName: Táctico
+          image:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-55801666-ee17-474a-be3e-f1e0ab285700.png'
+        internal:
+          contentType: blogpost
+          createdAt: '2022-05-26T15:16:09+00:00'
+          updatedAt: '2022-05-26T15:16:09+00:00'
+          deletedAt: ' '
+        description: Les quiero contar una historia *-REAL-*
+        media:
+          thumbnail:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+          headerImage:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-2393ec04-0dd5-40a8-988e-c25c132d91e9.png'
+        content: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento'
+        breadcrumb:
+          id: breadcrum-982488
+          name: Nosotros
+        published: true
     title: BlogPostList
     properties:
       id:
@@ -2262,6 +2329,15 @@ definitions:
       content:
         type: string
         example: 'Cuando me preguntan qué estudié y contesto que soy ingeniero comercial, las personas tienden a pensar que los problemas financieros *-producidos por desorden o desconocimiento'
+      breadcrumb:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+      published:
+        type: boolean
     required:
       - id
       - tag
