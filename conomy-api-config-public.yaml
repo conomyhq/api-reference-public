@@ -843,9 +843,9 @@ paths:
       tags:
         - Auth
     parameters: []
-  /blog/post/:
+  /blog/post:
     get:
-      summary: Get list of blogs
+      summary: "Get list of blogs \U0001F4D6"
       tags:
         - Blog
       responses:
@@ -921,7 +921,7 @@ paths:
         required: true
         description: 'Tag of the post to which the content is to be retrieved '
     get:
-      summary: Get blog post object
+      summary: "Get blog post object \U0001F4D6"
       tags:
         - Blog
       responses:
