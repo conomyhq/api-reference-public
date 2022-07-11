@@ -1269,6 +1269,10 @@ paths:
               detail:
                 type: string
                 example: Error obtaining post list from flotiq
+            required:
+              - code
+              - type
+              - detail
           examples: {}
       operationId: get-blog-post
       parameters:
