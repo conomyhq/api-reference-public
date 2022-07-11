@@ -1228,6 +1228,93 @@ paths:
       tags:
         - User
     parameters: []
+  /blog/post:
+    get:
+      summary: "Get list of blogs \U0001F4D6"
+      tags:
+        - Blog
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BlogList'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              Error obtaining post list from flotiq:
+                type: string
+      operationId: get-blog-post
+      parameters:
+        - type: string
+          in: header
+          name: X-AUTH-TOKEN
+          description: Personal Auth token generated for user in Headless CMS application
+          required: true
+        - type: number
+          in: query
+          name: offset
+          description: Current page number
+          default: '1'
+          minLength: 1
+        - type: number
+          in: query
+          description: limit of blogs on a page
+          name: count
+          minimum: 1
+          default: 10
+          maximum: 20
+      description: This service allows us to obtain a list of all the blogs that are created on the platform.
+  '/blog/post/{tag}':
+    parameters:
+      - type: string
+        name: tag
+        in: path
+        required: true
+        description: Tag of the post to which the content is to be retrieved
+    get:
+      summary: "Get blog post object \U0001F4D6"
+      tags:
+        - Blog
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BlogPostObject'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error400'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error401'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error404'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              Error obtaining post list from flotiq:
+                type: string
+      operationId: get-blog-post-tag
+      description: 'The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {tag}.'
 definitions:
   Transaction:
     type: object
@@ -2362,188 +2449,310 @@ definitions:
       - currentPage
       - data
   BlogPostObject:
-    description: ''
     type: object
-    x-examples: {}
-    title: ''
+    x-examples:
+      example-1:
+        id: blogpost-341099
+        tag: nuestra_historia
+        title: Nuestra historia
+        estimatedTime: 7
+        writer:
+          id: owner-338894
+          name: Pablo
+          last_name: Acuña
+          image:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-966f25c5-6cda-45e8-97aa-2f2b2cc5da99.png'
+        internal:
+          contentType: blogpost
+          createdAt: '2022-05-31T18:50:47+00:00'
+          updatedAt: '2022-06-28T18:11:51+00:00'
+          deletedAt: ''
+        content: |
+          Hola, mi nombre es Pablo, tengo 31 años y soy ingeniero comercial. Desde que empecé mi carrera, siempre me gustaron los ramos y temas de Economía, Finanzas y Contabilidad, quizás este ultimo un poco menos. Pero independiente de eso, desde bastante chico, incluso antes de terminar la Universidad, mis finanzas personales se volvieron un problema…
+
+          ### Gastar sin pensar
+
+          Aquí mi historia: Al poco tiempo de egresado, conseguí un trabajo en una empresa que me gustaba. Era mi primera pega como comercial, antes había trabajado como: empaquetador en época navideña, promotor de super, ayudante en la U y varias otras pegas, pero siempre *part time*, este iba a ser mi primer trabajo a tiempo completo. Con mi primer sueldo pagué algunas deudas que arrastraba desde mi época de estudiante, pero no demoré mucho y volví a endeudarme y esta vez no por tan poco... 
+
+          Me compré un auto sin haber ahorrado ni un peso. Y como pueden imaginarse la cuota que pagaba era alta (¡Obvio!), aproximadamente la mitad de mi sueldo. Además tenía que pagar las cuotas de mis tarjetas de crédito, compras de ropa, zapatillas, pagar el gimnasio (al que además no iba) o cualquier otro panorama que se te pudiera ocurrir, yo lo hacía; si total ya tenía un trabajo estable y con él un sueldo mensual. Dándole una vuelta ahora, claramente es una pésima forma de pensar…
+
+          ![Alt Text](https://media.giphy.com/media/Kerg053G7ZJUQ/giphy.gif)
+
+          Pasó menos de un año y los problemas se agrandaron. Seguí gastando sin pensar y así es que gastaba más de lo que ganaba y ese en realidad es el gran problema. Varios meses tuve que depender de la línea de crédito para llegar a fin de mes y esa no es una cómoda forma de vivir como se imaginarán…
+
+          ### Pensé que se resolvería solo ...
+
+          Seguía pensando que no importaba este desorden, que no era un problema real. Yo estaba seguro que lo resolvería o mejor dicho, que se resolvería solo, sin que yo tuviera nada que hacer para solucionarlo - como si yo no hubiese sido culpable del mismo problema-. Pensaba que tenía que aprovechar el tiempo y disfrutar mientras era joven. En fin, seguí gastando sin medir las consecuencias. El ahorro y la inversión eran dos cosas que no conocía.
+
+          Me ofrecieron otro puesto dentro de la misma empresa y mis problemas financieros no se solucionaron… Por mis deudas, compras en cuotas y forma de gastar en general, algunos meses llegué a pagar cuotas de mi tarjeta que eran más altas que mi sueldo. 
+
+          Es durísimo vivir así, empecé a dormir menos, a sufrir angustia y varias otras cosas negativas, pero bueno, era una lata, sobre todo porque lo que estaba sufriendo era netamente mi culpa.
+
+          ![Alt Text](https://media.giphy.com/media/xT5LMz2DWrwmbfVBK0/giphy.gif)
+
+           Ahí me di cuenta de algo: No importa lo que ganes, lo que importa es el equilibrio entre lo que ganas y lo que gastas… Suena lógico, lo sé, pero es difícil darse cuenta cuando uno mismo es el que se equivoca.
+
+          ### Una tarea monumental 
+
+          Ahora para solucionar el problema en el que yo mismo me había metido, tenía que hacer algo y seguramente no iba a ser tan fácil como gastar sin pensar... Pensándolo bien, era justamente lo opuesto, primero pensar y después gastar.
+
+          Lo primero que hice fue entender cuánto estaba gastando y en qué. Así que entré a las páginas de mis bancos (en esa época tenía cuentas en 3 bancos diferentes) y me di cuenta de lo difícil que era… En mi cuenta corriente tenía un saldo, en mi tarjeta de crédito tenía una deuda, saber cuánto tendría que pagar el próximo mes era casi imposible. Movimientos facturados, no facturados, pago mínimo y una lista de comercios con nombres que jamás había leído ni escuchado. Además tuve que hacer lo mismo para los tres bancos donde tenía cuenta. Si era difícil con uno, con tres era una tarea monumental…
+
+          Le conté mi problema a varios amigos y me llamó la atención que yo no era el único. Había muchos con el mismo problema. Aquí noté que algo no estaba bien y me pregunté: “¿Cuánta gente tendrá este mismo problema?”
+
+          > **Les doy un par de datos actuales:** Hoy los latinoamericanos estamos usando en promedio 4.9 tarjetas diferentes y tenemos 10 productos financieros distintos. Nuestro dinero está dividido en diferentes lugares y llevar el control del mismo se hace muy difícil y en consecuencia costoso, pero ¿cuán costoso? Para que se hagan una idea, los latinoamericanos en promedio debemos 7 de cada 11 pesos que ganamos. **¡SÍ! Casi el 70% de nuestros ingresos.**
+
+          En ese entonces me di cuenta que algo andaba mal y si nadie hacía algo al respecto esto seguiría empeorando. Pero *zapatero a tus zapatos*,  primero tenía que resolver mi problema...
+
+          ![Alt Text](https://media.giphy.com/media/AvMJCeu1EMmhG/giphy.gif)
+
+          Para solucionarlo tuve que dedicar mucho tiempo, armar una planilla con mi presupuesto y otra para llevar el control de cada uno de mis gastos (sí, de cada uno). Las cuadraba semanalmente con la información que sacaba de mi banco y la comparaba con la que yo llevaba enlistada y bueno, después de mucho trabajo y esfuerzo lo logré. 
+
+          Claramente no fue tan rápido como lo cuento en este artículo, y de seguro mi método no fue el óptimo en cuanto al esfuerzo y tiempo dedicado, pero tenía que salir de ese problema de alguna forma. Me demoré aproximadamente 3 años en salir del hoyo que yo mismo había cavado. 
+
+          Pasaron un par de años y mis finanzas continuaron “sanas”, pero el problema sigue existiendo para muchos chilenos y latinoamericanos. 
+
+          ### Una solución para todos
+
+          Yo sobre programación, desarrollo de software y pagos digitales no sabía casi nada… y estos temas eran claves para poder entregar una solución real.
+
+          Un día me junté con un amigo (y actual socio), Felipe. Él venía llegando desde Europa donde había estado trabajando justamente en tecnología, pagos digitales y conocía bastante del ecosistema Fintech (en ese momento yo ni siquiera sabía que era una Fintech). Cuando le conté el problema que había vivido y lo difícil de solucionar, en conjunto decidimos crear Conomy (claro que el nombre nació después).
+
+          ![Alt Text](https://media.giphy.com/media/ieEGqpcjvuI0YEN0Rm/giphy.gif)
+
+          Conomy tiene el fin de poder ayudar a las personas a simplificar sus finanzas, que puedan entender cómo y dónde gastan y que ahorrar e invertir sea fácil y hasta divertido. Que nadie tenga que poner tanto esfuerzo como yo puse para solucionar mis temas financieros.
+
+          Conomy es una tarjeta con el poder de manejar a todas las demás. Una sola clave que recordar y así Conomy es todas las tarjetas en una. **¿Conomy sirve para pagar? ¡Sí!** Esto es fundamental para poder realmente ayudarte a entender cómo gastas, ya que si usas 2, 3 o más tarjetas para pagar se hace inmanejable. Con Conomy usas la cantidad de tarjetas que quieras, pero solo pagas con una.
+
+          Conomy también es una aplicación para que puedas siempre tener el control de tu plata, generar presupuestos, ahorrar e invertir de forma fácil, para que alcances tus objetivos personales.
+
+          No tienes que ser un experto financiero para usar Conomy, de hecho todo lo contrario, está creada para que puedas relajarte, vivir tu vida y que nos dejes las finanzas a nosotros.
+          Olvídate de cuadrar planillas de banco, de no saber cuánto has gastado ni en dónde. Hacemos fácil lo que hasta ahora había sido difícil.
+
+          Esta historia está recién comenzando, actualmente estamos esperando la última aprobación por parte de CMF para poder emitir nuestra tarjeta para el mercado chileno. Ya estamos en la última parte previa al lanzamiento y decidimos armar este blog para: hablar sobre educación financiera, comunicar nuestra opinión sobre algunos temas de actualidad y hablar de tecnología (esa parte no la escribo yo claramente), entre otros temas. Pero sobre todo, y que quede bien claro: Ayudar a las personas en sus finanzas personales.
+        media:
+          thumbnail:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+          headerImage:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+        description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
+        breadCrum:
+          id: breadcrum-982488
+          name: Nosotros
+        published: true
+    description: ''
     properties:
       id:
         type: string
-        minLength: 1
         description: Unique id for each blog
-        example: blogpost-674209
       tag:
         type: string
-        minLength: 1
         description: Title tag for urls
-        example: transaccion_que_no_ocurrio
       title:
         type: string
-        minLength: 1
         description: Blog title
-        example: Transacción que no ocurrió
       estimatedTime:
-        type: number
-        description: Estimated reading time in date format ISO 8601
-        example: 6
+        type: integer
+        description: Estimated reading time in minutes
       writer:
-        type: array
-        uniqueItems: true
-        minItems: 1
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique id belonging to a single Owner
-              example: owner-338894
-            name:
-              type: string
-              description: Owner's name
-              example: Pablo
-            last_name:
-              type: string
-              description: Owner's last name
-              example: Acuña
-            role:
-              type: string
-              description: Role within conomy
-              example: CEO
-            image:
-              type: array
-              items:
-                type: object
-                properties:
-                  dataUrl:
-                    type: string
-                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-          required:
-            - id
-            - name
-            - last_name
-            - role
+        type: object
+        properties:
+          id:
+            type: string
+            description: Unique id belonging to a single Owner
+          name:
+            type: string
+            description: Owner's name
+          last_name:
+            type: string
+            description: Owner's last name
+          image:
+            type: object
+            description: Owner's image
+            properties:
+              dataUrl:
+                type: string
+        required:
+          - id
+          - name
+          - last_name
+      internal:
+        type: object
+        description: 'Contains general information about the blog. For example, date of publication, deletion. '
+        properties:
+          contentType:
+            type: string
+          createdAt:
+            type: string
+            description: Date of blog creation
+          updatedAt:
+            type: string
+            description: Date of last modification made to the blog
+          deletedAt:
+            type: string
+            description: Date and time of blog deletion
+        required:
+          - contentType
+          - createdAt
       content:
         type: string
-        minLength: 1
-        example: '<p>Mi nombre es Pablo, soy Ingeniero Comercial, tengo 31 años y soy cofundador de Conomy. Cuando le digo a la gente mi profesión, las personas tienden a imaginar que los problemas financieros -producidos por desorden o desconocimiento- son ajenos a mí y a los que estudiaron finanzas o algo similar, pero lamentablemente no es así.'
-      internal:
-        type: array
-        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        items:
-          type: object
-          properties:
-            createdAt:
-              type: string
-              description: Date of blog creation
-              example: '2022-03-15T16:21:25+00:00'
-            deletedAt:
-              type: string
-              description: Date and time of blog deletion
-            updatedAt:
-              type: string
-              description: Date of last modification made to the blog
-              example: '2022-03-16T12:04:35+00:00'
-            contentType:
-              type: string
-              example: blogpost
-          required:
-            - createdAt
-            - deletedAt
-            - updatedAt
+        description: Blog content.
+      media:
+        type: object
+        description: Images of the blog.
+        required:
+          - headerImage
+        properties:
+          thumbnail:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+          headerImage:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+      description:
+        type: string
+        description: Short summary of the blog
+      breadCrum:
+        type: object
+        description: Topic of the blog
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+      published:
+        type: boolean
+        description: Establishes whether the blog has been published or not.
     required:
       - id
       - tag
       - title
-      - content
+      - breadCrum
+      - published
   BlogPostListData:
-    description: ''
     type: object
-    x-examples: {}
-    title: BlogPostList
+    x-examples:
+      example-1:
+        id: blogpost-341099
+        tag: nuestra_historia
+        title: Nuestra historia
+        estimatedTime: 7
+        writer:
+          id: owner-338894
+          name: Pablo
+          last_name: Acuña
+          image:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-966f25c5-6cda-45e8-97aa-2f2b2cc5da99.png'
+        internal:
+          contentType: blogpost
+          createdAt: '2022-05-31T18:50:47+00:00'
+          updatedAt: '2022-06-28T18:11:51+00:00'
+          deletedAt: ''
+        media:
+          thumbnail:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+          headerImage:
+            dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+        description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
+        breadCrum:
+          id: breadcrum-982488
+          name: Nosotros
+        published: true
+    description: ''
     properties:
       id:
         type: string
-        minLength: 1
         description: Unique id for each blog
-        example: blogpost-674209
       tag:
         type: string
-        minLength: 1
         description: Title tag for urls
-        example: transaccion_que_no_ocurrio
       title:
         type: string
-        minLength: 1
         description: Blog title
-        example: Transacción que no ocurrió
       estimatedTime:
-        type: number
-        description: Estimated reading time in date format ISO 8601
-        example: 6
+        type: integer
+        description: Estimated reading time in minutes
       writer:
-        type: array
-        uniqueItems: true
-        minItems: 1
-        items:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique id belonging to a single Owner
-              example: owner-338894
-            name:
-              type: string
-              description: Owner's name
-              example: Pablo
-            last_name:
-              type: string
-              description: Owner's last name
-              example: Acuña
-            role:
-              type: string
-              description: Role within conomy
-              example: CEO
-            image:
-              type: array
-              items:
-                type: object
-                properties:
-                  dataUrl:
-                    type: string
-                    example: /api/v1/content/_media/_media-0f69723e-b789-475e-ac88-ab1bd771c945
-          required:
-            - id
-            - name
-            - last_name
-            - role
+        type: object
+        description: Contains information about the person who wrote the blog.
+        properties:
+          id:
+            type: string
+            description: Unique id belonging to a single Owner
+          name:
+            type: string
+            description: Owner's name
+          last_name:
+            type: string
+            description: Owner's last name
+          image:
+            type: object
+            description: Owner's image
+            properties:
+              dataUrl:
+                type: string
+                description: Thumbnail image of the writer
+            required:
+              - dataUrl
+        required:
+          - id
+          - name
+          - last_name
       internal:
-        type: array
-        description: 'Contains general information about the blog. For example, date of publication, deletion, status or type of content.'
-        items:
-          type: object
-          properties:
-            createdAt:
-              type: string
-              description: Date of blog creation
-              example: '2022-03-15T16:21:25+00:00'
-            deletedAt:
-              type: string
-              description: Date and time of blog deletion
-            updatedAt:
-              type: string
-              description: Date of last modification made to the blog
-              example: '2022-03-16T12:04:35+00:00'
-            contentType:
-              type: string
-              example: blogpost
-          required:
-            - createdAt
-            - deletedAt
-            - updatedAt
+        type: object
+        description: 'Contains general information about the blog. For example, date of publication, deletion or status'
+        properties:
+          contentType:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          deletedAt:
+            type: string
+        required:
+          - contentType
+      media:
+        type: object
+        description: Images of the blog.
+        properties:
+          thumbnail:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+          headerImage:
+            type: object
+            properties:
+              dataUrl:
+                type: string
+        required:
+          - headerImage
+      description:
+        type: string
+        description: Short summary of the blog
+      breadCrum:
+        type: object
+        description: Topic of the blog
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+      published:
+        type: boolean
+        description: Establishes whether the blog has been published or not.
     required:
       - id
       - tag
       - title
+      - estimatedTime
+      - breadCrum
+      - published
   UserDeleteRule:
     title: UserDeleteRule
     x-stoplight:
