@@ -112,18 +112,18 @@ paths:
             $ref: '#/definitions/CardCreate'
           x-examples:
             Create card request:
-              externalId: string
-              userId: string
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               issuingBank: Banco De Chile
-              cardBrand: MasterCard
+              cardBrand: MASTERCARD
               cardholderName: Pablo insulza
               pan: '************1234'
               currency: CLP
               isActive: false
-              color: string
-              cardType: string
-              description: string
-              priority: string
+              color: '#DF1CFF'
+              cardType: DEBIT
+              description: '************1234'
+              priority: MAIN
       security:
         - apitoken: []
       responses:
@@ -176,8 +176,9 @@ paths:
             $ref: '#/definitions/CardPatch'
           x-examples:
             Card patch request:
-              id: string
+              id: 62cc8f8a5136f82e4f4d3531
               isActive: false
+              priority: MAIN
       security:
         - apitoken: []
       responses:
@@ -289,18 +290,21 @@ paths:
         '201':
           description: Response a conomy card model
           schema:
-            $ref: '#/definitions/ConomyCardCreate'
+            $ref: '#/definitions/ConomyCard'
           examples:
             Success response:
-              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              id: 62cc8f8a5136f82e4f4d3531
               externalId: 3c7634c41a7c48db8d8eed907f653865
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
               issuingBank: CONOMY
               cardBrand: MASTERCARD
               cardholderName: Pablo insulza
               pan: '************1234'
               currency: CLP
-              description: string
-              isActive: 'true'
+              description: '************1234'
+              isActive: false
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -319,16 +323,16 @@ paths:
             $ref: '#/definitions/ConomyCardCreate'
           description: Request are all the attributes but active default payment card and description
           x-examples:
-            Conomy card post request:
-              externalId: 3c7634c41a7c48db8d8eed907f653865
+            Conomy card create request:
               userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-              issuingBank: string
-              cardBrand: MasterCard
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              issuingBank: CONOMY
+              cardBrand: MASTERCARD
               cardholderName: Pablo insulza
               pan: '************1234'
               currency: CLP
-              description: string
-              isActive: 'true'
+              description: '************1234'
+              isActive: true
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -351,8 +355,8 @@ paths:
           description: Request if is active or not
           x-examples:
             Conomy card patch request:
-              id: 628e7dccc22a0821b516fb55
-              isActive: 'true'
+              id: 62cc8f8a5136f82e4f4d3531
+              isActive: true
       security:
         - apitoken: []
       responses:
@@ -360,6 +364,20 @@ paths:
           description: Response a Conomy Card Object
           schema:
             $ref: '#/definitions/ConomyCard'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: CONOMY
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              description: '************1234'
+              isActive: false
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -1905,6 +1923,7 @@ definitions:
       description:
         type: string
         description: Info to be shown on conomy app
+        example: '************1234'
       isActive:
         type: boolean
         example: true
