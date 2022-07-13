@@ -25,18 +25,12 @@ paths:
     get:
       tags:
         - Card
-      description: 'The Cards service provides information about user''s wallet, and the endpoint /card/{card_id} with the method GET fetch the information about a specific id.'
+      description: 'The Cards service provides information about user''s wallet, and the endpoint /card/{cardId} with the method GET fetch the information about a specific id.'
       summary: "Get a specific card by card ID \U0001F4B3"
       operationId: getCardById
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
-      parameters:
-        - type: string
-          name: card_id
-          in: path
-          required: true
-          description: card ID
       security:
         - apitoken: []
       responses:
@@ -72,18 +66,12 @@ paths:
     delete:
       tags:
         - Card
-      description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method DELETE deletes the information about a specific card id.'
+      description: 'The Cards service provides information about user''s cards, and the endpoint /card/{cardId} with the method DELETE deletes the information about a specific card id.'
       summary: "Delete a specific card by card ID \U0001F4B3"
       operationId: DeleteCard
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
-      parameters:
-        - type: string
-          name: card_id
-          in: path
-          required: true
-          description: card ID
       security:
         - apitoken: []
       responses:
@@ -505,7 +493,7 @@ paths:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with a GET method deletes a specific user by its id.'
+      description: 'The Users service provides user information. The /users/{userId} endpoint with a GET method deletes a specific user by its id.'
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -586,7 +574,7 @@ paths:
           $ref: '#/responses/404'
         '500':
           $ref: '#/responses/500'
-      description: 'The Users service provides user information. The /users/{user_id} endpoint with a DELETE method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
+      description: 'The Users service provides user information. The /users/{userId} endpoint with a DELETE method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
       tags:
         - User
   /switch:
