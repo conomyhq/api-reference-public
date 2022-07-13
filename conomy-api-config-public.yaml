@@ -21,7 +21,7 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
-  '/card/{card_id}':
+  '/card/{cardId}':
     get:
       tags:
         - Card
@@ -41,7 +41,7 @@ paths:
         - apitoken: []
       responses:
         '200':
-          description: OK
+          description: Response a card model
           schema:
             $ref: '#/definitions/Card'
           examples:
@@ -73,7 +73,7 @@ paths:
       tags:
         - Card
       description: 'The Cards service provides information about user''s cards, and the endpoint /card/{card_id} with the method DELETE deletes the information about a specific card id.'
-      summary: "Delete a specific card by card ID \U0001F4B3 (WIP)"
+      summary: "Delete a specific card by card ID \U0001F4B3"
       operationId: DeleteCard
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
@@ -98,11 +98,12 @@ paths:
         '500':
           $ref: '#/responses/500'
     parameters:
-      - type: string
-        name: card_id
+      - name: cardId
         in: path
         required: true
-        description: Unique identifier of thecard to be used
+        type: string
+        description: Unique identifier of the card to be used
+        format: uuid
   /card:
     post:
       tags:
@@ -118,11 +119,11 @@ paths:
       parameters:
         - in: body
           name: Card
-          description: Card schema
+          description: Response a card model
           schema:
             $ref: '#/definitions/CardCreate'
           x-examples:
-            Create card:
+            Create card request:
               externalId: string
               userId: string
               issuingBank: Banco De Chile
@@ -185,13 +186,34 @@ paths:
           description: Card schema
           schema:
             $ref: '#/definitions/CardPatch'
+          x-examples:
+            Card patch request:
+              id: string
+              isActive: false
       security:
         - apitoken: []
       responses:
-        '201':
+        '200':
           description: Card information
           schema:
             $ref: '#/definitions/Card'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              externalId: card_7774180d53114815b405d14d9c0e5931
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: Banco De Chile
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              isActive: false
+              color: '#DF1CFF'
+              cardType: CREDIT
+              description: '************1234'
+              priority: MAIN
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2017-07-21T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -200,102 +222,69 @@ paths:
           $ref: '#/responses/404'
         '500':
           $ref: '#/responses/500'
-  '/conomyCard/{conomycard_id}':
+  '/conomyCard/{conomyCardId}':
     get:
       summary: "Get all the information of a specific Conomy Card \U0001F4B3"
       security:
         - apitoken: []
       responses:
         '200':
-          description: Response a Conomy Card Object
+          description: Response a conomy card model
           schema:
             $ref: '#/definitions/ConomyCard'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: CONOMY
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              description: '************1234'
+              isActive: false
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
       operationId: getConomyCardId
-      description: The Conomy Card service provides all the data about Conomy Cards and the GET method fetch a specific card by its id.
+      description: 'The Conomy Card service provides all the data about Conomy Cards, and the GET method fetch a specific card by its id.'
       tags:
         - Conomy Card
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
     parameters:
-      - type: string
-        name: conomycard_id
+      - name: conomyCardId
         in: path
         required: true
-        description: Conomy card ID
+        type: string
+        format: uuid
+        description: Unique identifier of the conomy card to be used
     delete:
-      summary: "Delete a specific Conomy Card by its conomyCardId \U0001F4B3"
+      summary: "Delete a specific Conomy Card by its id \U0001F4B3"
       security:
         - apitoken: []
       responses:
-        '200':
-          description: Response a Conomy Card Object
-          schema:
-            $ref: '#/definitions/ConomyCard'
+        '204':
+          $ref: '#/responses/204'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
       operationId: deleteConomyCardId
-      description: The Conomy Card service provides all the data about Conomy Cards and the DELETE method deletes a specific card by its id.
+      description: 'The Conomy Card service provides all the data about Conomy Cards, and the DELETE method deletes a specific card by its id.'
       tags:
         - Conomy Card
       x-google-backend:
@@ -309,41 +298,29 @@ paths:
       security:
         - apitoken: []
       responses:
-        '200':
-          description: Response a Conomy Card Object
+        '201':
+          description: Response a conomy card model
           schema:
             $ref: '#/definitions/ConomyCardCreate'
+          examples:
+            Success response:
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              issuingBank: CONOMY
+              cardBrand: MASTERCARD
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              description: string
+              isActive: 'true'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
       tags:
         - Conomy Card
       description: The Conomy Card service host all the data about Conomy Cards and the POST method creates a new Conomy Card based on the attributes provided.
@@ -353,6 +330,17 @@ paths:
           schema:
             $ref: '#/definitions/ConomyCardCreate'
           description: Request are all the attributes but active default payment card and description
+          x-examples:
+            Conomy card post request:
+              externalId: 3c7634c41a7c48db8d8eed907f653865
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              issuingBank: string
+              cardBrand: MasterCard
+              cardholderName: Pablo insulza
+              pan: '************1234'
+              currency: CLP
+              description: string
+              isActive: 'true'
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -373,6 +361,10 @@ paths:
           schema:
             $ref: '#/definitions/ConomyCardPatch'
           description: Request if is active or not
+          x-examples:
+            Conomy card patch request:
+              id: 628e7dccc22a0821b516fb55
+              isActive: 'true'
       security:
         - apitoken: []
       responses:
@@ -381,36 +373,13 @@ paths:
           schema:
             $ref: '#/definitions/ConomyCard'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
   /user:
     post:
       tags:
@@ -431,42 +400,50 @@ paths:
           description: User schema
           schema:
             $ref: '#/definitions/UserCreate'
+          x-examples:
+            Create new user request:
+              userExternalId: string
+              name: MAURICIO
+              lastName: GATICA
+              nickName: string
+              email: string
+              dni: 12612412-2
+              phone: string
+              career: string
+              gender: string
+              address: Bellas Artes
+              status: active
+              contractId: 1dhHkkf76
       responses:
         '201':
           description: matching user
           schema:
-            $ref: '#/definitions/UserCreate'
+            $ref: '#/definitions/User'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              name: Lalo
+              nickName: LaloLanda
+              lastName: Landa
+              email: lalolanda@conomyhq.com
+              phone: '+5691238159123'
+              dni: 12612412-2
+              career: string
+              address: Bellas Artes
+              status: ACTIVE
+              contractId: 976b47f1be414f86adb9afc295c2f8ef
+              rulesId:
+                - - 629144bd1bde2cf264deefde
+                  - 629144bd1bd6e2cf2645ba7e
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
     parameters: []
     patch:
       summary: "Update a user in the db \U0001F929"
@@ -476,6 +453,31 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/User'
+          examples:
+            Sucess response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              name: Lalo
+              nickName: LaloLanda
+              lastName: Landa
+              email: lalolanda@conomyhq.com
+              phone: '+5691238159123'
+              dni: 12612412-2
+              career: string
+              address: Bellas Artes
+              status: ACTIVE
+              contractId: 976b47f1be414f86adb9afc295c2f8ef
+              rulesId:
+                - - 629144bd1bde2cf264deefde
+                  - 629144bd1bd6e2cf2645ba7e
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '404':
+          $ref: '#/responses/404'
+        '500':
+          $ref: '#/responses/500'
       description: The Users services provides user information. The /user endpoint with a PATCH method updates defined updatables attributes in the db.
       tags:
         - User
@@ -485,15 +487,25 @@ paths:
           schema:
             $ref: '#/definitions/UserModify'
           description: There are some attributes that are modifiable
+          x-examples:
+            Patch user request:
+              email: string
+              address: Bellas Artes
+              status: active
+              contractId: 1dhHkkf76
+              rulesId:
+                - af1gs
+                - l2b3f
+                - hjg3k3
       security:
         - apitoken: []
-  '/user/{user_id}':
+  '/user/{userId}':
     get:
       tags:
         - User
       summary: "Get a specific user \U0001F60A"
       operationId: getUser
-      description: 'The Users service provides user information. The /users/{id} endpoint with a GET method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a GET method deletes a specific user by its id.'
       x-google-backend:
         address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
         path_translation: APPEND_PATH_TO_ADDRESS
@@ -521,10 +533,6 @@ paths:
                 - af1gs
                 - l2b3f
                 - hjg3k3
-        '201':
-          description: Created
-          schema:
-            type: object
         '400':
           description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
           schema:
@@ -559,11 +567,26 @@ paths:
       security:
         - apitoken: []
     parameters:
-      - type: string
-        name: user_id
+      - name: userId
         in: path
         required: true
-        description: User ID
+        type: string
+        description: Unique identifier of the user to be used
+    delete:
+      summary: Delete user by ID
+      operationId: deleteUserById
+      responses:
+        '204':
+          $ref: '#/responses/204'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '404':
+          $ref: '#/responses/404'
+        '500':
+          $ref: '#/responses/500'
+      description: 'The Users service provides user information. The /users/{user_id} endpoint with a DELETE method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
   /switch:
     post:
       summary: "Switch Transaction from Processor\U0001F511"
@@ -1619,53 +1642,58 @@ definitions:
       - description
   Card:
     type: object
-    x-examples: {}
+    x-examples:
+      Card model example:
+        id: 62cc8f8a5136f82e4f4d3531
+        externalId: 3c7634c41a7c48db8d8eed907f653865
+        userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        issuingBank: Banco De Chile
+        cardBrand: MASTERCARD
+        cardholderName: Pablo insulza
+        pan: '************1234'
+        currency: CLP
+        isActive: false
+        color: '#DF1CFF'
+        description: '************1234'
+        priority: MAIN
+        createdAt: '2017-07-21T17:32:28Z'
+        updatedAt: '2017-07-21T17:32:28Z'
+    x-tags:
+      - Card
+    description: Description of card model
     properties:
       id:
-        type: string
-        description: Card unique identifier
-        example: 62cc8f8a5136f82e4f4d3531
+        $ref: '#/definitions/id'
       externalId:
-        type: string
-        description: Card external identifier
-        example: card_7774180d53114815b405d14d9c0e5931
+        $ref: '#/definitions/ExternalId'
       userId:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        description: user conomy identifier
+        $ref: '#/definitions/UserId'
       issuingBank:
         type: string
         example: Banco De Chile
         description: Issuing Bank
       cardBrand:
-        type: string
-        example: MASTERCARD
-        description: 'MASTERCARD, VISA, AMEX, MAGNA'
+        $ref: '#/definitions/CardBrand'
       cardholderName:
-        type: string
         example: Pablo insulza
-        description: name shown on card
+        description: The name of the cardholder.
+        type: string
       pan:
         type: string
         example: '************1234'
         description: Obfuscated card number
       currency:
-        type: string
-        example: CLP
-        description: Card currency
+        $ref: '#/definitions/Currency'
       isActive:
         type: boolean
         example: false
         description: Card state
+      cardType:
+        $ref: '#/definitions/TypeOfCard'
       color:
         type: string
         description: User-defined card color (HEX)
         example: '#DF1CFF'
-      cardType:
-        type: string
-        description: 'PREPAID, DEBIT, CREDIT, UNDEFINED'
-        example: CREDIT
       description:
         type: string
         description: Info to be shown on conomy app
@@ -1674,16 +1702,13 @@ definitions:
         type: string
         description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
         example: MAIN
+        enum:
+          - MAIN
+          - BACKUP
       createdAt:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-        description: Creation date
+        $ref: '#/definitions/CreatedAt'
       updatedAt:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-        description: Date of last update
+        $ref: '#/definitions/UpdatedAt'
     required:
       - issuingBank
       - cardBrand
@@ -1691,13 +1716,10 @@ definitions:
       - pan
       - currency
       - isActive
-    x-tags:
-      - Card
-    description: Description of card model
   CardCreate:
     type: object
     x-examples:
-      example-1:
+      Card create example request:
         id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         card_issuer: BancoDeChile
         card_brand: MasterCard
@@ -1712,36 +1734,29 @@ definitions:
         description: {}
     x-tags:
       - Card
-    description: Description of a Post method where is possible to create a new card
+    description: Description of a post method where is possible to create a new card
+    title: ''
     properties:
       externalId:
-        type: string
-        description: Card external identifier
-        example: card_a1fc36da7180412c9c0a70b092464d67
+        $ref: '#/definitions/ExternalId'
       userId:
-        type: string
-        description: User conomy id
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        $ref: '#/definitions/UserId'
       issuingBank:
         type: string
         example: Banco De Chile
         description: Issuing Bank
       cardBrand:
-        type: string
-        example: MASTERCARD
-        description: 'MASTERCARD, VISA, AMEX, MAGNA'
+        $ref: '#/definitions/CardBrand'
       cardholderName:
         type: string
         example: Pablo insulza
-        description: name shown on card
+        description: The name of the cardholder.
       pan:
         type: string
         example: '************1234'
         description: Obfuscated card number
       currency:
-        type: string
-        example: CLP
-        description: Card Currency
+        $ref: '#/definitions/Currency'
       isActive:
         type: boolean
         example: false
@@ -1751,9 +1766,7 @@ definitions:
         description: User-defined card color (HEX)
         example: '#DF1CFF'
       cardType:
-        type: string
-        description: 'PREPAID, DEBIT, CREDIT'
-        example: CREDIT
+        $ref: '#/definitions/TypeOfCard'
       description:
         type: string
         description: Info to be shown on conomy app
@@ -1762,6 +1775,9 @@ definitions:
         type: string
         description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
         example: MAIN
+        enum:
+          - MAIN
+          - BACKUP
     required:
       - externalId
       - userId
@@ -1772,68 +1788,86 @@ definitions:
       - currency
   CardPatch:
     type: object
-    x-examples: {}
+    x-examples:
+      Card patch request example:
+        id: string
+        isActive: false
     title: CardPatch
     description: Description of a PATCH method where is possible to update selected card
+    x-tags:
+      - Card
     properties:
       id:
-        type: string
-        description: Card external identifier
+        $ref: '#/definitions/id'
       isActive:
         type: boolean
         example: false
         description: Card state
+      priority:
+        type: string
+        enum:
+          - MAIN
+          - BACKUP
+        example: MAIN
+        description: 'Card priority. MAIN: Principal card, BACKUP: Second card'
     required:
       - id
-      - isActive
-    x-tags:
-      - Card
   ConomyCard:
     type: object
     title: Conomy Card
     description: ''
+    x-examples:
+      Conomy card model:
+        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        externalId: 3c7634c41a7c48db8d8eed907f653865
+        userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        issuingBank: CONOMY
+        cardBrand: MASTERCARD
+        cardholderName: Pablo insulza
+        pan: '************1234'
+        currency: CLP
+        description: '************1234'
+        isActive: false
+        createdAt: string
+        updatedAt: string
     properties:
       id:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        $ref: '#/definitions/id'
+      externalId:
+        $ref: '#/definitions/ExternalId'
       userId:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        $ref: '#/definitions/UserId'
       issuingBank:
         type: string
         description: Issuing Bank
+        example: CONOMY
       cardBrand:
-        type: string
-        example: MasterCard
+        $ref: '#/definitions/CardBrand'
       cardholderName:
         type: string
         example: Pablo insulza
+        description: The name of the cardholder.
       pan:
         type: string
         example: '************1234'
         description: Obfuscated card number
       currency:
+        $ref: '#/definitions/Currency'
+      description:
         type: string
-        example: CLP
-        description: Card Currency
+        description: Info to be shown on conomy app
+        example: '************1234'
       isActive:
         type: boolean
         example: false
-        description: Card state
+        description: Conomy card state
       createdAt:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
+        $ref: '#/definitions/CreatedAt'
       updatedAt:
-        type: string
-        format: date-time
-        example: '2017-07-21T17:32:28Z'
-      description:
-        type: string
+        $ref: '#/definitions/UpdatedAt'
     required:
       - id
+      - externalId
       - userId
       - issuingBank
       - cardBrand
@@ -1845,37 +1879,45 @@ definitions:
     type: object
     title: Conomy Card Create
     description: ''
+    x-examples:
+      Conomy card post request example:
+        externalId: 3c7634c41a7c48db8d8eed907f653865
+        userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        issuingBank: string
+        cardBrand: MasterCard
+        cardholderName: Pablo insulza
+        pan: '************1234'
+        currency: CLP
+        description: string
+        isActive: 'true'
     properties:
-      externalId:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
       userId:
-        type: string
-        format: uuid
-        example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        $ref: '#/definitions/UserId'
+      externalId:
+        $ref: '#/definitions/ExternalId'
       issuingBank:
         type: string
         description: Issuing Bank
+        example: CONOMY
       cardBrand:
-        type: string
-        example: MasterCard
+        $ref: '#/definitions/CardBrand'
       cardholderName:
         type: string
         example: Pablo insulza
+        description: The name of the cardholder.
       pan:
         type: string
         example: '************1234'
         description: Obfuscated card number
       currency:
-        type: string
-        example: CLP
-        description: Card Currency
+        $ref: '#/definitions/Currency'
       description:
         type: string
+        description: Info to be shown on conomy app
       isActive:
         type: string
         example: 'true'
+        description: Conomy card state
     required:
       - externalId
       - cardBrand
@@ -1887,14 +1929,17 @@ definitions:
     type: object
     title: Conomy Card Patch
     description: Description of a PATCH method where is possible to update selected card
+    x-examples:
+      Conomy card patch request:
+        id: 628e7dccc22a0821b516fb55
+        isActive: 'true'
     properties:
       id:
-        type: string
-        format: objectId
-        example: 628e7dccc22a0821b516fb55
+        $ref: '#/definitions/id'
       isActive:
-        type: string
+        type: boolean
         example: 'true'
+        description: Conomy card state
     required:
       - id
       - isActive
@@ -1903,54 +1948,63 @@ definitions:
     description: Conomy User Model
     properties:
       id:
-        type: string
-        example: b92e761a-279a-11ec-9621-0242ac130002
+        $ref: '#/definitions/id'
       userExternalId:
-        type: string
-        description: User u-payments uuid
+        $ref: '#/definitions/ExternalId'
       name:
         type: string
-        example: MAURICIO
-        description: User name
+        example: Lalo
+        description: The user's first name.
       nickName:
         type: string
-        example: JFT
-        description: user nickname
+        description: The user's nick name.
+        example: LaloLanda
       lastName:
         type: string
-        example: GATICA
-        description: user last name
+        example: Landa
+        description: The user's last name.
       email:
         type: string
-        description: user email
+        format: email
+        example: lalolanda@conomyhq.com
+        description: The user's email address.
       phone:
         type: string
         example: '+5691238159123'
-        description: phone number
+        description: The user's phone number.
       dni:
         type: string
         example: 12612412-2
-        description: Unique country identifier
+        description: The user's DNI (unique country identifier).
       career:
         type: string
-        description: User career/ocuppation
+        description: The user's career/ocuppation.
       address:
         type: string
         example: Bellas Artes
+        description: The user's address
       status:
         type: string
-        example: active
+        example: ACTIVE
+        description: 'The user status, could be ACTIVE or INACTIVE'
+        enum:
+          - ACTIVE
+          - INACTIVE
       contractId:
         type: string
-        example: 1dhHkkf76
+        example: 976b47f1be414f86adb9afc295c2f8ef
+        description: The unique identifier of the contract belonging to the user.
+        format: uuid
       rulesId:
         type: array
-        example:
-          - af1gs
-          - l2b3f
-          - hjg3k3
+        uniqueItems: true
+        description: The unique identifiers of the business rules belonging to the user
         items:
           type: string
+          format: objectId
+          example:
+            - 629144bd1bde2cf264deefde
+            - 629144bd1bd6e2cf2645ba7e
     required:
       - id
       - userExternalId
@@ -1959,10 +2013,26 @@ definitions:
       - email
       - phone
       - dni
-      - career
       - address
-      - status
       - contractId
+    x-examples:
+      User model:
+        id: 62cc8f8a5136f82e4f4d3531
+        userExternalId: 3c7634c41a7c48db8d8eed907f653865
+        name: Lalo
+        nickName: LaloLanda
+        lastName: Landa
+        email: lalolanda@conomyhq.com
+        phone: '+5691238159123'
+        dni: 12612412-2
+        career: string
+        address: Bellas Artes
+        status: ACTIVE
+        contractId: 976b47f1be414f86adb9afc295c2f8ef
+        rulesId:
+          - - 629144bd1bde2cf264deefde
+            - 629144bd1bd6e2cf2645ba7e
+    title: ''
   UserModify:
     description: ''
     type: object
@@ -2849,14 +2919,99 @@ definitions:
     x-stoplight:
       id: xh24v055fr7g9
     type: object
-    properties:
-      id:
-        type: string
-    required:
-      - id
     x-examples:
       204 Response:
         id: 507f191e810c19729de860ea
+    properties:
+      id:
+        type: string
+        description: Deleted item ID
+        example: 62cc8f8a5136f82e4f4d3531
+        format: objectId
+    required:
+      - id
+  ExternalId:
+    type: string
+    title: ExternalId
+    x-stoplight:
+      id: us2owr3i4zkm6
+    description: External unique identifier
+    example: 3c7634c41a7c48db8d8eed907f653865
+  CreatedAt:
+    type: string
+    title: CreatedAt
+    x-stoplight:
+      id: fbl3qqnl49tj6
+    format: date-time
+    description: Creation date
+    example: '2017-07-21T17:32:28Z'
+    x-examples: {}
+  UpdatedAt:
+    type: string
+    title: UpdatedAt
+    x-stoplight:
+      id: ycaspw1foq55i
+    description: Date of last update
+    format: date-time
+    example: '2022-07-221T17:32:28Z'
+  UserId:
+    type: string
+    title: UserId
+    x-stoplight:
+      id: fpbl0gywitl1q
+    description: User conomy identifier
+    format: objectId
+    example: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+    x-examples: {}
+  CardBrand:
+    type: string
+    title: CardBrand
+    x-stoplight:
+      id: xkm8u6mpmwmkm
+    enum:
+      - MASTERCARD
+      - VISA
+      - MAGNA
+      - AMEX
+      - UNKNOWN
+    example: MASTERCARD
+    description: 'Indicates a card''s brand, such as VISA or MASTERCARD.'
+    x-examples:
+      cardBrand example: MASTERCARD
+  Currency:
+    type: string
+    title: Currency
+    x-stoplight:
+      id: my7yh67oeov29
+    description: 'The 3-character ISO 4217 currency code indicating the operating currency of the bank account. For example, the currency code for Chilean pesos is CLP'
+    enum:
+      - CLP
+      - USD
+    example: CLP
+    x-examples:
+      currency example: CLP
+  TypeOfCard:
+    type: string
+    title: TypeOfCard
+    x-stoplight:
+      id: 21lb1boyhutpk
+    description: 'Indicates a card''s type, such as CREDIT or DEBIT.'
+    enum:
+      - CREDIT
+      - DEBIT
+      - PREPAID
+      - UNKNOWN
+    example: DEBIT
+    x-examples:
+      Type of card example: CREDIT
+  id:
+    type: string
+    title: id
+    x-stoplight:
+      id: cd5duzx91w9gm
+    description: Unique ID for this model. Generated by Conomy.
+    example: 62cc8f8a5136f82e4f4d3531
+    format: objectId
 responses:
   '204':
     description: No content
@@ -2931,3 +3086,24 @@ responses:
         code: 500
         type: ServerError
         detail: Internal Server Error
+parameters:
+  CardId:
+    name: cardId
+    in: path
+    required: true
+    type: string
+    description: Unique identifier of the card to be used
+    format: uuid
+  ConomyCardId:
+    name: conomyCardId
+    in: path
+    required: true
+    type: string
+    format: uuid
+    description: Unique identifier of the conomy card to be used
+  UserId:
+    name: userId
+    in: path
+    required: true
+    type: string
+    description: Unique identifier of the user to be used
