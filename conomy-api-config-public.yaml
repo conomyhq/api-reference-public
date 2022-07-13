@@ -587,6 +587,8 @@ paths:
         '500':
           $ref: '#/responses/500'
       description: 'The Users service provides user information. The /users/{user_id} endpoint with a DELETE method fetch a specific user by its user id from the db with its personal information such as name, last name, national id, phone among other data.'
+      tags:
+        - User
   /switch:
     post:
       summary: "Switch Transaction from Processor\U0001F511"
