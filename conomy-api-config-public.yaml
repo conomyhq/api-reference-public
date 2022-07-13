@@ -1709,19 +1709,19 @@ definitions:
   CardCreate:
     type: object
     x-examples:
-      Card create example request:
-        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        card_issuer: BancoDeChile
-        card_brand: MasterCard
-        holder_card_name: Pablo insulza
-        card_number: '************1234'
+      Card create request:
+        externalId: 3c7634c41a7c48db8d8eed907f653865
+        userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        issuingBank: Banco De Chile
+        cardBrand: MASTERCARD
+        cardholderName: Pablo insulza
+        pan: '************1234'
         currency: CLP
-        is_active: false
-        created_at: '2017-07-21T17:32:28Z'
-        updated_at: '2017-07-21T17:32:28Z'
-        color: string
-        card_account_type: cuenta vista
-        description: {}
+        isActive: false
+        color: '#DF1CFF'
+        cardType: DEBIT
+        description: '************1234'
+        priority: MAIN
     x-tags:
       - Card
     description: Description of a post method where is possible to create a new card
@@ -1779,9 +1779,10 @@ definitions:
   CardPatch:
     type: object
     x-examples:
-      Card patch request example:
-        id: string
+      Card patch request:
+        id: 62cc8f8a5136f82e4f4d3531
         isActive: false
+        priority: MAIN
     title: CardPatch
     description: Description of a PATCH method where is possible to update selected card
     x-tags:
@@ -1808,7 +1809,7 @@ definitions:
     description: ''
     x-examples:
       Conomy card model:
-        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        id: 62cc8f8a5136f82e4f4d3531
         externalId: 3c7634c41a7c48db8d8eed907f653865
         userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
         issuingBank: CONOMY
@@ -1818,8 +1819,8 @@ definitions:
         currency: CLP
         description: '************1234'
         isActive: false
-        createdAt: string
-        updatedAt: string
+        createdAt: '2017-07-21T17:32:28Z'
+        updatedAt: '2022-07-221T17:32:28Z'
     properties:
       id:
         $ref: '#/definitions/id'
@@ -1870,16 +1871,16 @@ definitions:
     title: Conomy Card Create
     description: ''
     x-examples:
-      Conomy card post request example:
-        externalId: 3c7634c41a7c48db8d8eed907f653865
+      Conomy card create request:
         userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
-        issuingBank: string
-        cardBrand: MasterCard
+        externalId: 3c7634c41a7c48db8d8eed907f653865
+        issuingBank: CONOMY
+        cardBrand: MASTERCARD
         cardholderName: Pablo insulza
         pan: '************1234'
         currency: CLP
         description: string
-        isActive: 'true'
+        isActive: true
     properties:
       userId:
         $ref: '#/definitions/UserId'
@@ -1905,8 +1906,8 @@ definitions:
         type: string
         description: Info to be shown on conomy app
       isActive:
-        type: string
-        example: 'true'
+        type: boolean
+        example: true
         description: Conomy card state
     required:
       - externalId
@@ -1921,14 +1922,14 @@ definitions:
     description: Description of a PATCH method where is possible to update selected card
     x-examples:
       Conomy card patch request:
-        id: 628e7dccc22a0821b516fb55
-        isActive: 'true'
+        id: 62cc8f8a5136f82e4f4d3531
+        isActive: true
     properties:
       id:
         $ref: '#/definitions/id'
       isActive:
         type: boolean
-        example: 'true'
+        example: true
         description: Conomy card state
     required:
       - id
@@ -2026,20 +2027,7 @@ definitions:
   UserModify:
     description: ''
     type: object
-    x-examples:
-      example-1:
-        user_id: b92e761a-279a-11ec-9621-0242ac130002
-        name: Mauricio
-        nick_name: JFT
-        last_name: Gatica
-        rut: 12.612.412-2
-        phone: '+5691238159123'
-        account: user
-        password_pin: '2424'
-        profession: string
-        gender: string
-        civil_status: string
-        email: string
+    x-examples: {}
     properties:
       email:
         type: string
