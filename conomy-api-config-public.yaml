@@ -406,7 +406,27 @@ paths:
           description: User schema
           schema:
             $ref: '#/definitions/UserCreate'
-          x-examples: {}
+          x-examples:
+            User post request example:
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              name: Lalo
+              nickName: LaloLanda
+              lastName: Landa
+              email: lalolanda@conomyhq.com
+              phone: '+5691238159123'
+              dni: 12612412-2
+              career: jugador de futbol
+              address:
+                administrativeAreaLevel1: Región metropolitana
+                administrativeAreaLevel2: Provincia de Santiago
+                administrativeAreaLevel3: Providencia
+                street: Los Pillines
+                streetNumber: string
+                optionalAddress: Departamento 402
+                country: CL
+              status: ACTIVE
+              contractId: 976b47f1be414f86adb9afc295c2f8ef
+              image: 'http://example.com'
       responses:
         '201':
           description: matching user
@@ -422,13 +442,21 @@ paths:
               email: lalolanda@conomyhq.com
               phone: '+5691238159123'
               dni: 12612412-2
-              career: string
-              address: Bellas Artes
+              career: jugador de futbol
+              address:
+                administrativeAreaLevel1: Región metropolitana
+                administrativeAreaLevel2: Provincia de Santiago
+                administrativeAreaLevel3: Providencia
+                street: Los Pillines
+                streetNumber: string
+                optionalAddress: Departamento 402
+                country: CL
               status: ACTIVE
               contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
                 - - 629144bd1bde2cf264deefde
                   - 629144bd1bd6e2cf2645ba7e
+              image: 'http://example.com'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -447,7 +475,7 @@ paths:
           schema:
             $ref: '#/definitions/User'
           examples:
-            Sucess response:
+            Success response:
               id: 62cc8f8a5136f82e4f4d3531
               userExternalId: 3c7634c41a7c48db8d8eed907f653865
               name: Lalo
@@ -456,13 +484,21 @@ paths:
               email: lalolanda@conomyhq.com
               phone: '+5691238159123'
               dni: 12612412-2
-              career: string
-              address: Bellas Artes
+              career: jugador de futbol
+              address:
+                administrativeAreaLevel1: Región metropolitana
+                administrativeAreaLevel2: Provincia de Santiago
+                administrativeAreaLevel3: Providencia
+                street: Los Pillines
+                streetNumber: string
+                optionalAddress: Departamento 402
+                country: CL
               status: ACTIVE
               contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
                 - - 629144bd1bde2cf264deefde
                   - 629144bd1bd6e2cf2645ba7e
+              image: 'http://example.com'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -481,15 +517,28 @@ paths:
             $ref: '#/definitions/UserModify'
           description: There are some attributes that are modifiable
           x-examples:
-            Patch user request:
-              email: string
-              address: Bellas Artes
-              status: active
-              contractId: 1dhHkkf76
+            Patch request example:
+              id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              name: Lalo
+              nickName: LaloLanda
+              lastName: Landa
+              email: lalolanda@conomyhq.com
+              phone: '+5691238159123'
+              career: jugador de futbol
+              address:
+                administrativeAreaLevel1: Región metropolitana
+                administrativeAreaLevel2: Provincia de Santiago
+                administrativeAreaLevel3: Providencia
+                street: Los Pillines
+                streetNumber: string
+                optionalAddress: Departamento 402
+                country: CL
+              status: ACTIVE
+              contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
-                - af1gs
-                - l2b3f
-                - hjg3k3
+                - - 629144bd1bde2cf264deefde
+                  - 629144bd1bd6e2cf2645ba7e
+              image: 'http://example.com'
       security:
         - apitoken: []
   '/user/{userId}':
@@ -508,55 +557,38 @@ paths:
           schema:
             $ref: '#/definitions/User'
           examples:
-            example-1:
-              id: b92e761a-279a-11ec-9621-0242ac130002
-              userExternalId: string
-              name: Mauricio
-              nickName: JFT
-              lastName: Gatica
-              email: string
-              maritalStatus: string
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              name: Lalo
+              nickName: LaloLanda
+              lastName: Landa
+              email: lalolanda@conomyhq.com
               phone: '+5691238159123'
-              dni: 12.612.412-2
-              career: string
-              address: Bellas Artes
-              status: active
-              contractId: 1dhHkkf76
+              dni: 12612412-2
+              career: jugador de futbol
+              address:
+                administrativeAreaLevel1: Región metropolitana
+                administrativeAreaLevel2: Provincia de Santiago
+                administrativeAreaLevel3: Providencia
+                street: Los Pillines
+                streetNumber: string
+                optionalAddress: Departamento 402
+                country: CL
+              status: ACTIVE
+              contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
-                - af1gs
-                - l2b3f
-                - hjg3k3
+                - - 629144bd1bde2cf264deefde
+                  - 629144bd1bd6e2cf2645ba7e
+              image: 'http://example.com'
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
       security:
         - apitoken: []
     parameters:
@@ -1833,6 +1865,8 @@ definitions:
       - pan
       - currency
       - isActive
+    x-tags:
+      - Conomy Card
   ConomyCardCreate:
     type: object
     title: Conomy Card Create
@@ -1884,6 +1918,8 @@ definitions:
       - pan
       - currency
       - isActive
+    x-tags:
+      - Conomy Card
   ConomyCardPatch:
     type: object
     title: Conomy Card Patch
@@ -1902,11 +1938,36 @@ definitions:
     required:
       - id
       - isActive
+    x-tags:
+      - Conomy Card
   User:
     type: object
-    description: Conomy User Model
-    x-examples: {}
-    title: ''
+    description: Conomy user model.
+    x-examples:
+      User model example:
+        id: 62cc8f8a5136f82e4f4d3531
+        userExternalId: 3c7634c41a7c48db8d8eed907f653865
+        name: Lalo
+        nickName: LaloLanda
+        lastName: Landa
+        email: lalolanda@conomyhq.com
+        phone: '+5691238159123'
+        dni: 12612412-2
+        career: jugador de futbol
+        address:
+          administrativeAreaLevel1: Región metropolitana
+          administrativeAreaLevel2: Provincia de Santiago
+          administrativeAreaLevel3: Providencia
+          street: Los Pillines
+          streetNumber: string
+          optionalAddress: Departamento 402
+          country: CL
+        status: ACTIVE
+        contractId: 976b47f1be414f86adb9afc295c2f8ef
+        rulesId:
+          - - 629144bd1bde2cf264deefde
+            - 629144bd1bd6e2cf2645ba7e
+        image: 'http://example.com'
     properties:
       id:
         $ref: '#/definitions/id'
@@ -1968,7 +2029,7 @@ definitions:
       image:
         type: string
         format: uri
-        description: 'This property contains a full-qualified URL which includes the user''s avatar '
+        description: 'This property contains a full-qualified URL which includes the user''s avatar. '
     required:
       - id
       - userExternalId
@@ -1980,75 +2041,174 @@ definitions:
       - address
       - contractId
   UserModify:
-    description: ''
+    description: Description of a PATCH method where is possible to modify an user.
+    x-examples:
+      User patch request example:
+        id: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        name: Lalo
+        nickName: LaloLanda
+        lastName: Landa
+        email: lalolanda@conomyhq.com
+        phone: '+5691238159123'
+        career: jugador de futbol
+        address:
+          administrativeAreaLevel1: Región metropolitana
+          administrativeAreaLevel2: Provincia de Santiago
+          administrativeAreaLevel3: Providencia
+          street: Los Pillines
+          streetNumber: string
+          optionalAddress: Departamento 402
+          country: CL
+        status: ACTIVE
+        contractId: 976b47f1be414f86adb9afc295c2f8ef
+        rulesId:
+          - - 629144bd1bde2cf264deefde
+            - 629144bd1bd6e2cf2645ba7e
+        image: 'http://example.com'
     type: object
-    x-examples: {}
     properties:
+      id:
+        $ref: '#/definitions/UserId'
+      name:
+        type: string
+        example: Lalo
+        description: The user's first name.
+      nickName:
+        type: string
+        description: The user's nick name.
+        example: LaloLanda
+      lastName:
+        type: string
+        example: Landa
+        description: The user's last name.
       email:
         type: string
-        minLength: 1
-        description: user email
-      address:
+        format: email
+        example: lalolanda@conomyhq.com
+        description: The user's email address.
+      phone:
         type: string
-        example: Bellas Artes
+        example: '+5691238159123'
+        description: The user's phone number.
+      career:
+        type: string
+        description: The user's career/ocuppation.
+        example: jugador de futbol
+      address:
+        $ref: '#/definitions/Address'
       status:
         type: string
-        example: active
+        example: ACTIVE
+        description: 'The user status, could be ACTIVE or INACTIVE'
+        enum:
+          - ACTIVE
+          - INACTIVE
       contractId:
         type: string
-        example: 1dhHkkf76
+        example: 976b47f1be414f86adb9afc295c2f8ef
+        description: The unique identifier of the contract belonging to the user.
+        format: uuid
       rulesId:
         type: array
-        example:
-          - af1gs
-          - l2b3f
-          - hjg3k3
+        uniqueItems: true
+        description: The unique identifiers of the business rules belonging to the user
         items:
           type: string
+          format: objectId
+          example:
+            - 629144bd1bde2cf264deefde
+            - 629144bd1bd6e2cf2645ba7e
+      image:
+        type: string
+        format: uri
+        description: 'This property contains a full-qualified URL which includes the user''s avatar. '
+    required:
+      - id
   UserCreate:
     type: object
     properties:
       userExternalId:
-        type: string
-        description: user u-payments uuid
+        $ref: '#/definitions/ExternalId'
       name:
         type: string
-        example: MAURICIO
-        description: user name
-      lastName:
-        type: string
-        example: GATICA
-        description: user last name
+        example: Lalo
+        description: The user's first name.
       nickName:
         type: string
-        description: User nickname
+        description: The user's nick name.
+        example: LaloLanda
+      lastName:
+        type: string
+        example: Landa
+        description: The user's last name.
       email:
         type: string
-        description: user email
+        format: email
+        example: lalolanda@conomyhq.com
+        description: The user's email address.
+      phone:
+        type: string
+        example: '+5691238159123'
+        description: The user's phone number.
       dni:
         type: string
         example: 12612412-2
-        description: Unique country identifier
-      phone:
-        type: string
-        description: '+56981234567'
+        description: The user's DNI (unique country identifier).
       career:
         type: string
-        description: user career/ocuppation
-      gender:
-        type: string
-        description: 'FEMALE, MALE, OTHER'
+        description: The user's career/ocuppation.
+        example: jugador de futbol
       address:
-        type: string
-        example: Bellas Artes
+        $ref: '#/definitions/Address'
       status:
         type: string
-        example: active
+        example: ACTIVE
+        description: 'The user status, could be ACTIVE or INACTIVE'
+        enum:
+          - ACTIVE
+          - INACTIVE
       contractId:
         type: string
-        example: 1dhHkkf76
+        example: 976b47f1be414f86adb9afc295c2f8ef
+        description: The unique identifier of the contract belonging to the user.
+        format: uuid
+      image:
+        type: string
+        format: uri
+        description: 'This property contains a full-qualified URL which includes the user''s avatar. '
     required:
       - userExternalId
+      - name
+      - lastName
+      - email
+      - phone
+      - dni
+      - address
+      - status
+      - contractId
+      - image
+    description: Description of a POST method where is possible to create a new user.
+    x-examples:
+      User post request example:
+        userExternalId: 3c7634c41a7c48db8d8eed907f653865
+        name: Lalo
+        nickName: LaloLanda
+        lastName: Landa
+        email: lalolanda@conomyhq.com
+        phone: '+5691238159123'
+        dni: 12612412-2
+        career: jugador de futbol
+        address:
+          administrativeAreaLevel1: Región metropolitana
+          administrativeAreaLevel2: Provincia de Santiago
+          administrativeAreaLevel3: Providencia
+          street: Los Pillines
+          streetNumber: string
+          optionalAddress: Departamento 402
+          country: CL
+        status: ACTIVE
+        contractId: 976b47f1be414f86adb9afc295c2f8ef
+        image: 'http://example.com'
   SwitchTransaction:
     description: ''
     type: object
