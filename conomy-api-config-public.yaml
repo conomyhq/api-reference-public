@@ -406,20 +406,7 @@ paths:
           description: User schema
           schema:
             $ref: '#/definitions/UserCreate'
-          x-examples:
-            Create new user request:
-              userExternalId: string
-              name: MAURICIO
-              lastName: GATICA
-              nickName: string
-              email: string
-              dni: 12612412-2
-              phone: string
-              career: string
-              gender: string
-              address: Bellas Artes
-              status: active
-              contractId: 1dhHkkf76
+          x-examples: {}
       responses:
         '201':
           description: matching user
@@ -1513,80 +1500,42 @@ definitions:
       - _links
   Address:
     type: object
-    description: This is a model to represent user address
     properties:
-      id:
+      administrativeAreaLevel1:
         type: string
-        format: uuid
-        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
-      user_id:
+        description: This field represents the largest subnational  administrative unit of a country. For example "Región Metropolitana" in Chile.
+        example: Región metropolitana
+      administrativeAreaLevel2:
         type: string
-        format: uuid
-        example: d04882ef-cf1a-40c9-b571-a6b4fa3514fd
-      administrative_area_level_1:
+        example: Provincia de Santiago
+        description: This field represents the second subnational  administrative unit of a country. For example "Provincia de Santiago" in Chile.
+      administrativeAreaLevel3:
         type: string
-        example: Valparaiso
-      administrative_area_level_2:
-        type: string
-        example: ConCon
-      locality:
-        type: string
+        description: This field represents the third subnational administrative unit of a country. For example "Providencia" in Chile.
+        example: Providencia
       street:
         type: string
         example: Los Pillines
-      street_number:
+        description: The street name for the address. For example "Los pillines"
+      streetNumber:
         type: string
-      optional_address:
+        description: The street number for the address.
+      optionalAddress:
         type: string
-        example: '340'
-        description: Like an apartment number
+        description: Extra address detail. For example "Departamento 402"
+        example: Departamento 402
+      country:
+        type: string
+        description: The 2-character ISO 3166 country code indicating the country of address
+        example: CL
+        default: CL
     required:
-      - id
-      - user_id
-      - administrative_area_level_1
-      - administrative_area_level_2
+      - administrativeAreaLevel1
+      - administrativeAreaLevel3
       - street
-      - optional_address
-  AddressModify:
-    type: object
-    properties:
-      administrative_area_level_1:
-        type: string
-        example: Valparaiso
-      administrative_area_level_2:
-        type: string
-        example: ConCon
-      locality:
-        type: string
-        example: Los Pillines
-      optional_address:
-        type: string
-        example: '340'
-      street:
-        type: string
-      street_number:
-        type: string
-  AddressCreate:
-    type: object
-    properties:
-      user_id:
-        type: string
-      administrative_area_level_1:
-        type: string
-        example: Valparaiso
-      administrative_area_level_2:
-        type: string
-        example: ConCon
-      locality:
-        type: string
-        example: Los Pillines
-      optional_address:
-        type: string
-        example: '340'
-      street:
-        type: string
-      street_number:
-        type: string
+      - streetNumber
+      - country
+    description: The user address
   Rule:
     type: object
     description: Rule that defines business rules and has its atomic processes to apply to the transaction
@@ -1956,6 +1905,8 @@ definitions:
   User:
     type: object
     description: Conomy User Model
+    x-examples: {}
+    title: ''
     properties:
       id:
         $ref: '#/definitions/id'
@@ -1989,10 +1940,9 @@ definitions:
       career:
         type: string
         description: The user's career/ocuppation.
+        example: jugador de futbol
       address:
-        type: string
-        example: Bellas Artes
-        description: The user's address
+        $ref: '#/definitions/Address'
       status:
         type: string
         example: ACTIVE
@@ -2015,6 +1965,10 @@ definitions:
           example:
             - 629144bd1bde2cf264deefde
             - 629144bd1bd6e2cf2645ba7e
+      image:
+        type: string
+        format: uri
+        description: 'This property contains a full-qualified URL which includes the user''s avatar '
     required:
       - id
       - userExternalId
@@ -2025,24 +1979,6 @@ definitions:
       - dni
       - address
       - contractId
-    x-examples:
-      User model:
-        id: 62cc8f8a5136f82e4f4d3531
-        userExternalId: 3c7634c41a7c48db8d8eed907f653865
-        name: Lalo
-        nickName: LaloLanda
-        lastName: Landa
-        email: lalolanda@conomyhq.com
-        phone: '+5691238159123'
-        dni: 12612412-2
-        career: string
-        address: Bellas Artes
-        status: ACTIVE
-        contractId: 976b47f1be414f86adb9afc295c2f8ef
-        rulesId:
-          - - 629144bd1bde2cf264deefde
-            - 629144bd1bd6e2cf2645ba7e
-    title: ''
   UserModify:
     description: ''
     type: object
