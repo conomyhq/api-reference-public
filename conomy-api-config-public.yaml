@@ -639,7 +639,28 @@ paths:
           description: User schema
           schema:
             $ref: '#/definitions/SwitchTransaction'
-          x-examples: {}
+          x-examples:
+            Post example:
+              id: 62cc8f8a5136f82e4f4d3531
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              transactionExternalId: 3c6734c41b8e48db8d8eed907f652314
+              conomyCardId: 62cc8f8a4536f821e4f4d317
+              currency: CLP
+              amount: 24780
+              description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+              enrich:
+                merchantName: AliExpress GRB
+                brandCode: MC2345
+                location:
+                  administrativeAreaLevel1: Región metropolitana
+                  administrativeAreaLevel2: Provincia de Santiago
+                  administrativeAreaLevel3: Providencia
+                  street: Los Pillines
+                  streetNumber: string
+                  optionalAddress: Departamento 402
+                  country: CL
+              cardId: 3c7634c41a7c48db8d8eed907f653865
+              timestamp: '2017-07-21T17:32:28Z'
       responses:
         '201':
           description: matching user
