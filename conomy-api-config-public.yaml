@@ -233,6 +233,7 @@ paths:
               currency: CLP
               description: '************1234'
               isActive: false
+              accountNumber: '1111111111'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
         '400':
@@ -303,6 +304,7 @@ paths:
               currency: CLP
               description: '************1234'
               isActive: false
+              accountNumber: '1111111111'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
         '400':
@@ -376,6 +378,7 @@ paths:
               currency: CLP
               description: '************1234'
               isActive: false
+              accountNumber: '1111111111'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
         '400':
@@ -457,6 +460,8 @@ paths:
                 - - 629144bd1bde2cf264deefde
                   - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -499,6 +504,8 @@ paths:
                 - - 629144bd1bde2cf264deefde
                   - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -581,6 +588,8 @@ paths:
                 - - 629144bd1bde2cf264deefde
                   - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
         '400':
           $ref: '#/responses/400'
         '401':
@@ -1194,49 +1203,6 @@ paths:
         - apitoken: []
     parameters: []
   /user/deleteRule:
-    patch:
-      summary: Update user rules by UserID
-      operationId: patchUserRule
-      responses:
-        '200':
-          description: Delete rule by user id OK
-          schema:
-            $ref: '#/definitions/UserDeleteRuleResponse'
-        '201':
-          description: Created
-          schema:
-            type: object
-            properties: {}
-        '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
-        '401':
-          description: Invalid or missing authentication token.
-          schema:
-            $ref: '#/definitions/Error401'
-        '404':
-          description: Data not found in the DB.
-          schema:
-            $ref: '#/definitions/Error404'
-        '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
-      description: 'The Users service provides user information. The /user/deleteRule endpoint with a PATCH method, updates user rules, deleting a specific rule of specific user by user id from the db.'
-      security:
-        - apitoken: []
-      parameters:
-        - in: body
-          name: body
-          schema:
-            $ref: '#/definitions/UserDeleteRule'
-          description: ''
-      x-google-backend:
-        address: 'https://conomy-data-report-composite-ylggeyc7ba-uc.a.run.app'
-        path_translation: APPEND_PATH_TO_ADDRESS
-      tags:
-        - User
     parameters: []
   /blog/post:
     get:
@@ -1567,7 +1533,7 @@ definitions:
       - street
       - streetNumber
       - country
-    description: The user address
+    description: Address model
   Rule:
     type: object
     description: Rule that defines business rules and has its atomic processes to apply to the transaction
@@ -1820,6 +1786,8 @@ definitions:
         isActive: false
         createdAt: '2017-07-21T17:32:28Z'
         updatedAt: '2022-07-221T17:32:28Z'
+    x-tags:
+      - Conomy Card
     properties:
       id:
         $ref: '#/definitions/id'
@@ -1851,6 +1819,10 @@ definitions:
         type: boolean
         example: false
         description: Conomy card state
+      accountNumber:
+        type: string
+        description: 'The number of user''s account '
+        example: '1111111111'
       createdAt:
         $ref: '#/definitions/CreatedAt'
       updatedAt:
@@ -1865,8 +1837,6 @@ definitions:
       - pan
       - currency
       - isActive
-    x-tags:
-      - Conomy Card
   ConomyCardCreate:
     type: object
     title: Conomy Card Create
@@ -1968,6 +1938,10 @@ definitions:
           - - 629144bd1bde2cf264deefde
             - 629144bd1bd6e2cf2645ba7e
         image: 'http://example.com'
+        createdAt: '2017-07-21T17:32:28Z'
+        updatedAt: '2022-07-221T17:32:28Z'
+    x-tags:
+      - User
     properties:
       id:
         $ref: '#/definitions/id'
@@ -2030,6 +2004,10 @@ definitions:
         type: string
         format: uri
         description: 'This property contains a full-qualified URL which includes the user''s avatar. '
+      createdAt:
+        $ref: '#/definitions/CreatedAt'
+      updatedAt:
+        $ref: '#/definitions/UpdatedAt'
     required:
       - id
       - userExternalId
@@ -2124,6 +2102,8 @@ definitions:
         description: 'This property contains a full-qualified URL which includes the user''s avatar. '
     required:
       - id
+    x-tags:
+      - User
   UserCreate:
     type: object
     properties:
@@ -2209,47 +2189,91 @@ definitions:
         status: ACTIVE
         contractId: 976b47f1be414f86adb9afc295c2f8ef
         image: 'http://example.com'
+    x-tags:
+      - User
   SwitchTransaction:
-    description: ''
+    description: 'Information required to create a transaction '
     type: object
-    x-examples: {}
+    x-examples:
+      Create transaction:
+        id: 62cc8f8a5136f82e4f4d3531
+        userExternalId: 3c7634c41a7c48db8d8eed907f653865
+        transactionExternalId: 3c6734c41b8e48db8d8eed907f652314
+        conomyCardId: 62cc8f8a4536f821e4f4d317
+        currency: CLP
+        amount: 24780
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        enrich:
+          merchantName: AliExpress GRB
+          brandCode: MC2345
+          location:
+            administrativeAreaLevel1: Región metropolitana
+            administrativeAreaLevel2: Provincia de Santiago
+            administrativeAreaLevel3: Providencia
+            street: Los Pillines
+            streetNumber: string
+            optionalAddress: Departamento 402
+            country: CL
+        cardId: 3c7634c41a7c48db8d8eed907f653865
+        timestamp: '2017-07-21T17:32:28Z'
     properties:
-      identifier:
+      id:
+        $ref: '#/definitions/id'
+      userExternalId:
+        $ref: '#/definitions/ExternalId'
+      transactionExternalId:
         type: string
         minLength: 1
-        description: Upayment user id
-      idConomyCardReferenceToken:
+        description: Transaction external unique identifier.
+        example: 3c6734c41b8e48db8d8eed907f652314
+      conomyCardId:
         type: string
         minLength: 1
-      amount:
-        type: string
-        minLength: 1
+        description: Conomy card unique identifier.
+        example: 62cc8f8a4536f821e4f4d317
       currency:
-        type: string
-        minLength: 1
-      transactionId:
-        type: string
-        minLength: 1
+        $ref: '#/definitions/Currency'
+      amount:
+        type: number
+        description: Transaction amount. Outgoing funds are expressed as negative values.
+        example: 24780
       description:
         type: string
         minLength: 1
+        description: The transaction description submitted by the merchant institution.
+        example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      enrich:
+        type: object
+        properties:
+          merchantName:
+            type: string
+            example: AliExpress GRB
+            description: Merchant name
+          brandCode:
+            type: string
+            description: Code provided by the brand (mastercard or visa).
+            example: MC2345
+          location:
+            $ref: '#/definitions/Address'
+        required:
+          - merchantName
+          - brandCode
+      cardId:
+        type: string
+        description: Card unique identifier. This field indicates the card selected by the user to make the purchase.
+        example: 3c7634c41a7c48db8d8eed907f653865
       timestamp:
-        type: string
-        minLength: 1
-        default: 'yyyy-mm-dd hh:mm:ss'
-      origin:
-        type: string
-        minLength: 1
-        default: AliExpress GRB
+        $ref: '#/definitions/CreatedAt'
     required:
-      - identifier
-      - idConomyCardReferenceToken
-      - amount
+      - id
+      - userExternalId
+      - transactionExternalId
+      - conomyCardId
       - currency
-      - transactionId
+      - amount
       - description
+      - cardId
       - timestamp
-      - origin
   SwitchTransactionInWallet:
     description: ''
     type: object
