@@ -666,37 +666,26 @@ paths:
           description: matching user
           schema:
             $ref: '#/definitions/SwitchTransactionResponse'
+          examples:
+            Response:
+              conomyCardId: 62cc8f8a4536f821e4f4d317
+              amount: 24670
+              currency: CLP
+              transactionExternalId: 3c6734c41b8e48db8d8eed907f652314
+              links:
+                rel: string
+                route: string
+                method: string
+                targetSchema: string
+                schema: string
         '400':
-          description: Bad Request. A required parameter for this API operation is invalid or has not been provided.
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Invalid or missing authentication token.
-          examples:
-            Unauthorized Error:
-              detail: Jwt is missing
-              type: AuthError
-              code: 401
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Data not found in the DB.
-          examples:
-            Not Found Error:
-              detail: The user could not be found in the DB
-              type: NotFoundError
-              code: 404
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal server error.
-          schema:
-            $ref: '#/definitions/Error500'
-          examples:
-            Server Error:
-              detail: Internal Server Error
-              type: ServerError
-              code: 500
+          $ref: '#/responses/500'
       tags:
         - Transaction Switch
       security:
@@ -2355,36 +2344,43 @@ definitions:
   SwitchTransactionResponse:
     description: ''
     type: object
+    x-examples:
+      Switch response:
+        conomyCardId: 62cc8f8a4536f821e4f4d317
+        amount: 24670
+        currency: CLP
+        transactionExternalId: 3c6734c41b8e48db8d8eed907f652314
+        links:
+          rel: string
+          route: string
+          method: string
+          targetSchema: string
+          schema: string
     properties:
-      idConomyCardReferenceToken:
+      conomyCardId:
         type: string
         minLength: 1
+        description: Conomy card unique identifier.
+        example: 62cc8f8a4536f821e4f4d317
       amount:
-        type: string
-        minLength: 1
+        type: number
+        description: Transaction amount. Outgoing funds are expressed as negative values.
+        example: 24670
       currency:
+        $ref: '#/definitions/Currency'
+      transactionExternalId:
         type: string
         minLength: 1
-      transactionId:
-        type: string
-        minLength: 1
+        description: Transaction external unique identifier.
+        example: 3c6734c41b8e48db8d8eed907f652314
       links:
-        type: array
-        items:
-          properties: {}
+        $ref: '#/definitions/_links'
     required:
-      - idConomyCardReferenceToken
+      - conomyCardId
       - amount
       - currency
-      - transactionId
+      - transactionExternalId
       - links
-    x-examples:
-      example-1:
-        idConomyCardReferenceToken: asd
-        amount: as
-        currency: clp
-        transactionId: iasd
-        links: []
   Error400:
     title: BadRequestError
     type: object
