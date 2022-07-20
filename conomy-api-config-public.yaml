@@ -2247,6 +2247,7 @@ definitions:
         type: string
         description: Card unique identifier. This field indicates the card selected by the user to make the purchase.
         example: 3c7634c41a7c48db8d8eed907f653865
+        format: ObjectId
       timestamp:
         $ref: '#/definitions/CreatedAt'
     required:
@@ -2259,41 +2260,89 @@ definitions:
       - description
       - cardId
       - timestamp
+  SwitchTransactionToWallet:
+    description: ''
+    x-examples:
+      Request example:
+        transactions:
+          - identifier: 62cc8f8a5136f82e4f4d3531
+            idConomyCardReferenceToken: 62cc8f8a4536f821e4f4d317
+            amount: '24780'
+            currency: CLP
+            transactionId: 3c6734c41b8e48db8d8eed907f652314
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            timestamp: '2017-07-21T17:32:28Z'
+            origin: AliExpress GRB
+            idCard: 3c7634c41a7c48db8d8eed907f653865
+        totalAmount: 24780
+    title: ''
+    type: object
+    properties:
+      transactions:
+        type: array
+        description: All transactions to be collected
+        items:
+          $ref: '#/definitions/SwitchTransactionInWallet'
+      totalAmount:
+        type: number
+        description: Transaction amount
+        example: 24780
+    required:
+      - transactions
+      - totalAmount
   SwitchTransactionInWallet:
     description: ''
     type: object
-    x-examples: {}
+    x-examples:
+      transaction request:
+        identifier: 62cc8f8a5136f82e4f4d3531
+        idConomyCardReferenceToken: 62cc8f8a4536f821e4f4d317
+        amount: '24780'
+        currency: CLP
+        transactionId: 3c6734c41b8e48db8d8eed907f652314
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        timestamp: '2017-07-21T17:32:28Z'
+        origin: AliExpress GRB
+        idCard: 3c7634c41a7c48db8d8eed907f653865
     properties:
       identifier:
-        type: string
-        minLength: 1
+        $ref: '#/definitions/id'
       idConomyCardReferenceToken:
         type: string
         minLength: 1
+        description: Conomy card unique identifier.
+        example: 62cc8f8a4536f821e4f4d317
       amount:
         type: string
         minLength: 1
+        example: '24780'
+        description: Transaction amount. Outgoing funds are expressed as negative values.
       currency:
-        type: string
-        minLength: 1
+        $ref: '#/definitions/Currency'
       transactionId:
         type: string
         minLength: 1
+        description: Transaction external unique identifier.
+        example: 3c6734c41b8e48db8d8eed907f652314
       description:
         type: string
         minLength: 1
+        description: The transaction description submitted by the merchant institution.
+        example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       timestamp:
-        type: string
-        minLength: 1
-        default: 'yyyy-mm-dd hh:mm:ss'
+        $ref: '#/definitions/CreatedAt'
       origin:
         type: string
         minLength: 1
         default: AliExpress GRB
+        description: Merchant name.
+        example: AliExpress GRB
       idCard:
         type: string
         minLength: 1
         format: ObjectId
+        description: Card unique identifier. This field indicates the card selected by the user to make the purchase.
+        example: 3c7634c41a7c48db8d8eed907f653865
     required:
       - identifier
       - idConomyCardReferenceToken
@@ -2304,18 +2353,6 @@ definitions:
       - timestamp
       - origin
       - idCard
-  SwitchTransactionToWallet:
-    description: ''
-    x-examples: {}
-    title: ''
-    type: object
-    properties:
-      transactions:
-        type: array
-        items:
-          $ref: '#/definitions/SwitchTransactionInWallet'
-      totalAmount:
-        type: number
   SwitchTransactionResponse:
     description: ''
     type: object
