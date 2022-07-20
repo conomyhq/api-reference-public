@@ -1166,7 +1166,10 @@ paths:
           schema:
             $ref: '#/definitions/GetTokenBody'
           description: This request require an user id from uapyment and and estimated time to live
-          x-examples: {}
+          x-examples:
+            Create token example request:
+              user_upayments_uuid: 3c7634c41a7c48db8d8eed907f653865
+              ttl: 1651007906
         - type: string
           name: X-Application-Id
           in: header
@@ -1177,22 +1180,25 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/GetTokenResponse'
+          examples:
+            Success response:
+              conomyToken: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
+              refreshToken: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
+              expiration: '5'
+              _links:
+                - rel: string
+                  route: string
+                  method: string
+                  targetSchema: string
+                  schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       description: 'With this method a new jwt token will be created in the conomy authentication service, along with this will come a refresh token that will serve to renew said token and also an expiration date in unix timestamp format, in addition to this the useful links will be referenced of the api'
       tags:
         - Auth
@@ -1219,22 +1225,25 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ValidateTokenResponse'
+          examples:
+            Success response:
+              message: valid token
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              expiration: '1651007906'
+              _links:
+                - rel: string
+                  route: string
+                  method: string
+                  targetSchema: string
+                  schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       tags:
         - Auth
       x-google-backend:
@@ -1274,22 +1283,25 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/RefreshTokenResponse'
+          examples:
+            Success response:
+              conomyToken: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
+              refreshToken: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
+              expiration: '1651007906'
+              _links:
+                - rel: string
+                  route: string
+                  method: string
+                  targetSchema: string
+                  schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       tags:
         - Auth
       x-google-backend:
@@ -1502,11 +1514,13 @@ definitions:
   GetTokenBody:
     type: object
     description: Body schema to fetch a jwt token
+    x-examples:
+      Create request example:
+        user_upayments_uuid: 3c7634c41a7c48db8d8eed907f653865
+        ttl: 1651007906
     properties:
       user_upayments_uuid:
-        type: string
-        description: Upayment user id who is applying to the token
-        example: 52SNfMWOktWVxsfyks6felsafAU24
+        $ref: '#/definitions/ExternalId'
       ttl:
         type: integer
         description: Duration time (min)
@@ -1514,10 +1528,6 @@ definitions:
     required:
       - user_upayments_uuid
       - ttl
-    x-examples:
-      example-1:
-        user_upayments_uuid: 52SNfMWOktWVxsfyks6felsafAU24
-        ttl: 5
   GetTokenResponse:
     type: object
     description: Response schema for a get token method
@@ -1528,7 +1538,7 @@ definitions:
         example: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9
       refreshToken:
         type: string
-        description: refresh jwt token
+        description: Refresh jwt token
         example: eyJhbGciOiJIUzI1NiIsInR5c.eyJzdWIiOFt2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpM
       expiration:
         type: string
@@ -1575,14 +1585,13 @@ definitions:
       message:
         type: string
         example: valid token
+        description: 'A human-readable summary. '
       userId:
-        type: string
-        format: uuid
-        example: 123e4567-e89b-12d3-a456-426614174000
+        $ref: '#/definitions/UserId'
       expiration:
         type: string
         example: '1651007906'
-        description: Expiration date
+        description: Expiration date (Unix time).
       _links:
         type: array
         items:
