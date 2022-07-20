@@ -805,12 +805,9 @@ paths:
           $ref: '#/responses/404'
         '500':
           $ref: '#/responses/500'
-      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
+      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a GET method fetch a goals and challenges by userExternalId
       parameters:
-        - type: string
-          in: query
-          name: user_upayments_uuid
-          description: upayments user identifier
+        - $ref: '#/parameters/userExternalId'
       tags:
         - Goals & Challenges
       x-internal: true
@@ -3261,3 +3258,9 @@ parameters:
     required: true
     type: string
     description: Unique identifier of the user to be used
+  userExternalId:
+    name: userExternalId
+    in: query
+    required: false
+    type: string
+    description: External unique identifier
