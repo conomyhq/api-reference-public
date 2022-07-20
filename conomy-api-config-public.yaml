@@ -2256,7 +2256,6 @@ definitions:
       timestamp:
         $ref: '#/definitions/CreatedAt'
     required:
-      - id
       - userExternalId
       - transactionExternalId
       - conomyCardId
@@ -2310,9 +2309,9 @@ definitions:
         origin: AliExpress GRB
         idCard: 3c7634c41a7c48db8d8eed907f653865
     properties:
-      identifier:
+      id:
         $ref: '#/definitions/id'
-      idConomyCardReferenceToken:
+      conomyCardId:
         type: string
         minLength: 1
         description: Conomy card unique identifier.
@@ -2342,22 +2341,21 @@ definitions:
         default: AliExpress GRB
         description: Merchant name.
         example: AliExpress GRB
-      idCard:
+      cardId:
         type: string
         minLength: 1
         format: ObjectId
         description: Card unique identifier. This field indicates the card selected by the user to make the purchase.
         example: 3c7634c41a7c48db8d8eed907f653865
     required:
-      - identifier
-      - idConomyCardReferenceToken
+      - id
+      - conomyCardId
       - amount
       - currency
-      - transactionId
       - description
       - timestamp
       - origin
-      - idCard
+      - cardId
   SwitchTransactionResponse:
     description: ''
     type: object
@@ -2489,14 +2487,20 @@ definitions:
     description: Goal and challenge response model
     properties:
       id:
-        type: string
+        $ref: '#/definitions/id'
       userId:
-        type: string
+        $ref: '#/definitions/UserId'
       userExternalId:
-        type: string
+        $ref: '#/definitions/ExternalId'
       type:
         type: string
-        description: 'GOAL , CHALLENGE, CHALLENGE_DEFAULT'
+        description: 'This field describes the type of the model. CHALLANGE: User activated challenges. CHALLENGE_DEFAULT: Default challenges, which can be triggered by the user. GOAL: User created savings goals.'
+        enum:
+          - CHALLENGE
+          - GOAL
+          - CHALLENGE_DEFAULT
+          - UNKNOWN
+        example: GOAL
       description:
         type: object
         properties:
@@ -2527,68 +2531,110 @@ definitions:
         type: string
       updatedAt:
         type: string
+    required:
+      - id
+      - userId
+      - userExternalId
+      - type
   GoalandChallengeResponse:
     type: object
-    x-examples:
-      example-1:
-        id: string
-        userId: string
-        userExternalId: string
-        type: string
-        description:
-          title: string
-          image: string
-          color: string
-          detail: string
-        endTime: string
-        targetAmount: 0
-        currentAmount: 0
-        rules:
-          - string
-        payDayAmount: string
-        status: string
-        created_at: string
-        updated_at: string
+    x-examples: {}
     properties:
       id:
-        type: string
+        $ref: '#/definitions/id'
       userId:
-        type: string
+        $ref: '#/definitions/UserId'
       userExternalId:
-        type: string
+        $ref: '#/definitions/ExternalId'
       type:
         type: string
+        enum:
+          - CHALLENGE
+          - GOAL
+          - CHALLENGE_DEFAULT
+          - UNKNOWN
+        example: CHALLENGE
+        description: |-
+          This field describes the type of the model. 
+          CHALLANGE: User activated challenges.
+          CHALLENGE_DEFAULT: Default challenges, which can be triggered by the user.
+          GOAL: User created savings goals. 
       description:
         type: object
+        required:
+          - title
+          - image
+        description: Information to be shown within the app.
         properties:
           title:
             type: string
+            description: Title of goal or challenge.
+            example: 52 semanas con conomy.
           image:
             type: string
+            description: Image to be shown within the app. The image for the goals will be an emoji and for challenge the image it will be provided by conomy.
+            example: "\U0001F600"
           color:
             type: string
+            description: 'Color (HEX) of the goal or challenge that will be displayed within the app. '
+            example: '#DF1CFF'
           detail:
             type: string
+            description: Human readable explanation of the challenge.
       endTime:
         type: string
+        description: Goal or challenge achievemnt date.
+        example: '2022-07-221T17:32:28Z'
       targetAmount:
         type: number
-      currentAmount:
+        description: 'Goal or challenge amount. '
+        example: 200000
+      balance:
         type: number
+        description: Current balance of the goal or challenge.
+        example: 0
+        default: 0
       rules:
         type: array
+        description: The unique identifiers of the business rules belonging to the goal or challenge.
         items:
           type: string
-      payDayAmount:
-        type: string
+          example: 629144bd1bde2cf264deefde
       status:
         type: string
+        description: |-
+          Current status of the goal or challenge.
+          INACTIVE: Goal disabled by user.
+          ACTIVE: Ongoing goal or challenge.
+          PENDING: Goal created but not yet active.
+          CREATED: Goal created.
+          COMPLETED: Goal or challenge that was completed by the user.
+        enum:
+          - INACTIVE
+          - ACTIVE
+          - PENDING
+          - CREATED
+          - COMPLETE
+        example: ACTIVE
       createdAt:
-        type: string
+        $ref: '#/definitions/CreatedAt'
       updatedAt:
-        type: string
+        $ref: '#/definitions/UpdatedAt'
       _links:
         $ref: '#/definitions/_links'
+    required:
+      - id
+      - userId
+      - userExternalId
+      - type
+      - description
+      - endTime
+      - targetAmount
+      - balance
+      - rules
+      - status
+      - createdAt
+      - updatedAt
   GoalandChallengeModify:
     title: Goal&ChallengeModify
     type: object
@@ -2685,6 +2731,7 @@ definitions:
       - type
   GoalandChallengeCreateResponse:
     $ref: '#/definitions/GoalandChallengeResponse'
+    x-examples: {}
   _links:
     title: _links
     type: object
