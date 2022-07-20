@@ -2482,9 +2482,9 @@ definitions:
       - type
       - detail
   GoalandChallenge:
-    title: Goal&Challenge Response
+    title: Goal&Challenge
     type: object
-    description: Goal and challenge response model
+    description: Goal and challenge model
     properties:
       id:
         $ref: '#/definitions/id'
@@ -2503,39 +2503,73 @@ definitions:
         example: GOAL
       description:
         type: object
+        description: Information to be shown within the app.
+        required:
+          - title
+          - image
         properties:
           title:
             type: string
+            description: Title of goal or challenge.
+            example: Regalos de navidad
           image:
             type: string
+            description: Image to be shown within the app. The image for the goals will be an emoji and for challenge the image it will be provided by conomy.
+            example: "\U0001F970"
           color:
             type: string
+            description: Color (HEX) of the goal or challenge that will be displayed within the app.
+            example: '#DF1CFF'
           detail:
             type: string
+            description: Human readable explanation of the challenge.
+            example: Con conomy podrás ahorrar sin darte cuenta.
       endTime:
         type: string
+        description: Goal or challenge achievemnt date.
+        example: '2022-07-221T17:32:28Z'
+        format: date-time
       targetAmount:
         type: number
-      currentAmount:
+        description: Goal or challenge amount.
+        example: 240000
+      balance:
         type: number
+        description: Current balance of the goal or challenge.
+        default: 0
+        example: 0
       rules:
         type: array
+        description: The unique identifiers of the business rules belonging to the goal or challenge.
         items:
           type: string
-      payDayAmount:
-        type: string
+          example: 629144bd1bde2cf264deefde
       status:
         type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+        description: 'Current status of the goal or challenge. INACTIVE: Goal disabled by user. ACTIVE: Ongoing goal or challenge. PENDING: Goal created but not yet active. CREATED: Goal created. COMPLETED: Goal or challenge that was completed by the user.'
+        enum:
+          - INACTIVE
+          - ACTIVE
+          - PENDING
+          - CREATED
+          - COMPLETE
+        example: ACTIVE
+        default: CREATED
       createdAt:
-        type: string
+        $ref: '#/definitions/CreatedAt'
       updatedAt:
-        type: string
+        $ref: '#/definitions/UpdatedAt'
     required:
       - id
       - userId
       - userExternalId
       - type
+      - description
+      - endTime
+      - targetAmount
+      - balance
+      - rules
+      - status
   GoalandChallengeResponse:
     type: object
     x-examples: {}
@@ -2581,10 +2615,12 @@ definitions:
           detail:
             type: string
             description: Human readable explanation of the challenge.
+            example: Con conomy podrás ahorrar sin darte cuenta.
       endTime:
         type: string
         description: Goal or challenge achievemnt date.
         example: '2022-07-221T17:32:28Z'
+        format: date-time
       targetAmount:
         type: number
         description: 'Goal or challenge amount. '
@@ -2616,6 +2652,7 @@ definitions:
           - CREATED
           - COMPLETE
         example: ACTIVE
+        default: CREATED
       createdAt:
         $ref: '#/definitions/CreatedAt'
       updatedAt:
