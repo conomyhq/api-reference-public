@@ -797,6 +797,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/GoalandChallengeResponse'
+          examples:
+            Success response:
+              goalAndChallenge:
+                - id: 62cc8f8a5136f82e4f4d3531
+                  userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+                  userExternalId: 3c7634c41a7c48db8d8eed907f653865
+                  type: CHALLENGE
+                  description:
+                    title: 52 semanas con conomy.
+                    image: "\U0001F600"
+                    color: '#DF1CFF'
+                    detail: Con conomy podrás ahorrar sin darte cuenta.
+                  endTime: '2022-07-221T17:32:28Z'
+                  targetAmount: 200000
+                  balance: 0
+                  rules:
+                    - 629144bd1bde2cf264deefde
+                  status: ACTIVE
+                  createdAt: '2017-07-21T17:32:28Z'
+                  updatedAt: '2022-07-221T17:32:28Z'
+                  _links:
+                    rel: string
+                    route: string
+                    method: string
+                    targetSchema: string
+                    schema: string
         '400':
           $ref: '#/responses/400'
         '401':
@@ -2706,66 +2732,60 @@ definitions:
           type: string
   GoalandChallengeCreate:
     type: object
-    x-examples:
-      example-1:
-        id: string
-        userId: string
-        userExternalId: string
-        type: string
-        description:
-          title: string
-          image: string
-          color: string
-          detail: string
-        endTime: string
-        targetAmount: 0
-        currentAmount: 0
-        rules:
-          - string
-        payDayAmount: string
-        status: string
-        created_at: string
-        updated_at: string
+    x-examples: {}
     properties:
       userId:
-        type: string
+        $ref: '#/definitions/UserId'
       userExternalId:
-        type: string
+        $ref: '#/definitions/ExternalId'
       type:
         type: string
         description: 'GOAL,CHALLENGE,CHALLENGE_DEFAULT'
       description:
         type: object
+        description: Information to be shown within the app.
         properties:
           title:
             type: string
+            description: Title of goal or challenge.
+            example: Regalos de cumpleaños
           image:
             type: string
+            description: Image to be shown within the app. The image for the goals will be an emoji and for challenge the image it will be provided by conomy.
+            example: "\U0001F973"
           color:
             type: string
+            description: Color (HEX) of the goal or challenge that will be displayed within the app.
+            example: '#DF1CFF'
           detail:
             type: string
-        required:
-          - title
+            description: Human readable explanation of the challenge.
+            example: Regalos de cumpleaños del mes de marzo para mis hijos.
       endTime:
         type: string
+        description: Goal or challenge achievemnt date.
+        format: date-time
+        example: '2022-07-221T17:32:28Z'
       targetAmount:
         type: number
-      currentAmount:
+        description: Goal or challenge amount.
+        example: 200000
+      balance:
         type: number
+        description: Current balance of the goal or challenge.
+        default: 0
+        example: 0
       rules:
         type: array
+        description: The unique identifiers of the business rules belonging to the goal or challenge.
         items:
           type: string
-      payDayAmount:
-        type: string
-      status:
-        type: string
-        description: 'INACTIVE,ACTIVE,COMPLETE,PENDING'
+          example: 629144bd1bde2cf264deefde
     required:
       - userId
       - userExternalId
       - type
+      - description
   GoalandChallengeCreateResponse:
     $ref: '#/definitions/GoalandChallengeResponse'
     x-examples: {}
