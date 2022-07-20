@@ -761,21 +761,13 @@ paths:
           schema:
             $ref: '#/definitions/GoalandChallengeCreateResponse'
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       operationId: post-v1-goals
       parameters:
         - in: body
@@ -806,21 +798,13 @@ paths:
                 items:
                   $ref: '#/definitions/GoalandChallengeResponse'
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a GET method fetch a goals and challenges by user_upayments_uuid
       parameters:
         - type: string
