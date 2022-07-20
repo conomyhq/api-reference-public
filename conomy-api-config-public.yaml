@@ -1350,41 +1350,13 @@ paths:
                     name: Nosotros
                   published: true
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            type: object
-            x-examples:
-              example-1:
-                code: 404
-                type: NotFoundError
-                detail: The user could not be found in the DB
-            properties:
-              code:
-                type: integer
-                example: 500
-              type:
-                type: string
-                example: ErrorObtainingList
-              detail:
-                type: string
-                example: Error obtaining post list from flotiq
-            required:
-              - code
-              - type
-              - detail
-          examples: {}
+          $ref: '#/responses/500'
       operationId: get-blog-post
       parameters:
         - type: string
