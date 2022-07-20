@@ -1420,36 +1420,13 @@ paths:
                 name: Nosotros
               published: true
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            type: object
-            x-examples:
-              example-1:
-                code: 500
-                type: ErrorObtainingList
-                detail: Error obtaining post list from flotiq
-            properties:
-              code:
-                type: integer
-                example: 500
-              type:
-                type: string
-                example: ErrorObtainingList
-              detail:
-                type: string
-                example: Error obtaining post list from flotiq
+          $ref: '#/responses/500'
       operationId: get-blog-post-tag
       description: 'The Get blog post object service will allow us to obtain all the necessary information about a specific blog, through its {tag}.'
       x-internal: false
