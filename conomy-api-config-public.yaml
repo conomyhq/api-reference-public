@@ -760,6 +760,31 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/GoalandChallengeCreateResponse'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              type: CHALLENGE
+              description:
+                title: 52 semanas con conomy.
+                image: "\U0001F600"
+                color: '#DF1CFF'
+                detail: Con conomy podrás ahorrar sin darte cuenta.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 200000
+              balance: 0
+              rules:
+                - 629144bd1bde2cf264deefde
+              status: ACTIVE
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
+              _links:
+                rel: string
+                route: string
+                method: string
+                targetSchema: string
+                schema: string
         '400':
           $ref: '#/responses/400'
         '401':
@@ -775,7 +800,21 @@ paths:
           schema:
             $ref: '#/definitions/GoalandChallengeCreate'
           description: Goal & challenge schema
-          x-examples: {}
+          x-examples:
+            Create request example:
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              type: string
+              description:
+                title: Regalos de cumpleaños
+                image: "\U0001F973"
+                color: '#DF1CFF'
+                detail: Regalos de cumpleaños del mes de marzo para mis hijos.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 200000
+              balance: 0
+              rules:
+                - 629144bd1bde2cf264deefde
       description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/ endpoint with a POST method register a new goal or challenge in the db with  a goal and challenge model field.
       x-internal: true
       security:
@@ -859,32 +898,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/_links'
-        '201':
-          description: Created
-          schema:
-            type: object
-            properties: {}
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       operationId: get-v1-active-challenges
       x-internal: true
       security:
         - apitoken: []
-      description: ''
+      description: The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /challengesDefault/ endpoint with a GET method fetch all challenges default.
     parameters: []
   /goals-challenges/composite/rules:
     get:
@@ -906,22 +932,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/_links'
+          examples:
+            Success response:
+              rules:
+                id: 62cc8f8a5136f82e4f4d3531
+                name: Recurrent payment
+                type: TRANSACTIONAL
+                description: Premium user discount
+              _links:
+                - rel: string
+                  route: string
+                  method: string
+                  targetSchema: string
+                  schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       operationId: get-v1-active-rules
       x-internal: true
       security:
@@ -938,22 +969,39 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeResponse'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              type: CHALLENGE
+              description:
+                title: 52 semanas con conomy.
+                image: "\U0001F600"
+                color: '#DF1CFF'
+                detail: Con conomy podrás ahorrar sin darte cuenta.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 200000
+              balance: 0
+              rules:
+                - 629144bd1bde2cf264deefde
+              status: ACTIVE
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
+              _links:
+                rel: string
+                route: string
+                method: string
+                targetSchema: string
+                schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       operationId: get-v1-goals-challenge
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a GET method fetch a specific goal or challenge by id'
       parameters: []
@@ -973,39 +1021,64 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeResponse'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              type: CHALLENGE
+              description:
+                title: 52 semanas con conomy.
+                image: "\U0001F600"
+                color: '#DF1CFF'
+                detail: Con conomy podrás ahorrar sin darte cuenta.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 200000
+              balance: 0
+              rules:
+                - 629144bd1bde2cf264deefde
+              status: ACTIVE
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
+              _links:
+                rel: string
+                route: string
+                method: string
+                targetSchema: string
+                schema: string
+          headers: {}
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method updates a goal or challenge values by id'
       parameters:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/GoalandChallenge'
-          x-examples: {}
+            $ref: '#/definitions/GoalandChallengeModify'
+          x-examples:
+            PUT request example:
+              description:
+                title: Fiesta amigos
+                image: "\U0001F92A"
+                color: '#DF1CFF'
+                detail: Carrete con los cabros.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 45000
+              rules:
+                - 629144bd1bde2cf264deefde
       tags:
         - Goals & Challenges
       x-internal: true
       security:
         - apitoken: []
     parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
+      - $ref: '#/parameters/goalandchallengeId'
     delete:
       summary: Delete goal or challenge by id
       operationId: delete-v1-goals-challenges-id
@@ -1014,23 +1087,15 @@ paths:
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
         '204':
-          description: No Content
+          $ref: '#/responses/204'
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id} endpoint with a PUT method deletes a goal or challenge values by id'
       tags:
         - Goals & Challenges
@@ -1039,11 +1104,7 @@ paths:
         - apitoken: []
   '/goals-challenges/composite/{id}/confirm':
     parameters:
-      - type: string
-        name: id
-        in: path
-        required: true
-        description: Goal or Challenge identifier
+      - $ref: '#/parameters/goalandchallengeId'
     post:
       summary: Complete the setup of an objective or challenge
       operationId: post-v1-goals-challenges-id-confirm
@@ -1055,22 +1116,39 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/GoalandChallengeResponse'
+          examples:
+            Success response:
+              id: 62cc8f8a5136f82e4f4d3531
+              userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+              userExternalId: 3c7634c41a7c48db8d8eed907f653865
+              type: CHALLENGE
+              description:
+                title: 52 semanas con conomy.
+                image: "\U0001F600"
+                color: '#DF1CFF'
+                detail: Con conomy podrás ahorrar sin darte cuenta.
+              endTime: '2022-07-221T17:32:28Z'
+              targetAmount: 200000
+              balance: 0
+              rules:
+                - 629144bd1bde2cf264deefde
+              status: ACTIVE
+              createdAt: '2017-07-21T17:32:28Z'
+              updatedAt: '2022-07-221T17:32:28Z'
+              _links:
+                rel: string
+                route: string
+                method: string
+                targetSchema: string
+                schema: string
         '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error400'
+          $ref: '#/responses/400'
         '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error401'
+          $ref: '#/responses/401'
         '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error404'
+          $ref: '#/responses/404'
         '500':
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error500'
+          $ref: '#/responses/500'
       description: 'The goals and challenges service is responsible for storing and handling all goals and challenges of our users. The /goals-challenges/{id}/confirm endpoint with a POST method confirms the goal or challenge attempt, assigning with a status ACTIVE'
       tags:
         - Goals & Challenges
@@ -1555,18 +1633,34 @@ definitions:
     description: Rule that defines business rules and has its atomic processes to apply to the transaction
     properties:
       id:
-        type: string
+        $ref: '#/definitions/id'
       name:
         type: string
+        description: The name rule.
+        example: Recurrent payment
       type:
         type: string
-        description: Rule's type
-        example: Profile rule
+        description: |-
+          Rule's type.
+          TRANSACTIONAL: Rules applicable to payments flow.
+          RECURRENT: Rules applicable to recurrents payments.
+          SAVING_CARD: Rules applicable to savings.
+          CHALLENGE: Rules applicable to challenges.
+          PAYDAY_OPTION: Rules applicable to savings.
+        enum:
+          - TRANSACTIONAL
+          - RECURRENT
+          - SAVING_CARD
+          - CHALLENGE
+          - PAYDAY_OPTION
+        example: TRANSACTIONAL
       description:
         type: string
         description: Rule description for human reading
+        example: Premium user discount
     required:
       - id
+      - name
       - type
       - description
   RuleFiltered:
@@ -2703,33 +2797,52 @@ definitions:
     type: object
     description: Goal and challenge model
     properties:
-      type:
-        type: string
       description:
         type: object
+        description: Information to be shown within the app.
         properties:
           title:
             type: string
+            description: Title of goal or challenge.
+            example: Fiesta amigos
           image:
             type: string
+            description: Image to be shown within the app. The image for the goals will be an emoji and for challenge the image it will be provided by conomy.
+            example: "\U0001F92A"
           color:
             type: string
+            description: Color (HEX) of the goal or challenge that will be displayed within the app.
+            example: '#DF1CFF'
           detail:
             type: string
+            description: Human readable explanation of the challenge.
+            example: Carrete con los cabros.
       endTime:
         type: string
+        description: Goal or challenge achievemnt date.
+        example: '2022-07-221T17:32:28Z'
+        format: date-time
       targetAmount:
         type: number
-      currentAmount:
-        type: number
-      status:
-        type: string
-        description: 'INACTIVE, ACTIVE, COMPLETE, PENDING'
+        description: Goal or challenge amount.
+        example: 45000
       rules:
         type: array
-        description: rulesId
+        description: The unique identifiers of the business rules belonging to the goal or challenge.
         items:
           type: string
+          example: 629144bd1bde2cf264deefde
+    x-examples:
+      PUT request example:
+        description:
+          title: Fiesta amigos
+          image: "\U0001F92A"
+          color: '#DF1CFF'
+          detail: Carrete con los cabros.
+        endTime: '2022-07-221T17:32:28Z'
+        targetAmount: 45000
+        rules:
+          - 629144bd1bde2cf264deefde
   GoalandChallengeCreate:
     type: object
     x-examples: {}
@@ -3368,3 +3481,9 @@ parameters:
     required: false
     type: string
     description: External unique identifier
+  goalandchallengeId:
+    name: goal&challengeId
+    in: path
+    required: true
+    type: string
+    description: Unique identifier of the goal or challenge
