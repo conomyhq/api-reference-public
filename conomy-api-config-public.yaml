@@ -3005,99 +3005,122 @@ definitions:
           name: Nosotros
         published: true
     description: ''
+    title: Post Object
     properties:
       id:
-        type: string
-        description: Unique id for each blog
+        $ref: '#/definitions/id'
       tag:
         type: string
-        description: Title tag for urls
+        description: Part of the URL that explains the post's content
+        example: nuestra_historia
       title:
         type: string
-        description: Blog title
+        description: Post title
+        example: Nuestra historia
       estimatedTime:
         type: integer
         description: Estimated reading time in minutes
+        example: 5
       writer:
         type: object
         properties:
           id:
             type: string
-            description: Unique id belonging to a single Owner
+            description: Unique id belonging to a single writer
+            example: owner-338894
           name:
             type: string
-            description: Owner's name
+            description: Writer's name
+            example: Pablo
           last_name:
             type: string
-            description: Owner's last name
+            description: Writer's last name
+            example: Acuña
           image:
             type: object
-            description: Owner's image
+            description: Writer's image
             properties:
               dataUrl:
                 type: string
+                description: This property contains a full-qualified URL which includes the writer's avatar.
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
         required:
           - id
           - name
           - last_name
       internal:
         type: object
-        description: 'Contains general information about the blog. For example, date of publication, deletion. '
+        description: 'Contains general information about the post. For example, date of publication, deletion. '
         properties:
           contentType:
             type: string
+            description: Name of Content Type Definition of object
+            example: content
+            default: content
           createdAt:
-            type: string
-            description: Date of blog creation
+            $ref: '#/definitions/CreatedAt'
           updatedAt:
-            type: string
-            description: Date of last modification made to the blog
+            $ref: '#/definitions/UpdatedAt'
           deletedAt:
             type: string
-            description: Date and time of blog deletion
+            description: 'Date and time of deletion of Content Object, in ISO 8601 date format'
         required:
           - contentType
           - createdAt
       content:
         type: string
-        description: Blog content.
+        description: Posr content (Markdown format)
+        example: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       media:
         type: object
-        description: Images of the blog.
-        required:
-          - headerImage
+        description: Images of the post.
         properties:
           thumbnail:
             type: object
             properties:
               dataUrl:
                 type: string
+                description: This property contains a full-qualified URL which includes the thumbnail.
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                format: uri
           headerImage:
             type: object
             properties:
               dataUrl:
                 type: string
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                description: This property contains a full-qualified URL which includes the header.
+                format: uri
+        required:
+          - headerImage
       description:
         type: string
-        description: Short summary of the blog
+        description: Short human readable summary of the post
+        example: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
       breadCrum:
         type: object
-        description: Topic of the blog
+        description: Topic of the post
+        required:
+          - id
+          - name
         properties:
           id:
             type: string
+            description: Unique id of the object.
+            example: breadcrumb-338894
           name:
             type: string
+            description: Name of the breadcrumb
+            example: Finanzas personales
       published:
         type: boolean
-        description: Establishes whether the blog has been published or not.
+        description: Establishes whether the post has been published or not.
     required:
       - id
       - tag
       - title
       - breadCrum
       - published
-    title: Post Object
   BlogPostListData:
     type: object
     x-examples:
@@ -3176,7 +3199,7 @@ definitions:
           - lastName
       internal:
         type: object
-        description: 'Contains general information about the blog. For example, date of publication, deletion or status'
+        description: 'Contains general information about the post. For example, date of publication, deletion or status'
         properties:
           contentType:
             type: string
@@ -3231,7 +3254,7 @@ definitions:
             example: breadcrumb-338894
           name:
             type: string
-            description: Unique id of the object.
+            description: Name of the breadcrumb.
             example: Finanzas personales
       published:
         type: boolean
