@@ -3099,7 +3099,7 @@ definitions:
   BlogPostListData:
     type: object
     x-examples:
-      example-1:
+      Post  list data:
         id: blogpost-341099
         tag: nuestra_historia
         title: Nuestra historia
@@ -3121,7 +3121,7 @@ definitions:
           headerImage:
             dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
         description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
-        breadCrum:
+        breadCrumb:
           id: breadcrum-982488
           name: Nosotros
         published: true
@@ -3129,96 +3129,117 @@ definitions:
     title: ''
     properties:
       id:
-        type: string
-        description: Unique id for each blog
+        $ref: '#/definitions/id'
       tag:
         type: string
-        description: Title tag for urls
+        description: Part of the URL that explains the blog's content
+        example: nuestra_historia
       title:
         type: string
-        description: Blog title
+        description: Post title
+        example: Nuestra Historia
       estimatedTime:
         type: integer
         description: Estimated reading time in minutes
+        example: 4
       writer:
         type: object
-        description: Contains information about the person who wrote the blog.
+        description: Contains information about the person who wrote the post.
         properties:
           id:
             type: string
-            description: Unique id belonging to a single Owner
+            description: Unique id belonging to a single writer
+            example: owner-338894
           name:
             type: string
-            description: Owner's name
-          last_name:
+            description: Writer's name
+            example: Pablo
+          lastName:
             type: string
-            description: Owner's last name
+            description: Writer's last name
+            example: Acuña
           image:
             type: object
-            description: Owner's image
+            description: Writer's image
             properties:
               dataUrl:
                 type: string
-                description: Thumbnail image of the writer
+                description: This property contains a full-qualified URL which includes the writer's avatar.
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
             required:
               - dataUrl
         required:
           - id
           - name
-          - last_name
+          - lastName
       internal:
         type: object
         description: 'Contains general information about the blog. For example, date of publication, deletion or status'
         properties:
           contentType:
             type: string
+            description: Name of Content Type Definition of object
+            default: content
+            example: content
           createdAt:
-            type: string
-            format: date-time
+            $ref: '#/definitions/CreatedAt'
           updatedAt:
-            type: string
-            format: date-time
+            $ref: '#/definitions/UpdatedAt'
           deletedAt:
-            type: string
             format: date-time
+            type: string
+            description: 'Date and time of deletion of Content Object, in ISO 8601 date format'
         required:
           - contentType
       media:
         type: object
-        description: Images of the blog.
+        description: Images of the post.
         properties:
           thumbnail:
             type: object
             properties:
               dataUrl:
                 type: string
+                description: This property contains a full-qualified URL which includes the thumbnail.
+                example: '"https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                format: uri
+              '':
+                type: string
           headerImage:
             type: object
             properties:
               dataUrl:
                 type: string
+                description: This property contains a full-qualified URL which includes the header.
+                example: '"https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                format: uri
         required:
           - headerImage
       description:
         type: string
-        description: Short summary of the blog
-      breadCrum:
+        description: Short human readable summary of the post
+        example: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
+      breadCrumb:
         type: object
-        description: Topic of the blog
+        description: Topic of the post.
         properties:
           id:
             type: string
+            description: Unique id of the object.
+            example: breadcrumb-338894
           name:
             type: string
+            description: Unique id of the object.
+            example: Finanzas personales
       published:
         type: boolean
-        description: Establishes whether the blog has been published or not.
+        description: Establishes whether the post has been published or not.
     required:
       - id
       - tag
       - title
       - estimatedTime
-      - breadCrum
+      - breadCrumb
       - published
   UserDeleteRule:
     title: UserDeleteRule
@@ -3269,7 +3290,7 @@ definitions:
     x-stoplight:
       id: fbl3qqnl49tj6
     format: date-time
-    description: Creation date
+    description: 'Creation date, in ISO 8601 date format.'
     example: '2017-07-21T17:32:28Z'
     x-examples: {}
   UpdatedAt:
@@ -3277,7 +3298,7 @@ definitions:
     title: UpdatedAt
     x-stoplight:
       id: ycaspw1foq55i
-    description: Date of last update
+    description: 'Date of last update, in ISO 8601 date format.'
     format: date-time
     example: '2022-07-221T17:32:28Z'
   UserId:
