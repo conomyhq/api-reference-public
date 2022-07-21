@@ -1345,7 +1345,7 @@ paths:
                     headerImage:
                       dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
                   description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
-                  breadCrum:
+                  breadCrumb:
                     id: breadcrum-982488
                     name: Nosotros
                   published: true
@@ -1415,7 +1415,7 @@ paths:
                 deletedAt: ''
               content: 'Hola, mi nombre es Pablo, tengo 31 años y soy ingeniero comercial. Desde que empecé mi carrera, siempre me gustaron los ramos y temas de Economía, Finanzas y Contabilidad, quizás este ultimo un poco menos. Pero independiente de eso, desde bastante chico, incluso antes de terminar la Universidad... '
               description: Esta es la histora de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
-              breadCrum:
+              breadCrumb:
                 id: breadcrum-982488
                 name: Nosotros
               published: true
@@ -3000,7 +3000,7 @@ definitions:
           headerImage:
             dataUrl: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
         description: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
-        breadCrum:
+        breadCrumb:
           id: breadcrum-982488
           name: Nosotros
         published: true
@@ -3097,7 +3097,7 @@ definitions:
         type: string
         description: Short human readable summary of the post
         example: Esta es la historia de cómo se ideó y nació Conomy. Lo que pasó antes de y lo que gatilló la creación de esta Fintech que viene a mejorar las finanzas personales de los chilenos y latinoamericanos.
-      breadCrum:
+      breadCrumb:
         type: object
         description: Topic of the post
         required:
@@ -3119,7 +3119,7 @@ definitions:
       - id
       - tag
       - title
-      - breadCrum
+      - breadCrumb
       - published
   BlogPostListData:
     type: object
