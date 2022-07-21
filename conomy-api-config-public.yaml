@@ -2887,10 +2887,11 @@ definitions:
   BlogList:
     type: object
     x-examples: {}
+    title: Post list
     properties:
-      totalBlogs:
+      totalPost:
         type: number
-        description: Number of the total blogs
+        description: Number of the total posts
         example: 4
       totalPages:
         type: number
@@ -2907,7 +2908,7 @@ definitions:
         items:
           $ref: '#/definitions/BlogPostListData'
     required:
-      - totalBlogs
+      - totalPost
       - totalPages
       - currentPage
       - data
@@ -3096,6 +3097,7 @@ definitions:
       - title
       - breadCrum
       - published
+    title: Post Object
   BlogPostListData:
     type: object
     x-examples:
@@ -3126,13 +3128,13 @@ definitions:
           name: Nosotros
         published: true
     description: ''
-    title: ''
+    title: Post list data
     properties:
       id:
         $ref: '#/definitions/id'
       tag:
         type: string
-        description: Part of the URL that explains the blog's content
+        description: Part of the URL that explains the post's content
         example: nuestra_historia
       title:
         type: string
