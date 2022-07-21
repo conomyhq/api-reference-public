@@ -457,8 +457,8 @@ paths:
               status: ACTIVE
               contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
-                - - 629144bd1bde2cf264deefde
-                  - 629144bd1bd6e2cf2645ba7e
+                - 629144bd1bde2cf264deefde
+                - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
@@ -501,8 +501,8 @@ paths:
               status: ACTIVE
               contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
-                - - 629144bd1bde2cf264deefde
-                  - 629144bd1bd6e2cf2645ba7e
+                - 629144bd1bde2cf264deefde
+                - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
@@ -585,8 +585,8 @@ paths:
               status: ACTIVE
               contractId: 976b47f1be414f86adb9afc295c2f8ef
               rulesId:
-                - - 629144bd1bde2cf264deefde
-                  - 629144bd1bd6e2cf2645ba7e
+                - 629144bd1bde2cf264deefde
+                - 629144bd1bd6e2cf2645ba7e
               image: 'http://example.com'
               createdAt: '2017-07-21T17:32:28Z'
               updatedAt: '2022-07-221T17:32:28Z'
@@ -1320,7 +1320,7 @@ paths:
             $ref: '#/definitions/BlogList'
           examples:
             example:
-              totalBlogs: 1
+              totalPost: 1
               totalPages: 1
               currentPage: 1
               data:
@@ -1331,7 +1331,7 @@ paths:
                   writer:
                     id: owner-338894
                     name: Pablo
-                    last_name: Acuña
+                    lastName: Acuña
                     image:
                       dataUrl: 'https://api.flotiq.com/image/0x0/_media-966f25c5-6cda-45e8-97aa-2f2b2cc5da99.png'
                   internal:
@@ -2057,17 +2057,13 @@ definitions:
         type: string
         example: 976b47f1be414f86adb9afc295c2f8ef
         description: The unique identifier of the contract belonging to the user.
-        format: uuid
       rulesId:
         type: array
         uniqueItems: true
         description: The unique identifiers of the business rules belonging to the user
         items:
           type: string
-          format: objectId
-          example:
-            - 629144bd1bde2cf264deefde
-            - 629144bd1bd6e2cf2645ba7e
+          example: 629144bd1bde2cf264deefde
       image:
         type: string
         format: uri
@@ -2153,17 +2149,13 @@ definitions:
         type: string
         example: 976b47f1be414f86adb9afc295c2f8ef
         description: The unique identifier of the contract belonging to the user.
-        format: uuid
       rulesId:
         type: array
         uniqueItems: true
         description: The unique identifiers of the business rules belonging to the user
         items:
           type: string
-          format: objectId
-          example:
-            - 629144bd1bde2cf264deefde
-            - 629144bd1bd6e2cf2645ba7e
+          example: 629144bd1bde2cf264deefde
       image:
         type: string
         format: uri
@@ -2219,7 +2211,6 @@ definitions:
         type: string
         example: 976b47f1be414f86adb9afc295c2f8ef
         description: The unique identifier of the contract belonging to the user.
-        format: uuid
       image:
         type: string
         format: uri
@@ -2606,7 +2597,6 @@ definitions:
         type: string
         description: Goal or challenge achievemnt date.
         example: '2022-07-221T17:32:28Z'
-        format: date-time
       targetAmount:
         type: number
         description: Goal or challenge amount.
@@ -2650,7 +2640,31 @@ definitions:
       - status
   GoalandChallengeResponse:
     type: object
-    x-examples: {}
+    x-examples:
+      Goal&Challenge response:
+        id: 62cc8f8a5136f82e4f4d3531
+        userId: 96daafcf-9f83-4c2c-8706-eb557e20c23c
+        userExternalId: 3c7634c41a7c48db8d8eed907f653865
+        type: CHALLENGE
+        description:
+          title: 52 semanas con conomy.
+          image: "\U0001F600"
+          color: '#DF1CFF'
+          detail: Con conomy podrás ahorrar sin darte cuenta.
+        endTime: '2022-07-221T17:32:28Z'
+        targetAmount: 200000
+        balance: 0
+        rules:
+          - 629144bd1bde2cf264deefde
+        status: CREATED
+        createdAt: '2017-07-21T17:32:28Z'
+        updatedAt: '2022-07-221T17:32:28Z'
+        _links:
+          rel: string
+          route: string
+          method: string
+          targetSchema: string
+          schema: string
     properties:
       id:
         $ref: '#/definitions/id'
@@ -2698,7 +2712,6 @@ definitions:
         type: string
         description: Goal or challenge achievemnt date.
         example: '2022-07-221T17:32:28Z'
-        format: date-time
       targetAmount:
         type: number
         description: 'Goal or challenge amount. '
@@ -2750,10 +2763,22 @@ definitions:
       - status
       - createdAt
       - updatedAt
+    description: ''
   GoalandChallengeModify:
     title: Goal&ChallengeModify
     type: object
     description: Goal and challenge model
+    x-examples:
+      PUT request example:
+        description:
+          title: Fiesta amigos
+          image: "\U0001F92A"
+          color: '#DF1CFF'
+          detail: Carrete con los cabros.
+        endTime: '2022-07-221T17:32:28Z'
+        targetAmount: 45000
+        rules:
+          - 629144bd1bde2cf264deefde
     properties:
       description:
         type: object
@@ -2779,7 +2804,6 @@ definitions:
         type: string
         description: Goal or challenge achievemnt date.
         example: '2022-07-221T17:32:28Z'
-        format: date-time
       targetAmount:
         type: number
         description: Goal or challenge amount.
@@ -2790,17 +2814,6 @@ definitions:
         items:
           type: string
           example: 629144bd1bde2cf264deefde
-    x-examples:
-      PUT request example:
-        description:
-          title: Fiesta amigos
-          image: "\U0001F92A"
-          color: '#DF1CFF'
-          detail: Carrete con los cabros.
-        endTime: '2022-07-221T17:32:28Z'
-        targetAmount: 45000
-        rules:
-          - 629144bd1bde2cf264deefde
   GoalandChallengeCreate:
     type: object
     x-examples: {}
@@ -2835,7 +2848,6 @@ definitions:
       endTime:
         type: string
         description: Goal or challenge achievemnt date.
-        format: date-time
         example: '2022-07-221T17:32:28Z'
       targetAmount:
         type: number
@@ -2859,7 +2871,6 @@ definitions:
       - description
   GoalandChallengeCreateResponse:
     $ref: '#/definitions/GoalandChallengeResponse'
-    x-examples: {}
   _links:
     title: _links
     type: object
@@ -3211,7 +3222,6 @@ definitions:
           updatedAt:
             $ref: '#/definitions/UpdatedAt'
           deletedAt:
-            format: date-time
             type: string
             description: 'Date and time of deletion of Content Object, in ISO 8601 date format'
         required:
@@ -3226,7 +3236,7 @@ definitions:
               dataUrl:
                 type: string
                 description: This property contains a full-qualified URL which includes the thumbnail.
-                example: '"https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
                 format: uri
               '':
                 type: string
@@ -3236,7 +3246,7 @@ definitions:
               dataUrl:
                 type: string
                 description: This property contains a full-qualified URL which includes the header.
-                example: '"https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
+                example: 'https://api.flotiq.com/image/0x0/_media-159c16ad-983a-404c-8e8c-a6ebb8f33f9a.png'
                 format: uri
         required:
           - headerImage
@@ -3314,7 +3324,6 @@ definitions:
     title: CreatedAt
     x-stoplight:
       id: fbl3qqnl49tj6
-    format: date-time
     description: 'Creation date, in ISO 8601 date format.'
     example: '2017-07-21T17:32:28Z'
     x-examples: {}
@@ -3324,7 +3333,6 @@ definitions:
     x-stoplight:
       id: ycaspw1foq55i
     description: 'Date of last update, in ISO 8601 date format.'
-    format: date-time
     example: '2022-07-221T17:32:28Z'
   UserId:
     type: string
@@ -3486,7 +3494,7 @@ parameters:
     type: string
     description: External unique identifier
   goalandchallengeId:
-    name: goal&challengeId
+    name: id
     in: path
     required: true
     type: string
